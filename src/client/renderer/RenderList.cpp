@@ -51,7 +51,7 @@ void RenderList::render() {
 		glPushMatrix2();
 
 		#ifndef USE_VBO
-			glTranslated2(-xOff, -yOff, -zOff);
+			glTranslatef2(-xOff, -yOff, -zOff);
 			glCallLists(bufferLimit, GL_UNSIGNED_INT, lists);
 		#else
 			renderChunks();
@@ -76,7 +76,7 @@ void RenderList::renderChunks() {
 		double ry = rc.pos.y - yOff;
 		double rz = rc.pos.z - zOff;
 		glPushMatrix2();
-		glTranslated2(rx, ry, rz);
+		glTranslatef2(rx, ry, rz);
 		glBindBuffer2(GL_ARRAY_BUFFER, rc.vboId);
 
 		glVertexPointer2	(3, GL_FLOAT, Stride,  0);
