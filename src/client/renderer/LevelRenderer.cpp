@@ -850,9 +850,9 @@ void LevelRenderer::renderHit( Player* player, const HitResult& h, int mode, /*I
 			t.begin();
 			t.color(1.0f, 1.0f, 1.0f, 0.5f);
 			t.noColor();
-			float xo = player->xOld + (player->x - player->xOld) * a;
-			float yo = player->yOld + (player->y - player->yOld) * a;
-			float zo = player->zOld + (player->z - player->zOld) * a;
+			double xo = player->xOld + (player->x - player->xOld) * a;
+			double yo = player->yOld + (player->y - player->yOld) * a;
+			double zo = player->zOld + (player->z - player->zOld) * a;
 
 			t.offset(-xo, -yo, -zo);
 			//t.noColor();
@@ -909,9 +909,9 @@ void LevelRenderer::renderHitOutline( Player* player, const HitResult& h, int mo
 
 		if (tileId > 0) {
 			Tile::tiles[tileId]->updateShape(level, h.x, h.y, h.z);
-			float xo = player->xOld + (player->x - player->xOld) * a;
-			float yo = player->yOld + (player->y - player->yOld) * a;
-			float zo = player->zOld + (player->z - player->zOld) * a;
+			double xo = player->xOld + (player->x - player->xOld) * a;
+			double yo = player->yOld + (player->y - player->yOld) * a;
+			double zo = player->zOld + (player->z - player->zOld) * a;
 			render(Tile::tiles[tileId]->getTileAABB(level, h.x, h.y, h.z).grow(ss, ss, ss).cloneMove(-xo, -yo, -zo));
 		}
 		glDepthMask(true);
@@ -1599,9 +1599,9 @@ void LevelRenderer::renderHitSelect( Player* player, const HitResult& h, int mod
 		//glPolygonOffset(-.3f, -.3f);
 		glPolygonOffset(-1.f, -1.f); //Implementation dependent units
 		glEnable2(GL_POLYGON_OFFSET_FILL);
-		float xo = player->xOld + (player->x - player->xOld) * a;
-		float yo = player->yOld + (player->y - player->yOld) * a;
-		float zo = player->zOld + (player->z - player->zOld) * a;
+		double xo = player->xOld + (player->x - player->xOld) * a;
+		double yo = player->yOld + (player->y - player->yOld) * a;
+		double zo = player->zOld + (player->z - player->zOld) * a;
 
 		t.begin();
 		t.offset(-xo, -yo, -zo);
