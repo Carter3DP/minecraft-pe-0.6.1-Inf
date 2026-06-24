@@ -82,7 +82,7 @@ OptionBool blockOutline("blockOutline", false);
 OptionBool restoredAnims("restoredAnims", true);
 
 OptionInt debugStyle("debugStyle", 0, 0, 1);
-OptionInt logLevel("logLevel", 0, 0, 2);
+OptionInt logLevel("logLevel", 1, 0, 2);
 
 OptionInt menuStyle("menuStyle",0, 0, 2);
 
