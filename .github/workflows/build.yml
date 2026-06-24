@@ -71,6 +71,7 @@ jobs:
             ${{github.workspace}}/build/libpng16.dll
             ${{github.workspace}}/build/OpenAL32.dll
             ${{github.workspace}}/build/libz.dll
+            ${{github.workspace}}/build/data/**
 
   build-ios:
   # credit to pengubow from deepfriedwaffles repo
@@ -327,7 +328,7 @@ jobs:
         uses: vimtor/action-zip@v1.2
         with:
           files: data
-          recursive: false
+          recursive: true
           dest: data.zip
 
       - name: Update Development Release
