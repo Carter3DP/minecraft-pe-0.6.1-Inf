@@ -1,0 +1,29 @@
+#ifndef NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__
+#define NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__
+
+//package net.minecraft.client.renderer.culling;
+
+#include "Culler.h"
+
+class AABB;
+
+class AllowAllCuller: public Culler
+{
+public:
+    bool isVisible(const AABB& bb) {
+        return true;
+    }
+
+    bool cubeFullyInFrustum(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return true;
+    }
+
+    bool cubeInFrustum(double x1, double y1, double z1, double x2, double y2, double z2) {
+        return true;
+    }
+
+    void prepare(double xOff, double yOff, double zOff) {
+    }
+};
+
+#endif /*NET_MINECRAFT_CLIENT_RENDERER_CULLING__AllowAllCuller_H__*/
