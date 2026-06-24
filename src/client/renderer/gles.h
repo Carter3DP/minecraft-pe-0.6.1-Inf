@@ -120,6 +120,11 @@ int glhUnProjectf(	float winx, float winy, float winz,
 	#define glPopMatrix2	glPopMatrix
 	#define glLoadIdentity2 glLoadIdentity
 
+	//gl double functions
+	#define glTranslated2	glTranslated
+	#define glRotated2		glRotated
+	#define glScaled2		glScaled
+
 	#define glVertexPointer2	glVertexPointer
 	#define glColorPointer2		glColorPointer
 	#define glTexCoordPointer2  glTexCoordPointer

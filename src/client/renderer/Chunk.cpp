@@ -156,9 +156,9 @@ void Chunk::rebuild()
 
 #ifdef USE_VBO
 			renderChunk[l] = t.end(true, vboBuffers[l]);
-			renderChunk[l].pos.x = (float)this->x;
-			renderChunk[l].pos.y = (float)this->y;
-			renderChunk[l].pos.z = (float)this->z;
+			renderChunk[l].pos.x = (double)this->x;
+			renderChunk[l].pos.y = (double)this->y;
+			renderChunk[l].pos.z = (double)this->z;
 #else
 			t.end(false, -1);
 			glPopMatrix2();

@@ -48,9 +48,9 @@ bool TileRenderer::tesselateBlockInWorld(Tile* tt, int x, int y, int z) {
 bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r, float g, float b )
 {
 	applyAmbienceOcclusion = false;
-	float xf = (float)x;
-	float yf = (float)y;
-	float zf = (float)z;
+	double xf = (double)x;
+	double yf = (double)y;
+	double zf = (double)z;
 
 	Tesselator& t = Tesselator::instance;
 
@@ -2097,11 +2097,11 @@ void TileRenderer::renderFaceDown( Tile* tt, double x, double y, double z, int t
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x0 = x + tt->xx0;
-	float x1 = x + tt->xx1;
-	float y0 = y + tt->yy0;
-	float z0 = z + tt->zz0;
-	float z1 = z + tt->zz1;
+	double x0 = x + tt->xx0;
+	double x1 = x + tt->xx1;
+	double y0 = y + tt->yy0;
+	double z0 = z + tt->zz0;
+	double z1 = z + tt->zz1;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);
@@ -2142,11 +2142,11 @@ void TileRenderer::renderFaceUp( Tile* tt, double x, double y, double z, int tex
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x0 = x + tt->xx0;
-	float x1 = x + tt->xx1;
-	float y1 = y + tt->yy1;
-	float z0 = z + tt->zz0;
-	float z1 = z + tt->zz1;
+	double x0 = x + tt->xx0;
+	double x1 = x + tt->xx1;
+	double y1 = y + tt->yy1;
+	double z0 = z + tt->zz0;
+	double z1 = z + tt->zz1;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);
@@ -2191,11 +2191,11 @@ void TileRenderer::renderNorth( Tile* tt, double x, double y, double z, int tex 
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x0 = x + tt->xx0;
-	float x1 = x + tt->xx1;
-	float y0 = y + tt->yy0;
-	float y1 = y + tt->yy1;
-	float z0 = z + tt->zz0;
+	double x0 = x + tt->xx0;
+	double x1 = x + tt->xx1;
+	double y0 = y + tt->yy0;
+	double y1 = y + tt->yy1;
+	double z0 = z + tt->zz0;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);
@@ -2241,11 +2241,11 @@ void TileRenderer::renderSouth( Tile* tt, double x, double y, double z, int tex 
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x0 = x + tt->xx0;
-	float x1 = x + tt->xx1;
-	float y0 = y + tt->yy0;
-	float y1 = y + tt->yy1;
-	float z1 = z + tt->zz1;
+	double x0 = x + tt->xx0;
+	double x1 = x + tt->xx1;
+	double y0 = y + tt->yy0;
+	double y1 = y + tt->yy1;
+	double z1 = z + tt->zz1;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);
@@ -2291,11 +2291,11 @@ void TileRenderer::renderWest( Tile* tt, double x, double y, double z, int tex )
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x0 = x + tt->xx0;
-	float y0 = y + tt->yy0;
-	float y1 = y + tt->yy1;
-	float z0 = z + tt->zz0;
-	float z1 = z + tt->zz1;
+	double x0 = x + tt->xx0;
+	double y0 = y + tt->yy0;
+	double y1 = y + tt->yy1;
+	double z0 = z + tt->zz0;
+	double z1 = z + tt->zz1;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);
@@ -2341,11 +2341,11 @@ void TileRenderer::renderEast( Tile* tt, double x, double y, double z, int tex )
 		v1 = (yt + 1 * 15.99f) / 256.0f;
 	}
 
-	float x1 = x + tt->xx1;
-	float y0 = y + tt->yy0;
-	float y1 = y + tt->yy1;
-	float z0 = z + tt->zz0;
-	float z1 = z + tt->zz1;
+	double x1 = x + tt->xx1;
+	double y0 = y + tt->yy0;
+	double y1 = y + tt->yy1;
+	double z0 = z + tt->zz0;
+	double z1 = z + tt->zz1;
 
 	if (applyAmbienceOcclusion) {
 		t.color(c1r, c1g, c1b);

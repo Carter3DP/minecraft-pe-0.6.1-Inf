@@ -49,7 +49,7 @@ void RenderList::render() {
 	}
 	if (listIndex < bufferLimit) {
 		glPushMatrix2();
-		glTranslatef2(-xOff, -yOff, -zOff);
+		glTranslated2(-xOff, -yOff, -zOff);
 
 		#ifndef USE_VBO
 			glCallLists(bufferLimit, GL_UNSIGNED_INT, lists);
@@ -73,7 +73,7 @@ void RenderList::renderChunks() {
 		RenderChunk& rc = rlists[i];
 
 		glPushMatrix2();
-		glTranslatef2(rc.pos.x, rc.pos.y, rc.pos.z);
+		glTranslated2(rc.pos.x, rc.pos.y, rc.pos.z);
 		glBindBuffer2(GL_ARRAY_BUFFER, rc.vboId);
 
 		glVertexPointer2	(3, GL_FLOAT, Stride,  0);
