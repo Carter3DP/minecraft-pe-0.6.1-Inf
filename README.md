@@ -1,11 +1,6 @@
-# MinecraftPE
-> [!Warning]
-> Github repository **isnt main**. All issues and pull requests should be send in [Gitea Repository](https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1).
-
-> [!Important]
-> We have a discord server, where you can report bugs or send feedback https://discord.gg/c58YesBxve
-
 Source code for **Minecraft Pocket Edition 0.6.1 alpha** with various fixes and improvements.
+
+Ripped straight from https://gitea.sffempire.ru/Kolyah35/minecraft-pe-0.6.1
 
 This project aims to preserve and improve this early version of Minecraft PE.
 
