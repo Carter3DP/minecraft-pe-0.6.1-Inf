@@ -121,7 +121,6 @@ build.ninja
 *.ipdb
 *.tlog
 *.lastbuildstate
-*.pch
 *.ipch
 *.VC.db-shm
 *.VC.db-wal
