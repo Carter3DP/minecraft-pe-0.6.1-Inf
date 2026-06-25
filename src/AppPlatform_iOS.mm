@@ -31,6 +31,7 @@ struct PVR_Texture_Header
 void AppPlatform_iOS::showDialog(int dialogId) {
     if (dialogId == DialogDefinitions::DIALOG_NEW_CHAT_MESSAGE) {
         [_viewController showChatKeyboardInput];
+        super::showKeyboard();
     }
     if (dialogId == DialogDefinitions::DIALOG_CREATE_NEW_WORLD) {
         [_viewController showDialog_CreateWorld];

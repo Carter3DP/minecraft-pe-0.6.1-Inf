@@ -27,6 +27,13 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
     textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     textField.returnKeyType = UIReturnKeySend;
     textField.frame = CGRectMake(-1000.0f, -1000.0f, 1.0f, 1.0f);
+    [textField addTarget:self action:@selector(submitText) forControlEvents:UIControlEventEditingDidEndOnExit];
+
+    UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelInput)];
+    tapRecognizer.cancelsTouchesInView = YES;
+    [self addGestureRecognizer:tapRecognizer];
+    [tapRecognizer release];
+
     self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
     [self addSubview:textField];
@@ -118,7 +125,11 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
     [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardSubmittedNotification object:self userInfo:userInfo];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)cancelInput {
     [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardCancelledNotification object:self];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self cancelInput];
 }
 @end

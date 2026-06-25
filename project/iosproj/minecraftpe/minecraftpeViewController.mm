@@ -38,6 +38,7 @@
 - (void) _resetAllPointers;
 - (void)keyboardInputSubmitted:(NSNotification*)notification;
 - (void)keyboardInputCancelled:(NSNotification*)notification;
+- (void)keyboardDidHide:(NSNotification*)notification;
 - (void)cancelKeyboardInput;
 @end
 
@@ -206,6 +207,7 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
     _keyboardView = [[ShowKeyboardView alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardInputSubmitted:) name:@"MCPEKeyboardSubmittedNotification" object:_keyboardView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardInputCancelled:) name:@"MCPEKeyboardCancelledNotification" object:_keyboardView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 	[super viewDidLoad];
 }
 
@@ -551,6 +553,11 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
     [self cancelKeyboardInput];
 }
 
+- (void)keyboardDidHide:(NSNotification*)notification
+{
+    [self cancelKeyboardInput];
+}
+
 - (void)cancelKeyboardInput
 {
     if (!_keyboardInputActive)
@@ -631,11 +638,13 @@ NSString* DefaultUsername = @"Stevie";
         if([view isKindOfClass:[ShowKeyboardView class]]) {
             ShowKeyboardView* kview = (ShowKeyboardView*) view;
             kview.frame = self.view.bounds;
+            [self.view bringSubviewToFront:kview];
             [kview showKeyboard];
             return;
         }
     }
     _keyboardView.frame = self.view.bounds;
+    _keyboardView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_keyboardView];
     [_keyboardView showKeyboard];
 }

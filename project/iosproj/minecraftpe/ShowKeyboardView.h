@@ -22,4 +22,5 @@
 - (void)textFieldDidChange :(NSNotification *)notif;
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField;
 - (void)submitText;
+- (void)cancelInput;
 @end
