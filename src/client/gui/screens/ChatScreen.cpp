@@ -18,7 +18,7 @@ void ChatScreen::render(int xm, int ym, float a)
 			if (v.size() && v[0].length() > 0)
 				minecraft->gui.addMessage(v[0]);
 		}
-
+		minecraft->platform()->hideKeyboard();
 		minecraft->setScreen(NULL);
 	}
 }
