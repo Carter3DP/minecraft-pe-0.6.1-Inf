@@ -1,4 +1,5 @@
 #include "Tesselator.h"
+#include "RendererBackend.h"
 #include <cstdio>
 #include <cstring>
 #include <algorithm>
@@ -6,6 +7,25 @@
 Tesselator Tesselator::instance(sizeof(GLfloat) * MAX_FLOATS); // max size in bytes
 
 const int VertexSizeBytes = sizeof(VERTEX);
+
+static RendererVertexFormat rendererVertexFormat(bool hasTexture, bool hasColor, bool hasNormal)
+{
+	if (hasTexture && hasColor && hasNormal)
+		return RENDERER_VERTEX_FORMAT_VTCN;
+	if (hasTexture && hasColor)
+		return RENDERER_VERTEX_FORMAT_VTC;
+	if (hasTexture && hasNormal)
+		return RENDERER_VERTEX_FORMAT_VTN;
+	if (hasTexture)
+		return RENDERER_VERTEX_FORMAT_VT;
+	if (hasColor && hasNormal)
+		return RENDERER_VERTEX_FORMAT_VCN;
+	if (hasColor)
+		return RENDERER_VERTEX_FORMAT_VC;
+	if (hasNormal)
+		return RENDERER_VERTEX_FORMAT_VN;
+	return RENDERER_VERTEX_FORMAT_V;
+}
 
 Tesselator::Tesselator( int size )
 	:	size(size),
@@ -49,7 +69,7 @@ Tesselator::~Tesselator()
 void Tesselator::init()
 {
 #ifndef STANDALONE_SERVER
-	glGenBuffers2(vboCounts, vboIds);
+	rendererBackend().createVertexBuffers(vboCounts, vboIds);
 #endif
 }
 
@@ -94,40 +114,13 @@ RenderChunk Tesselator::end( bool useMine, int bufferId )
 		// Not using VBO - always use the next buffer object
 		bufferId = vboIds[vboId];
 #endif
-		int access = GL_STATIC_DRAW;//(accessMode==ACCESS_DYNAMIC) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
-		glBindBuffer2(GL_ARRAY_BUFFER, bufferId);
-		glBufferData2(GL_ARRAY_BUFFER, bytes, _varray, access); // GL_STREAM_DRAW
+		rendererBackend().updateVertexBuffer(bufferId, _varray, bytes, false);
 
 		totalSize += bytes;
 
 #ifndef USE_VBO
-		// 0 1 2 3 4 5 6 7
-		// x y z u v c
-		if (hasTexture) {
-			glTexCoordPointer2(2, GL_FLOAT, VertexSizeBytes, (GLvoid*) (3 * 4));
-			glEnableClientState2(GL_TEXTURE_COORD_ARRAY);
-		}
-		if (hasColor) {
-			glColorPointer2(4, GL_UNSIGNED_BYTE, VertexSizeBytes, (GLvoid*) (5 * 4));
-			glEnableClientState2(GL_COLOR_ARRAY);
-		}
-		if (hasNormal) {
-			glNormalPointer(GL_FLOAT, VertexSizeBytes, (GLvoid*) (6 * 4));
-			glEnableClientState2(GL_NORMAL_ARRAY);
-		}
-		glVertexPointer2(3, GL_FLOAT, VertexSizeBytes, 0);
-		glEnableClientState2(GL_VERTEX_ARRAY);
-
-		if (mode == GL_QUADS) {
-			glDrawArrays2(GL_TRIANGLES, 0, vertices);
-		} else {
-			glDrawArrays2(mode, 0, vertices);
-		}
-		//printf("drawing %d tris, size %d (%d,%d,%d)\n", vertices, p, hasTexture, hasColor, hasNormal);
-		glDisableClientState2(GL_VERTEX_ARRAY);
-		if (hasTexture) glDisableClientState2(GL_TEXTURE_COORD_ARRAY);
-		if (hasColor) glDisableClientState2(GL_COLOR_ARRAY);
-		if (hasNormal) glDisableClientState2(GL_NORMAL_ARRAY);
+		rendererBackend().drawVertexBuffer(bufferId, vertices, VertexSizeBytes,
+			rendererVertexFormat(hasTexture, hasColor, hasNormal), mode);
 #endif /*!USE_VBO*/
 	}
 
@@ -302,6 +295,8 @@ void Tesselator::vertex( double x, double y, double z )
 	}
 	if (hasColor) {
 		vertex.color = _color;
+	} else {
+		vertex.color = 0xffffffff;
 	}
 	if (hasNormal) {
 		vertex.nx = (GLfloat)_nx;
@@ -398,38 +393,10 @@ void Tesselator::draw()
 
 		int bufferId = vboIds[vboId];
 
-		int access = GL_DYNAMIC_DRAW;//(accessMode==ACCESS_DYNAMIC) ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
-		glBindBuffer2(GL_ARRAY_BUFFER, bufferId);
-		glBufferData2(GL_ARRAY_BUFFER, bytes, _varray, access); // GL_STREAM_DRAW
+		rendererBackend().updateVertexBuffer(bufferId, _varray, bytes, true);
 
-		if (hasTexture) {
-			glTexCoordPointer2(2, GL_FLOAT, VertexSizeBytes, (GLvoid*) (3 * 4));
-			//glTexCoordPointer2(2, GL_FLOAT, VertexSizeBytes, (GLvoid*) &_varray->u);
-			glEnableClientState2(GL_TEXTURE_COORD_ARRAY);
-		}
-		if (hasColor) {
-			glColorPointer2(4, GL_UNSIGNED_BYTE, VertexSizeBytes, (GLvoid*) (5 * 4));
-			//glColorPointer2(4, GL_UNSIGNED_BYTE, VertexSizeBytes, (GLvoid*) &_varray->color);
-			glEnableClientState2(GL_COLOR_ARRAY);
-		}
-		if (hasNormal) {
-			glNormalPointer(GL_FLOAT, VertexSizeBytes, (GLvoid*) (6 * 4));
-			glEnableClientState2(GL_NORMAL_ARRAY);
-		}
-		//glVertexPointer2(3, GL_FLOAT, VertexSizeBytes, (GLvoid*)&_varray);
-		glVertexPointer2(3, GL_FLOAT, VertexSizeBytes, 0);
-		glEnableClientState2(GL_VERTEX_ARRAY);
-
-		if (mode == GL_QUADS) {
-			glDrawArrays2(GL_TRIANGLES, 0, vertices);
-		} else {
-			glDrawArrays2(mode, 0, vertices);
-		}
-
-		glDisableClientState2(GL_VERTEX_ARRAY);
-		if (hasTexture) glDisableClientState2(GL_TEXTURE_COORD_ARRAY);
-		if (hasColor) glDisableClientState2(GL_COLOR_ARRAY);
-		if (hasNormal) glDisableClientState2(GL_NORMAL_ARRAY);
+		rendererBackend().drawVertexBuffer(bufferId, vertices, VertexSizeBytes,
+			rendererVertexFormat(hasTexture, hasColor, hasNormal), mode);
 	}
 
 	clear();

@@ -7,6 +7,7 @@
 #include <map>
 #include <utility>
 #include "gles.h"
+#include "RendererBackend.h"
 #include "TextureData.h"
 
 class DynamicTexture;
@@ -31,7 +32,7 @@ public:
 
 	__inline void bind(TextureId id) {
 		if (id != Textures::InvalidId && lastBoundTexture != id) {
-			glBindTexture2(GL_TEXTURE_2D, id);
+			rendererBackend().bindTexture(id);
 			lastBoundTexture = id;
 			++textureChanges;
 		} else if (id == Textures::InvalidId){

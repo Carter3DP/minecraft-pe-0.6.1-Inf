@@ -10,6 +10,7 @@
 @interface ShowKeyboardView : UIView</*UIKeyInput, */UITextFieldDelegate> {
     UITextField* textField;
     NSString* lastString;
+    NSMutableString* submittedText;
 }
 - (id)initWithFrame:(CGRect)frame;
 //- (void)insertText:(NSString *)text;

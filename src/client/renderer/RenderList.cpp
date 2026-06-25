@@ -2,6 +2,7 @@
 
 #include "gles.h"
 #include "RenderChunk.h"
+#include "RendererBackend.h"
 #include "Tesselator.h"
 
 
@@ -71,11 +72,6 @@ void RenderList::render() {
 }
 
 void RenderList::renderChunks() {
-	//glDisableClientState2(GL_NORMAL_ARRAY);
-	glEnableClientState2(GL_VERTEX_ARRAY);
-	glEnableClientState2(GL_COLOR_ARRAY);
-	glEnableClientState2(GL_TEXTURE_COORD_ARRAY);
-
 	const int Stride = VertexSizeBytes;
 
 	for (int i = 0; i < bufferLimit; ++i) {
@@ -86,20 +82,10 @@ void RenderList::renderChunks() {
 		double rz = rc.pos.z - zOff;
 		glPushMatrix2();
 		glTranslatef2((float)rx, (float)ry, (float)rz);
-		glBindBuffer2(GL_ARRAY_BUFFER, rc.vboId);
-
-		glVertexPointer2	(3, GL_FLOAT, Stride,  0);
-		glTexCoordPointer2	(2, GL_FLOAT, Stride, (GLvoid*) (3 * 4));
-		glColorPointer2		(4, GL_UNSIGNED_BYTE, Stride, (GLvoid*) (5 * 4));
-
-		glDrawArrays2(GL_TRIANGLES, 0, rc.vertexCount);
+		rendererBackend().drawVertexBuffer(rc.vboId, rc.vertexCount, Stride, RENDERER_VERTEX_FORMAT_VTC, GL_TRIANGLES);
 
 		glPopMatrix2();
 	}
-
-	glDisableClientState2(GL_VERTEX_ARRAY);
-	glDisableClientState2(GL_COLOR_ARRAY);
-	glDisableClientState2(GL_TEXTURE_COORD_ARRAY);
 }
 
 void RenderList::clear() {

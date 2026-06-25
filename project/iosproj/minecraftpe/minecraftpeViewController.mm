@@ -7,6 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <TargetConditionals.h>
+#import <dlfcn.h>
 
 #import "minecraftpeViewController.h"
 #import "EAGLView.h"
@@ -34,9 +36,45 @@
 - (BOOL) releaseView;
 
 - (void) _resetAllPointers;
+- (void)keyboardInputSubmitted:(NSNotification*)notification;
+- (void)cancelKeyboardInput;
 @end
 
 static NSThread* lastThread = nil;
+
+static BOOL MCPEAppleDeviceSupportsMetal()
+{
+#if TARGET_OS_IPHONE
+    void* metal = dlopen("/System/Library/Frameworks/Metal.framework/Metal", RTLD_LAZY);
+    if (!metal)
+        return NO;
+
+    typedef id (*MTLCreateSystemDefaultDeviceFn)(void);
+    MTLCreateSystemDefaultDeviceFn createDevice = (MTLCreateSystemDefaultDeviceFn)dlsym(metal, "MTLCreateSystemDefaultDevice");
+    if (!createDevice)
+        return NO;
+
+    id device = createDevice();
+    return device != nil;
+#else
+    return NO;
+#endif
+}
+
+static MCPEAppleRenderBackend MCPESelectAppleRenderBackend()
+{
+    /*
+     * The current game renderer is OpenGL ES 1.x fixed-function. Metal support
+     * must be plugged in here once a Metal renderer or GLES-to-Metal bridge is
+     * available; until then, Metal-capable devices keep the existing EAGL path.
+     */
+    return MCPEAppleRenderBackendEAGL;
+}
+
+static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
+{
+    return backend == MCPEAppleRenderBackendMetal ? "Metal" : "EAGL";
+}
 
 @implementation minecraftpeViewController
 
@@ -58,6 +96,15 @@ static NSThread* lastThread = nil;
 
 - (void)awakeFromNib
 {
+    renderBackend = MCPESelectAppleRenderBackend();
+    NSLog(@"Minecraft PE Apple render backend: %s%s",
+          MCPEAppleRenderBackendName(renderBackend),
+          (renderBackend == MCPEAppleRenderBackendEAGL && MCPEAppleDeviceSupportsMetal()) ? " (Metal supported, EAGL fallback active)" : "");
+
+    if (renderBackend == MCPEAppleRenderBackendMetal) {
+        NSLog(@"Metal renderer selected, but the current game renderer is still OpenGL ES 1.x.");
+    }
+
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     
     if (!aContext)
@@ -112,6 +159,7 @@ static NSThread* lastThread = nil;
     [self _resetAllPointers];
 
     _dialog = nil;
+    _keyboardInputActive = NO;
 }
 
 - (void)dealloc
@@ -123,6 +171,7 @@ static NSThread* lastThread = nil;
     delete _app;
     delete _platform;
     delete[] _touchMap;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [context release];
     
@@ -154,6 +203,7 @@ static NSThread* lastThread = nil;
 - (void)viewDidLoad
 {
     _keyboardView = [[ShowKeyboardView alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardInputSubmitted:) name:@"MCPEKeyboardSubmittedNotification" object:_keyboardView];
 	[super viewDidLoad];
 }
 
@@ -321,6 +371,11 @@ static NSThread* lastThread = nil;
 // Handles the start of a touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (_keyboardInputActive) {
+        [self cancelKeyboardInput];
+        return;
+    }
+
     //NSLog(@"touch began count: %d\n",[touches count]);
 
 	for( UITouch *touch in touches ) {
@@ -422,6 +477,14 @@ static NSThread* lastThread = nil;
     }
 }
 
+- (void)showChatKeyboardInput
+{
+    _dialogResultStatus = -1;
+    _dialogResultStrings.clear();
+    _keyboardInputActive = YES;
+    [self showKeyboard];
+}
+
 - (void)showDialog_MainMenuOptions
 {
     if (!_dialog) {
@@ -465,6 +528,31 @@ static NSThread* lastThread = nil;
     //    LOGI("%d: %s, %s\n", i/2, _dialogResultStrings[i].c_str(), _dialogResultStrings[i+1].c_str()); 
     //}
     return _dialogResultStrings;
+}
+
+- (void)keyboardInputSubmitted:(NSNotification*)notification
+{
+    if (!_keyboardInputActive)
+        return;
+
+    NSString* text = [[notification userInfo] objectForKey:@"text"];
+    _dialogResultStrings.clear();
+    if (text != nil)
+        _dialogResultStrings.push_back([text UTF8String]);
+    _dialogResultStatus = 1;
+    _keyboardInputActive = NO;
+    [self hideKeyboard];
+}
+
+- (void)cancelKeyboardInput
+{
+    if (!_keyboardInputActive)
+        return;
+
+    _dialogResultStatus = 0;
+    _dialogResultStrings.clear();
+    _keyboardInputActive = NO;
+    [self hideKeyboard];
 }
 
 //

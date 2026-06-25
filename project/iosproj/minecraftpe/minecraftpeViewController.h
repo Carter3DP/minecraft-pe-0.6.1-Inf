@@ -23,8 +23,14 @@
 //@class AppPlatform_iOS;
 @class BaseDialogController;
 
+typedef enum {
+    MCPEAppleRenderBackendEAGL = 0,
+    MCPEAppleRenderBackendMetal = 1
+} MCPEAppleRenderBackend;
+
 @interface minecraftpeViewController : UIViewController<IASKSettingsDelegate> {
     EAGLContext *context;
+    MCPEAppleRenderBackend renderBackend;
     
     // App and AppPlatform
     App* _app;
@@ -41,6 +47,7 @@
     
     int _dialogResultStatus;
     std::vector<std::string> _dialogResultStrings;
+    BOOL _keyboardInputActive;
     
     ShowKeyboardView* _keyboardView;
 
@@ -69,6 +76,7 @@
 
 - (void)showKeyboard;
 - (void)hideKeyboard;
+- (void)showChatKeyboardInput;
 
 - (void) closeDialog;
 - (BaseDialogController*) dialog;

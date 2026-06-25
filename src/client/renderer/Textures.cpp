@@ -32,7 +32,7 @@ void Textures::clear()
 {
 	for (TextureMap::iterator it = idMap.begin(); it != idMap.end(); ++it) {
 		if (it->second != Textures::InvalidId)
-			glDeleteTextures(1, &it->second);
+			rendererBackend().deleteTexture(it->second);
 	}
 	for (TextureImageMap::iterator it = loadedImages.begin(); it != loadedImages.end(); ++it) {
 		if (!(it->second).memoryHandledExternally)
@@ -83,60 +83,15 @@ TextureId Textures::loadTexture( const std::string& resourceName, bool inTexture
 TextureId Textures::assignTexture( const std::string& resourceName, const TextureData& img )
 {
 	TextureId id;
-	glGenTextures(1, &id);
+	id = rendererBackend().createTexture();
 
 	bind(id);
 
-	if (MIPMAP) {
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	} else {
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	}
-	if (blur) {
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	}
-
-	if (clamp) {
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	} else {
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	}
-
-    switch (img.format)
-    {
-        case TEXF_COMPRESSED_PVRTC_4444:
-        case TEXF_COMPRESSED_PVRTC_565:
-        case TEXF_COMPRESSED_PVRTC_5551:
-        {
-#if defined(__APPLE__)
-            int fmt = img.transparent? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-            glCompressedTexImage2D(GL_TEXTURE_2D, 0, fmt, img.w, img.h, 0, img.numBytes, img.data);
-#endif
-            break;
-        }
-
-        default:
-            const GLint mode = img.transparent? GL_RGBA : GL_RGB;
-
-            if (img.format == TEXF_UNCOMPRESSED_565) {
-                glTexImage2D2(GL_TEXTURE_2D, 0, mode, img.w, img.h, 0, mode, GL_UNSIGNED_SHORT_5_6_5, img.data);
-            }
-            else if (img.format == TEXF_UNCOMPRESSED_4444) {
-                glTexImage2D2(GL_TEXTURE_2D, 0, mode, img.w, img.h, 0, mode, GL_UNSIGNED_SHORT_4_4_4_4, img.data);
-            }
-            else if (img.format == TEXF_UNCOMPRESSED_5551) {
-                glTexImage2D2(GL_TEXTURE_2D, 0, mode, img.w, img.h, 0, mode, GL_UNSIGNED_SHORT_5_5_5_1, img.data);
-            }
-            else {
-                glTexImage2D2(GL_TEXTURE_2D, 0, mode, img.w, img.h, 0, mode, GL_UNSIGNED_BYTE, img.data);
-            }
-            break;
-    }
+	TextureUploadOptions uploadOptions;
+	uploadOptions.mipmap = MIPMAP;
+	uploadOptions.blur = blur;
+	uploadOptions.clamp = clamp;
+	rendererBackend().uploadTexture(id, img, uploadOptions);
 
     //LOGI("Adding id: %d to map\n", id);
 	idMap.insert(std::make_pair(resourceName, id));
@@ -164,9 +119,9 @@ void Textures::tick(bool uploadToGraphicsCard)
             tex->bindTexture(this);
 		    for (int xx = 0; xx < tex->replicate; xx++)
 		    for (int yy = 0; yy < tex->replicate; yy++) {
-			    glTexSubImage2D2(GL_TEXTURE_2D, 0, tex->tex % 16 * 16 + xx * 16,
-				    tex->tex / 16 * 16 + yy * 16, 16, 16,
-				    GL_RGBA, GL_UNSIGNED_BYTE, tex->pixels);
+			    rendererBackend().updateTextureRegion(lastBoundTexture,
+				    tex->tex % 16 * 16 + xx * 16,
+				    tex->tex / 16 * 16 + yy * 16, 16, 16, tex->pixels);
 		    }
         }
 	}
