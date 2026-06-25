@@ -71,7 +71,6 @@ jobs:
             ${{github.workspace}}/build/libpng16.dll
             ${{github.workspace}}/build/OpenAL32.dll
             ${{github.workspace}}/build/libz.dll
-            ${{github.workspace}}/build/data/**
 
   build-ios:
   # credit to pengubow from deepfriedwaffles repo
@@ -318,6 +317,10 @@ jobs:
           mv minecraftpe-apk-arm64-v8a/minecraftpe-v8a-debug.apk minecraftpe-${{ steps.ref.outputs.hash }}-android-arm64-v8a.apk
           mv minecraftpe-apk-armeabi-v7a/minecraftpe-v7a-debug.apk minecraftpe-${{ steps.ref.outputs.hash }}-android-armeabi-v7a.apk
 
+      - name: Rename IOS Artifact
+        run: |
+          mv minecraftpe-ios/minecraftpe.ipa minecraftpe-${{ steps.ref.outputs.hash }}-ios.ipa
+
       - name: Zip Web Artifact
         uses: vimtor/action-zip@v1.2
         with:
@@ -347,4 +350,5 @@ jobs:
             ./minecraftpe-${{ steps.ref.outputs.hash }}-linux.zip
             ./minecraftpe-${{ steps.ref.outputs.hash }}-android-arm64-v8a.apk
             ./minecraftpe-${{ steps.ref.outputs.hash }}-android-armeabi-v7a.apk
+            ./minecraftpe-${{ steps.ref.outputs.hash }}-ios.ipa
             ./minecraftpe-${{ steps.ref.outputs.hash }}-web.zip
