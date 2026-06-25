@@ -91,7 +91,7 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
         } else {
             unichar c = [txt.text characterAtIndex:(txt.text.length - 1)];
             [submittedText appendFormat:@"%C", c];
-            Keyboard::feedText(c);
+            Keyboard::feedText((char)c);
         }
         textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
     }

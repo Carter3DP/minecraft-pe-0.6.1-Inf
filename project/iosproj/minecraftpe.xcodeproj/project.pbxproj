@@ -835,6 +835,10 @@
 		D5B50FE414CFF670005F7284 /* GameRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CDC14CFF66F005F7284 /* GameRenderer.cpp */; };
 		D5B50FE514CFF670005F7284 /* gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CDE14CFF66F005F7284 /* gles.cpp */; };
 		D5B50FE614CFF670005F7284 /* gles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CDE14CFF66F005F7284 /* gles.cpp */; };
+		D5B50FE914CFF671005F7284 /* RendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE014CFF671005F7284 /* RendererBackend.cpp */; };
+		D5B50FEA14CFF671005F7284 /* RendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE014CFF671005F7284 /* RendererBackend.cpp */; };
+		D5B50FEB14CFF671005F7284 /* GLESRendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE214CFF671005F7284 /* GLESRendererBackend.cpp */; };
+		D5B50FEC14CFF671005F7284 /* GLESRendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE214CFF671005F7284 /* GLESRendererBackend.cpp */; };
 		D5B50FE714CFF670005F7284 /* ItemInHandRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE014CFF66F005F7284 /* ItemInHandRenderer.cpp */; };
 		D5B50FE814CFF670005F7284 /* ItemInHandRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE014CFF66F005F7284 /* ItemInHandRenderer.cpp */; };
 		D5B50FE914CFF670005F7284 /* LevelRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D5B50CE214CFF66F005F7284 /* LevelRenderer.cpp */; };
@@ -1956,6 +1960,9 @@
 		D5B50CDD14CFF66F005F7284 /* GameRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRenderer.h; sourceTree = "<group>"; };
 		D5B50CDE14CFF66F005F7284 /* gles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gles.cpp; sourceTree = "<group>"; };
 		D5B50CDF14CFF66F005F7284 /* gles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gles.h; sourceTree = "<group>"; };
+		D5B50CE014CFF671005F7284 /* RendererBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RendererBackend.cpp; sourceTree = "<group>"; };
+		D5B50CE114CFF671005F7284 /* RendererBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RendererBackend.h; sourceTree = "<group>"; };
+		D5B50CE214CFF671005F7284 /* GLESRendererBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLESRendererBackend.cpp; sourceTree = "<group>"; };
 		D5B50CE014CFF66F005F7284 /* ItemInHandRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ItemInHandRenderer.cpp; sourceTree = "<group>"; };
 		D5B50CE114CFF66F005F7284 /* ItemInHandRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemInHandRenderer.h; sourceTree = "<group>"; };
 		D5B50CE214CFF66F005F7284 /* LevelRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelRenderer.cpp; sourceTree = "<group>"; };
@@ -3515,6 +3522,9 @@
 				D5B50CDD14CFF66F005F7284 /* GameRenderer.h */,
 				D5B50CDE14CFF66F005F7284 /* gles.cpp */,
 				D5B50CDF14CFF66F005F7284 /* gles.h */,
+				D5B50CE014CFF671005F7284 /* RendererBackend.cpp */,
+				D5B50CE114CFF671005F7284 /* RendererBackend.h */,
+				D5B50CE214CFF671005F7284 /* GLESRendererBackend.cpp */,
 				D5B50CE014CFF66F005F7284 /* ItemInHandRenderer.cpp */,
 				D5B50CE114CFF66F005F7284 /* ItemInHandRenderer.h */,
 				D5D3820B15A1A2A000B6C50E /* EntityTileRenderer.cpp */,
@@ -5181,6 +5191,8 @@
 				D5B50FE214CFF670005F7284 /* TripodCameraRenderer.cpp in Sources */,
 				D5B50FE414CFF670005F7284 /* GameRenderer.cpp in Sources */,
 				D5B50FE614CFF670005F7284 /* gles.cpp in Sources */,
+				D5B50FEA14CFF671005F7284 /* RendererBackend.cpp in Sources */,
+				D5B50FEC14CFF671005F7284 /* GLESRendererBackend.cpp in Sources */,
 				D5B50FE814CFF670005F7284 /* ItemInHandRenderer.cpp in Sources */,
 				D5B50FEA14CFF670005F7284 /* LevelRenderer.cpp in Sources */,
 				D5B50FEC14CFF670005F7284 /* DynamicTexture.cpp in Sources */,
@@ -5536,6 +5548,8 @@
 				D5B50FE114CFF670005F7284 /* TripodCameraRenderer.cpp in Sources */,
 				D5B50FE314CFF670005F7284 /* GameRenderer.cpp in Sources */,
 				D5B50FE514CFF670005F7284 /* gles.cpp in Sources */,
+				D5B50FE914CFF671005F7284 /* RendererBackend.cpp in Sources */,
+				D5B50FEB14CFF671005F7284 /* GLESRendererBackend.cpp in Sources */,
 				D5B50FE714CFF670005F7284 /* ItemInHandRenderer.cpp in Sources */,
 				D5B50FE914CFF670005F7284 /* LevelRenderer.cpp in Sources */,
 				D5B50FEB14CFF670005F7284 /* DynamicTexture.cpp in Sources */,
