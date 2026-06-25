@@ -51,8 +51,17 @@ void RenderList::render() {
 		glPushMatrix2();
 
 		#ifndef USE_VBO
-			glTranslated2(-xOff, -yOff, -zOff);
-			glCallLists(bufferLimit, GL_UNSIGNED_INT, lists);
+			for (int i = 0; i < bufferLimit; ++i) {
+				RenderChunk& rc = rlists[i];
+				double rx = rc.pos.x - xOff;
+				double ry = rc.pos.y - yOff;
+				double rz = rc.pos.z - zOff;
+
+				glPushMatrix2();
+				glTranslatef2((float)rx, (float)ry, (float)rz);
+				glCallList(lists[i]);
+				glPopMatrix2();
+			}
 		#else
 			renderChunks();
 		#endif/*!USE_VBO*/
@@ -76,7 +85,7 @@ void RenderList::renderChunks() {
 		double ry = rc.pos.y - yOff;
 		double rz = rc.pos.z - zOff;
 		glPushMatrix2();
-		glTranslated2(rx, ry, rz);
+		glTranslatef2((float)rx, (float)ry, (float)rz);
 		glBindBuffer2(GL_ARRAY_BUFFER, rc.vboId);
 
 		glVertexPointer2	(3, GL_FLOAT, Stride,  0);

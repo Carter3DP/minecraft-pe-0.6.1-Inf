@@ -401,7 +401,7 @@ HitResult Tile::clip(Level* level, int xt, int yt, int zt, const Vec3& A, const 
 	//Stopwatch sw;
 	//sw.start();
 
-	Vec3 sub((float)xt, (float)yt, (float)zt);
+	Vec3 sub(xt, yt, zt);
 	Vec3 a = A - sub;//a.add((float)-xt, (float)-yt, (float)-zt);
     Vec3 b = B - sub;//b.add((float)-xt, (float)-yt, (float)-zt);
 
@@ -448,7 +448,7 @@ HitResult Tile::clip(Level* level, int xt, int yt, int zt, const Vec3& A, const 
 	//sw.stop();
 	//sw.printEvery(5, ">>> ");
 
-    return HitResult(xt, yt, zt, face, closest->add((float)xt, (float)yt, (float)zt));
+    return HitResult(xt, yt, zt, face, closest->add(xt, yt, zt));
 }
 
 /*virtual*/
@@ -549,12 +549,12 @@ void Tile::addAABBs( Level* level, int x, int y, int z, const AABB* box, std::ve
 
 AABB* Tile::getAABB( Level* level, int x, int y, int z )
 {
-	tmpBB.x0 = x + xx0;
-	tmpBB.y0 = y + yy0;
-	tmpBB.z0 = z + zz0;
-	tmpBB.x1 = x + xx1;
-	tmpBB.y1 = y + yy1;
-	tmpBB.z1 = z + zz1;
+	tmpBB.x0 = (double)x + (double)xx0;
+	tmpBB.y0 = (double)y + (double)yy0;
+	tmpBB.z0 = (double)z + (double)zz0;
+	tmpBB.x1 = (double)x + (double)xx1;
+	tmpBB.y1 = (double)y + (double)yy1;
+	tmpBB.z1 = (double)z + (double)zz1;
 	return &tmpBB;
 }
 
@@ -712,7 +712,7 @@ bool Tile::containsZ( const Vec3& v )
 
 /*public*/
 AABB Tile::getTileAABB(Level* level, int x, int y, int z) {
-	return AABB(x + xx0, y + yy0, z + zz0, x + xx1, y + yy1, z + zz1);
+	return AABB((double)x + (double)xx0, (double)y + (double)yy0, (double)z + (double)zz0, (double)x + (double)xx1, (double)y + (double)yy1, (double)z + (double)zz1);
 }
 
 /*public*/

@@ -35,9 +35,9 @@ public:
             return NULL;
         }
 
-        const float xx = (float)x;
-        const float yy = (float)y;
-        const float zz = (float)z;
+        const double xx = x;
+        const double yy = y;
+        const double zz = z;
         if (data == Direction::NORTH || data == Direction::SOUTH) {
             tmpBB.set(xx, yy, zz + 6.0f / 16.0f, xx + 1, yy + 1.5f, zz + 10.0f / 16.0f);
         } else {

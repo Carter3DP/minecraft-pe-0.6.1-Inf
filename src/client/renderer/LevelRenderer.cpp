@@ -467,7 +467,7 @@ int LevelRenderer::render( Mob* player, int layer, float alpha )
 						double zdd = zt - zo;
 
 						if (xdd != 0 || ydd != 0 || zdd != 0) {
-							glTranslatef2(xdd, ydd, zdd);
+							glTranslatef2((float)xdd, (float)ydd, (float)zdd);
 							xo += xdd;
 							yo += ydd;
 							zo += zdd;
@@ -649,9 +649,8 @@ int LevelRenderer::renderChunks( int from, int to, int layer, float alpha )
 
 	for (unsigned int i = 0; i < _renderChunks.size(); ++i) {
 		Chunk* chunk = _renderChunks[i];
-#ifdef USE_VBO
 		renderList.addR(chunk->getRenderChunk(layer));
-#else
+#ifndef USE_VBO
 		renderList.add(chunk->getList(layer));
 #endif
 		renderList.next();

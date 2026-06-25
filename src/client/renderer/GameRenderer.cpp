@@ -506,7 +506,7 @@ void GameRenderer::moveCameraToPlayer(double a) {
 
 				HitResult hr = mc->level->clip(Vec3(x + xo, y + yo, z + zo), Vec3(x - xd + xo + zo, y - yd + yo, z - zd + zo)); // newTemp
 				if (hr.type != NO_HIT) {
-					float dist = hr.pos.distanceTo(Vec3(x, y, z)); // newTemp
+					double dist = hr.pos.distanceTo(Vec3(x, y, z)); // newTemp
 					if (dist < cameraDist) cameraDist = dist;
 				}
 			}
@@ -675,7 +675,7 @@ bool GameRenderer::updateFreeformPickDirection(float a, Vec3& outDir) {
 	// If in 3rd person view - verify that the hit target is within range
 	if (!firstPerson && hit.isHit()) {
 		const float MaxSqrDist = PickingDistance*PickingDistance;
-		if (mc->cameraTargetPlayer->distanceToSqr((float)hit.x, (float)hit.y, (float)hit.z) > MaxSqrDist)
+		if (mc->cameraTargetPlayer->distanceToSqr(hit.x, hit.y, hit.z) > MaxSqrDist)
 			mc->hitResult.type = NO_HIT;
 	}
 	return true;
@@ -737,7 +737,7 @@ void GameRenderer::pick(float a) {
 				nearest = 0;
 			}
 		} else if (p.isHit()) {
-			float dd = from.distanceTo(p.pos);
+			double dd = from.distanceTo(p.pos);
 			if (dd < nearest || nearest == 0) {
 				hovered = e;
 				nearest = dd;

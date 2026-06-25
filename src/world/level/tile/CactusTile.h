@@ -44,18 +44,18 @@ public:
 
     AABB* getAABB(Level* level, int x, int y, int z) {
         float r = 1 / 16.0f;
-        tmpBB.x0 = x + r;
-        tmpBB.y0 = (float)y;
-        tmpBB.z0 = z + r;
-        tmpBB.x1 = x + 1 - r;
-        tmpBB.y1 = y + 1 - r;
-        tmpBB.z1 = z + 1 - r;
+        tmpBB.x0 = (double)x + (double)r;
+        tmpBB.y0 = (double)y;
+        tmpBB.z0 = (double)z + (double)r;
+        tmpBB.x1 = (double)x + 1.0 - (double)r;
+        tmpBB.y1 = (double)y + 1.0 - (double)r;
+        tmpBB.z1 = (double)z + 1.0 - (double)r;
         return &tmpBB;
     }
 
     AABB getTileAABB(Level* level, int x, int y, int z) {
         float r = 1 / 16.0f;
-        return AABB((float)x + r, (float)y, (float)z + r, (float)x + 1 - r, (float)y + 1, (float)z + 1 - r);
+        return AABB((double)x + (double)r, (double)y, (double)z + (double)r, (double)x + 1.0 - (double)r, (double)y + 1.0, (double)z + 1.0 - (double)r);
     }
 
     int getTexture(int face) {

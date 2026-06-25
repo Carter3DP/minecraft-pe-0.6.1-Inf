@@ -125,7 +125,6 @@ void Chunk::rebuild()
 #ifndef USE_VBO
 							glNewList(lists + l, GL_COMPILE);
 							glPushMatrix2();
-							translateToPos();
 							float ss = 1.000001f;
 							glTranslatef2(-zs / 2.0f, -ys / 2.0f, -zs / 2.0f);
 							glScalef2(ss, ss, ss);
@@ -154,6 +153,9 @@ void Chunk::rebuild()
 
 		if (started) {
 
+			renderChunk[l].pos.x = (double)this->x;
+			renderChunk[l].pos.y = (double)this->y;
+			renderChunk[l].pos.z = (double)this->z;
 #ifdef USE_VBO
 			renderChunk[l] = t.end(true, vboBuffers[l]);
 			renderChunk[l].pos.x = (double)this->x;

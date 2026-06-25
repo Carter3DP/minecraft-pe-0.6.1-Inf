@@ -49,7 +49,7 @@ bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r
 {
 	applyAmbienceOcclusion = false;
 	double xf = (double)x;
-	double yf = (double)y;
+	double yf = y;
 	double zf = (double)z;
 
 	Tesselator& t = Tesselator::instance;
@@ -233,15 +233,15 @@ bool TileRenderer::tesselateTorchInWorld( Tile* tt, int x, int y, int z )
 	float r2 = 0.5f - r;
 	float h = 0.20f;
 	if (dir == 1) {
-		tesselateTorch(tt, (float)x - r2, (float)y + h, (float)z, -r, 0);
+		tesselateTorch(tt, x - r2, y + h, z, -r, 0);
 	} else if (dir == 2) {
-		tesselateTorch(tt, (float)x + r2, (float)y + h, (float)z, +r, 0);
+		tesselateTorch(tt, x + r2, y + h, z, +r, 0);
 	} else if (dir == 3) {
-		tesselateTorch(tt, (float)x, (float)y + h, (float)z - r2, 0, -r);
+		tesselateTorch(tt, x, y + h, z - r2, 0, -r);
 	} else if (dir == 4) {
-		tesselateTorch(tt, (float)x, (float)y + h, (float)z + r2, 0, +r);
+		tesselateTorch(tt, x, y + h, z + r2, 0, +r);
 	} else {
-		tesselateTorch(tt, (float)x, (float)y, (float)z, 0, 0);
+		tesselateTorch(tt, x, y, z, 0, 0);
 	}
 	return true;
 }
@@ -270,25 +270,25 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 
 	if ( level->isSolidBlockingTile( x, y - 1, z ) || Tile::fire->canBurn( level, x, y - 1, z ) )
 	{
-		float	x0 = x + 0.5f + 0.2f;
-		float	x1 = x + 0.5f - 0.2f;
-		float	z0 = z + 0.5f + 0.2f;
-		float	z1 = z + 0.5f - 0.2f;
+		double x0 = x + 0.5f + 0.2f;
+		double x1 = x + 0.5f - 0.2f;
+		double z0 = z + 0.5f + 0.2f;
+		double z1 = z + 0.5f - 0.2f;
 
-		float	x0_ = x + 0.5f - 0.3f;
-		float	x1_ = x + 0.5f + 0.3f;
-		float	z0_ = z + 0.5f - 0.3f;
-		float	z1_ = z + 0.5f + 0.3f;
+		double x0_ = x + 0.5f - 0.3f;
+		double x1_ = x + 0.5f + 0.3f;
+		double z0_ = z + 0.5f - 0.3f;
+		double z1_ = z + 0.5f + 0.3f;
 
-		t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z + 1 ), ( float )( u1 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z + 1 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z + 0 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z + 0 ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( x0_, (y + h ), (z + 1 ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( x0, (y + 0 ), (z + 1 ), ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( x0, (y + 0 ), (z + 0 ), ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( x0_, (y + h ), (z + 0 ), ( float )( u0 ), ( float )( v0 ) );
 
-		t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z + 0 ), ( float )( u1 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x1 ), ( float )( y + 0 ), ( float )( z + 0 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x1 ), ( float )( y + 0 ), ( float )( z + 1 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z + 1 ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( x1_, (y + h ), (z + 0 ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( x1, (y + 0 ), (z + 0 ), ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( x1, (y + 0 ), (z + 1 ), ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( x1_, (y + h ), (z + 1 ), ( float )( u0 ), ( float )( v0 ) );
 
 
 
@@ -297,15 +297,15 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 		v0 = (yt) / 256.0f;
 		v1 = (yt + 15.99f) / 256.0f;
 
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + h ), ( float )( z1_ ), ( float )( u1 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + 0 ), ( float )( z1 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + 0 ), ( float )( z1 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + h ), ( float )( z1_ ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( (x + 1 ), (y + h ), z1_, ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( (x + 1 ), (y + 0 ), z1, ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( (x + 0 ), (y + 0 ), z1, ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( (x + 0 ), (y + h ), z1_, ( float )( u0 ), ( float )( v0 ) );
 
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + h ), ( float )( z0_ ), ( float )( u1 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + 0 ), ( float )( z0 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + 0 ), ( float )( z0 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + h ), ( float )( z0_ ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( (x + 0 ), (y + h ), z0_, ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( (x + 0 ), (y + 0 ), z0, ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( (x + 1 ), (y + 0 ), z0, ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( (x + 1 ), (y + h ), z0_, ( float )( u0 ), ( float )( v0 ) );
 
 		x0 = x + 0.5f - 0.5f;
 		x1 = x + 0.5f + 0.5f;
@@ -317,15 +317,15 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 		z0_ = z + 0.5f - 0.4f;
 		z1_ = z + 0.5f + 0.4f;
 
-		t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z + 0 ), ( float )( u0 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z + 0 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z + 1 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z + 1 ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( x0_, (y + h ), (z + 0 ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( x0, (y + 0 ), (z + 0 ), ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( x0, (y + 0 ), (z + 1 ), ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( x0_, (y + h ), (z + 1 ), ( float )( u1 ), ( float )( v0 ) );
 
-		t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z + 1 ), ( float )( u0 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x1 ), ( float )( y + 0 ), ( float )( z + 1 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x1 ), ( float )( y + 0 ), ( float )( z + 0 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z + 0 ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( x1_, (y + h ), (z + 1 ), ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( x1, (y + 0 ), (z + 1 ), ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( x1, (y + 0 ), (z + 0 ), ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( x1_, (y + h ), (z + 0 ), ( float )( u1 ), ( float )( v0 ) );
 
 
 		u0 = (xt) / 256.0f;
@@ -333,15 +333,15 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 		v0 = (yt) / 256.0f;
 		v1 = (yt + 15.99f) / 256.0f;
 
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + h ), ( float )( z1_ ), ( float )( u0 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + 0 ), ( float )( z1 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + 0 ), ( float )( z1 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + h ), ( float )( z1_ ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( (x + 0 ), (y + h ), z1_, ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( (x + 0 ), (y + 0 ), z1, ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( (x + 1 ), (y + 0 ), z1, ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( (x + 1 ), (y + h ), z1_, ( float )( u1 ), ( float )( v0 ) );
 
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + h ), ( float )( z0_ ), ( float )( u0 ), ( float )( v0 ) );
-		t.vertexUV( ( float )( x + 1 ), ( float )( y + 0 ), ( float )( z0 ), ( float )( u0 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + 0 ), ( float )( z0 ), ( float )( u1 ), ( float )( v1 ) );
-		t.vertexUV( ( float )( x + 0 ), ( float )( y + h ), ( float )( z0_ ), ( float )( u1 ), ( float )( v0 ) );
+		t.vertexUV( (x + 1 ), (y + h ), z0_, ( float )( u0 ), ( float )( v0 ) );
+		t.vertexUV( (x + 1 ), (y + 0 ), z0, ( float )( u0 ), ( float )( v1 ) );
+		t.vertexUV( (x + 0 ), (y + 0 ), z0, ( float )( u1 ), ( float )( v1 ) );
+		t.vertexUV( (x + 0 ), (y + h ), z0_, ( float )( u1 ), ( float )( v0 ) );
 	}
 	else
 	{
@@ -362,95 +362,95 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 		}
 		if ( Tile::fire->canBurn( level, x - 1, y, z ) )
 		{
-			t.vertexUV( ( float )( x + r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + r ), (y + h + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + r ), (y + h + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v0 ) );
 
-			t.vertexUV( ( float )( x + r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + r ), (y + h + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + r ), (y + h + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v0 ) );
 		}
 		if ( Tile::fire->canBurn( level, x + 1, y, z ) )
 		{
-			t.vertexUV( ( float )( x + 1 - r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1 - r ), (y + h + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 1 - 0 ), ( float )( y + 0 + yo ), ( float )( z +
+			t.vertexUV( (x + 1 - 0 ), (y + 0 + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1 - 0 ), ( float )( y + 0 + yo ), ( float )( z +
+			t.vertexUV( (x + 1 - 0 ), (y + 0 + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1 - r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1 - r ), (y + h + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v0 ) );
 
-			t.vertexUV( ( float )( x + 1.0f - r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f - r ), (y + h + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 1.0f - 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f - 0.0f ), (y + 0.0f + yo ), (z +
 				1.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f - 0 ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f - 0 ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f - r ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f - r ), (y + h + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v0 ) );
 		}
 		if ( Tile::fire->canBurn( level, x, y, z - 1 ) )
 		{
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + h + yo ), (z +
 				r ), ( float )( u1 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f ), (y + h + yo ), (z +
 				r ), ( float )( u0 ), ( float )( v0 ) );
 
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f ), (y + h + yo ), (z +
 				r ), ( float )( u0 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 1.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z +
 				0.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + h + yo ), ( float )( z +
+			t.vertexUV( (x + 0.0f ), (y + h + yo ), (z +
 				r ), ( float )( u1 ), ( float )( v0 ) );
 		}
 		if ( Tile::fire->canBurn( level, x, y, z + 1 ) )
 		{
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + h + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 1.0f ), (y + h + yo ), (z + 1.0f -
 				r ), ( float )( u0 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + 0.0f + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 1.0f ), (y + 0.0f + yo ), (z + 1.0f -
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z + 1.0f -
 				0.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + h + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 0.0f ), (y + h + yo ), (z + 1.0f -
 				r ), ( float )( u1 ), ( float )( v0 ) );
 
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + h + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 0.0f ), (y + h + yo ), (z + 1.0f -
 				r ), ( float )( u1 ), ( float )( v0 ) );
-			t.vertexUV( ( float )( x + 0.0f ), ( float )( y + 0.0f + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 0.0f ), (y + 0.0f + yo ), (z + 1.0f -
 				0.0f ), ( float )( u1 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + 0.0f + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 1.0f ), (y + 0.0f + yo ), (z + 1.0f -
 				0.0f ), ( float )( u0 ), ( float )( v1 ) );
-			t.vertexUV( ( float )( x + 1.0f ), ( float )( y + h + yo ), ( float )( z + 1.0f -
+			t.vertexUV( (x + 1.0f ), (y + h + yo ), (z + 1.0f -
 				r ), ( float )( u0 ), ( float )( v0 ) );
 		}
 		if ( Tile::fire->canBurn( level, x, y + 1.0f, z ) )
 		{
-			float	x0 = x + 0.5f + 0.5f;
-			float	x1 = x + 0.5f - 0.5f;
-			float	z0 = z + 0.5f + 0.5f;
-			float	z1 = z + 0.5f - 0.5f;
+			double x0 = x + 0.5f + 0.5f;
+			double x1 = x + 0.5f - 0.5f;
+			double z0 = z + 0.5f + 0.5f;
+			double z1 = z + 0.5f - 0.5f;
 
-			float	x0_ = x + 0.5f - 0.5f;
-			float	x1_ = x + 0.5f + 0.5f;
-			float	z0_ = z + 0.5f - 0.5f;
-			float	z1_ = z + 0.5f + 0.5f;
+			double x0_ = x + 0.5f - 0.5f;
+			double x1_ = x + 0.5f + 0.5f;
+			double z0_ = z + 0.5f - 0.5f;
+			double z1_ = z + 0.5f + 0.5f;
 
 			u0 = (xt) / 256.0f;
 			u1 = (xt + 15.99f) / 256.0f;
@@ -462,13 +462,13 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 
 			if ( ( ( x + y + z ) & 1 ) == 0 )
 			{
-				t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z +
+				t.vertexUV( x0_, (y + h ), (z +
 					0 ), ( float )( u1 ), ( float )( v0 ) );
-				t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z +
+				t.vertexUV( x0, (y + 0 ), (z +
 					0 ), ( float )( u1 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x0 ), ( float )( y + 0 ), ( float )( z +
+				t.vertexUV( x0, (y + 0 ), (z +
 					1 ), ( float )( u0 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x0_ ), ( float )( y + h ), ( float )( z +
+				t.vertexUV( x0_, (y + h ), (z +
 					1 ), ( float )( u0 ), ( float )( v0 ) );
 
 				u0 = (xt) / 256.0f;
@@ -476,39 +476,39 @@ bool TileRenderer::tesselateFireInWorld( Tile* tt, int x, int y, int z )
 				v0 = (yt) / 256.0f;
 				v1 = (yt + 15.99f) / 256.0f;
 
-				t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z +
+				t.vertexUV( x1_, (y + h ), (z +
 					1.0f ), ( float )( u1 ), ( float )( v0 ) );
-				t.vertexUV( ( float )( x1 ), ( float )( y + 0.0f ), ( float )( z +
+				t.vertexUV( x1, (y + 0.0f ), (z +
 					1.0f ), ( float )( u1 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x1 ), ( float )( y + 0.0f ), ( float )( z +
+				t.vertexUV( x1, (y + 0.0f ), (z +
 					0 ), ( float )( u0 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x1_ ), ( float )( y + h ), ( float )( z +
+				t.vertexUV( x1_, (y + h ), (z +
 					0 ), ( float )( u0 ), ( float )( v0 ) );
 			}
 			else
 			{
-				t.vertexUV( ( float )( x + 0.0f ), ( float )( y +
-					h ), ( float )( z1_ ), ( float )( u1 ), ( float )( v0 ) );
-				t.vertexUV( ( float )( x + 0.0f ), ( float )( y +
-					0.0f ), ( float )( z1 ), ( float )( u1 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x + 1.0f ), ( float )( y +
-					0.0f ), ( float )( z1 ), ( float )( u0 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x + 1.0f ), ( float )( y +
-					h ), ( float )( z1_ ), ( float )( u0 ), ( float )( v0 ) );
+				t.vertexUV( (x + 0.0f ), (y +
+					h ), z1_, ( float )( u1 ), ( float )( v0 ) );
+				t.vertexUV( (x + 0.0f ), (y +
+					0.0f ), z1, ( float )( u1 ), ( float )( v1 ) );
+				t.vertexUV( (x + 1.0f ), (y +
+					0.0f ), z1, ( float )( u0 ), ( float )( v1 ) );
+				t.vertexUV( (x + 1.0f ), (y +
+					h ), z1_, ( float )( u0 ), ( float )( v0 ) );
 
 				u0 = (xt) / 256.0f;
 				u1 = (xt + 15.99f) / 256.0f;
 				v0 = (yt) / 256.0f;
 				v1 = (yt + 15.99f) / 256.0f;
 
-				t.vertexUV( ( float )( x + 1.0f ), ( float )( y +
-					h ), ( float )( z0_ ), ( float )( u1 ), ( float )( v0 ) );
-				t.vertexUV( ( float )( x + 1.0f ), ( float )( y +
-					0.0f ), ( float )( z0 ), ( float )( u1 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x + 0.0f ), ( float )( y +
-					0.0f ), ( float )( z0 ), ( float )( u0 ), ( float )( v1 ) );
-				t.vertexUV( ( float )( x + 0.0f ), ( float )( y +
-					h ), ( float )( z0_ ), ( float )( u0 ), ( float )( v0 ) );
+				t.vertexUV( (x + 1.0f ), (y +
+					h ), z0_, ( float )( u1 ), ( float )( v0 ) );
+				t.vertexUV( (x + 1.0f ), (y +
+					0.0f ), z0, ( float )( u1 ), ( float )( v1 ) );
+				t.vertexUV( (x + 0.0f ), (y +
+					0.0f ), z0, ( float )( u0 ), ( float )( v1 ) );
+				t.vertexUV( (x + 0.0f ), (y +
+					h ), z0_, ( float )( u0 ), ( float )( v0 ) );
 			}
 		}
 	}
@@ -579,9 +579,9 @@ bool TileRenderer::tesselateCrossInWorld( Tile* tt, int x, int y, int z )
 	float b = ((col) & 0xff) / 255.0f;
 	t.color(br * r, br * g, br * b);
 
-	float xt = float(x);
-	float yt = float(y);
-	float zt = float(z);
+	double xt = (x);
+	double yt = (y);
+	double zt = (z);
 
 	if (tt == Tile::tallgrass) {
 		long seed = (x * 3129871) ^ (z * 116129781l) ^ (y);
@@ -600,7 +600,7 @@ bool TileRenderer::tesselateCrossInWorld( Tile* tt, int x, int y, int z )
 	float br = tt->getBrightness(level, x, y, z);
 	t.color(br, br, br);
 
-	tesselateCrossTexture(tt, level->getData(x, y, z), (float)x, (float)y, (float)z);
+	tesselateCrossTexture(tt, level->getData(x, y, z), x, y, z);
 	return true;*/
 }
 bool TileRenderer::tesselateStemInWorld( Tile* _tt, int x, int y, int z ) {
@@ -619,10 +619,10 @@ bool TileRenderer::tesselateStemInWorld( Tile* _tt, int x, int y, int z ) {
 	tt->updateShape(level, x, y, z);
 	int dir = tt->getConnectDir(level, x, y, z);
 	if (dir < 0) {
-		tesselateStemTexture(tt, level->getData(x, y, z), tt->yy1, float(x), float(y - 1 / 16.0f), float(z));
+		tesselateStemTexture(tt, level->getData(x, y, z), tt->yy1, (x), (y - 1 / 16.0f), (z));
 	} else {
-		tesselateStemTexture(tt, level->getData(x, y, z), 0.5f, float(x), float(y - 1 / 16.0f), float(z));
-		tesselateStemDirTexture(tt, level->getData(x, y, z), dir, tt->yy1, float(x), float(y - 1 / 16.0f), float(z));
+		tesselateStemTexture(tt, level->getData(x, y, z), 0.5f, (x), (y - 1 / 16.0f), (z));
+		tesselateStemDirTexture(tt, level->getData(x, y, z), dir, tt->yy1, (x), (y - 1 / 16.0f), (z));
 	}
 	return true;
 }
@@ -647,10 +647,10 @@ void TileRenderer::tesselateTorch( Tile* tt, double x, double y, double z, doubl
 	x += 0.5f;
 	z += 0.5f;
 
-	float x0 = x - 0.5f;
-	float x1 = x + 0.5f;
-	float z0 = z - 0.5f;
-	float z1 = z + 0.5f;
+	double x0 = x - 0.5f;
+	double x1 = x + 0.5f;
+	double z0 = z - 0.5f;
+	double z1 = z + 0.5f;
 	float r = 1 / 16.0f;
 
 	float h = 10.0f / 16.0f;
@@ -694,10 +694,10 @@ void TileRenderer::tesselateCrossTexture( Tile* tt, int data, double x, double y
 	float v0 = (yt) / 256.0f;
 	float v1 = (yt + 15.99f) / 256.0f;
 
-	float x0 = x + 0.5f - 0.45f;
-	float x1 = x + 0.5f + 0.45f;
-	float z0 = z + 0.5f - 0.45f;
-	float z1 = z + 0.5f + 0.45f;
+	double x0 = x + 0.5f - 0.45f;
+	double x1 = x + 0.5f + 0.45f;
+	double z0 = z + 0.5f - 0.45f;
+	double z1 = z + 0.5f + 0.45f;
 
 	t.vertexUV(x0, y + 1, z0, u0, v0);
 	t.vertexUV(x0, y + 0, z0, u0, v1);
@@ -730,10 +730,10 @@ void TileRenderer::tesselateStemTexture( Tile* tt, int data, double h, double x,
 	float v0 = (yt) / 256.0f;
 	float v1 = (yt + 15.99f * h) / 256.0f;
 
-	float x0 = x + 0.5f - 0.45f;
-	float x1 = x + 0.5f + 0.45f;
-	float z0 = z + 0.5f - 0.45f;
-	float z1 = z + 0.5f + 0.45f;
+	double x0 = x + 0.5f - 0.45f;
+	double x1 = x + 0.5f + 0.45f;
+	double z0 = z + 0.5f - 0.45f;
+	double z1 = z + 0.5f + 0.45f;
 
 	t.vertexUV(x0, y + h, z0, u0, v0);
 	t.vertexUV(x0, y + 0, z0, u0, v1);
@@ -768,13 +768,13 @@ void TileRenderer::tesselateStemDirTexture( Tile* tt, int data, int dir, double 
 	float v0 = (yt) / 256.0f;
 	float v1 = (yt + 15.99f * h) / 256.0f;
 
-	float x0 = x + 0.5f - 0.5f;
-	float x1 = x + 0.5f + 0.5f;
-	float z0 = z + 0.5f - 0.5f;
-	float z1 = z + 0.5f + 0.5f;
+	double x0 = x + 0.5f - 0.5f;
+	double x1 = x + 0.5f + 0.5f;
+	double z0 = z + 0.5f - 0.5f;
+	double z1 = z + 0.5f + 0.5f;
 
-	float xm = x + 0.5f;
-	float zm = z + 0.5f;
+	double xm = x + 0.5f;
+	double zm = z + 0.5f;
 
 	if ((dir + 1) / 2 % 2 == 1) {
 		float tmp = u1;
@@ -862,16 +862,16 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 
 		float br = tt->getBrightness(level, x, y, z);
 		t.color(c11 * br, c11 * br, c11 * br);
-		t.vertexUV((float)x + 0, (float)y + h0, (float)z + 0, uc - c - s, vc - c + s);
-		t.vertexUV((float)x + 0, (float)y + h1, (float)z + 1, uc - c + s, vc + c + s);
-		t.vertexUV((float)x + 1, (float)y + h2, (float)z + 1, uc + c + s, vc + c - s);
-		t.vertexUV((float)x + 1, (float)y + h3, (float)z + 0, uc + c - s, vc - c - s);
+		t.vertexUV(x + 0, y + h0, z + 0, uc - c - s, vc - c + s);
+		t.vertexUV(x + 0, y + h1, z + 1, uc - c + s, vc + c + s);
+		t.vertexUV(x + 1, y + h2, z + 1, uc + c + s, vc + c - s);
+		t.vertexUV(x + 1, y + h3, z + 0, uc + c - s, vc - c - s);
 	}
 
 	if (noCulling || down) {
 		float br = tt->getBrightness(level, x, y - 1, z);
 		t.color(c10 * br, c10 * br, c10 * br);
-		renderFaceDown(tt, (float)x, (float)y, (float)z, tt->getTexture(0));
+		renderFaceDown(tt, x, y, z, tt->getTexture(0));
 		changed = true;
 	}
 
@@ -892,35 +892,35 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 		if (noCulling || dirs[face]) {
 			float hh0;
 			float hh1;
-			float x0, z0, x1, z1;
+			double x0, z0, x1, z1;
 			if (face == 0) {
 				hh0 = h0;
 				hh1 = h3;
-				x0 = (float)(x    );
-				x1 = (float)(x + 1);
-				z0 = (float)(z    );
-				z1 = (float)(z    );
+				x0 = (x);
+				x1 = (x + 1);
+				z0 = (z);
+				z1 = (z);
 			} else if (face == 1) {
 				hh0 = h2;
 				hh1 = h1;
-				x0 = (float)(x + 1);
-				x1 = (float)(x    );
-				z0 = (float)(z + 1);
-				z1 = (float)(z + 1);
+				x0 = (x + 1);
+				x1 = (x);
+				z0 = (z + 1);
+				z1 = (z + 1);
 			} else if (face == 2) {
 				hh0 = h1;
 				hh1 = h0;
-				x0 = (float)(x    );
-				x1 = (float)(x    );
-				z0 = (float)(z + 1);
-				z1 = (float)(z    );
+				x0 = (x);
+				x1 = (x);
+				z0 = (z + 1);
+				z1 = (z);
 			} else {
 				hh0 = h3;
 				hh1 = h2;
-				x0 = (float)(x + 1);
-				x1 = (float)(x + 1);
-				z0 = (float)(z    );
-				z1 = (float)(z + 1);
+				x0 = (x + 1);
+				x1 = (x + 1);
+				z0 = (z);
+				z1 = (z + 1);
 			}
 
 			changed = true;
@@ -935,7 +935,7 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 			if (face < 2) br *= c2;
 			else br *= c3;
 
-			float yf = (float)y;
+			double yf = y;
 			t.color(c11 * br, c11 * br, c11 * br);
 			t.vertexUV(x0, yf + hh0, z0, u0, v01);
 			t.vertexUV(x1, yf + hh1, z1, u1, v02);
@@ -1113,7 +1113,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4g *= ll4;
 		c4b *= ll4;
 
-		renderFaceDown(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 0));
+		renderFaceDown(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 0));
 		i = true;
 	}
 	if ((noCulling) || (tt->shouldRenderFace(level, pX, pY + 1, pZ, 1))) {
@@ -1167,7 +1167,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4r *= ll4;
 		c4g *= ll4;
 		c4b *= ll4;
-		renderFaceUp(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 1));
+		renderFaceUp(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 1));
 		i = true;
 	}
 	if ((noCulling) || (tt->shouldRenderFace(level, pX, pY, pZ - 1, 2))) {
@@ -1219,7 +1219,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4r *= ll4;
 		c4g *= ll4;
 		c4b *= ll4;
-		renderNorth(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 2));
+		renderNorth(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 2));
 		if (tt->getTexture(level, pX, pY, pZ, 2) == 3 && sideTinting) 
 		{
 			c1r *= pBaseRed; c1g *= pBaseGreen; c1b *= pBaseBlue;
@@ -1227,7 +1227,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 			c3r *= pBaseRed; c3g *= pBaseGreen; c3b *= pBaseBlue;
 			c4r *= pBaseRed; c4g *= pBaseGreen; c4b *= pBaseBlue;
 
-			renderNorth(tt, (float) pX, (float) pY, (float) pZ, 38);
+			renderNorth(tt, pX, pY, pZ, 38);
 		}
 		i = true;
 	}
@@ -1281,7 +1281,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4r *= ll4;
 		c4g *= ll4;
 		c4b *= ll4;
-		renderSouth(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 3));
+		renderSouth(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 3));
 		if (tt->getTexture(level, pX, pY, pZ, 3) == 3 && sideTinting) 
 		{
 			c1r *= pBaseRed; c1g *= pBaseGreen; c1b *= pBaseBlue;
@@ -1289,7 +1289,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 			c3r *= pBaseRed; c3g *= pBaseGreen; c3b *= pBaseBlue;
 			c4r *= pBaseRed; c4g *= pBaseGreen; c4b *= pBaseBlue;
 
-			renderSouth(tt, (float) pX, (float) pY, (float) pZ, 38);
+			renderSouth(tt, pX, pY, pZ, 38);
 		}
 		i = true;
 	}
@@ -1342,7 +1342,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4r *= ll4;
 		c4g *= ll4;
 		c4b *= ll4;
-		renderWest(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 4));
+		renderWest(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 4));
 		if (tt->getTexture(level, pX, pY, pZ, 4) == 3 && sideTinting) 
 		{
 			c1r *= pBaseRed; c1g *= pBaseGreen; c1b *= pBaseBlue;
@@ -1350,7 +1350,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 			c3r *= pBaseRed; c3g *= pBaseGreen; c3b *= pBaseBlue;
 			c4r *= pBaseRed; c4g *= pBaseGreen; c4b *= pBaseBlue;
 
-			renderWest(tt, (float) pX, (float) pY, (float) pZ, 38);
+			renderWest(tt, pX, pY, pZ, 38);
 		}
 		i = true;
 	}
@@ -1404,7 +1404,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 		c4g *= ll4;
 		c4b *= ll4;
 
-		renderEast(tt, (float) pX, (float) pY, (float) pZ, tt->getTexture(level, pX, pY, pZ, 5));
+		renderEast(tt, pX, pY, pZ, tt->getTexture(level, pX, pY, pZ, 5));
 		if (tt->getTexture(level, pX, pY, pZ, 5) == 3 && sideTinting) 
 		{
 			c1r *= pBaseRed; c1g *= pBaseGreen; c1b *= pBaseBlue;
@@ -1412,7 +1412,7 @@ bool TileRenderer::tesselateBlockInWorldWithAmbienceOcclusion( Tile* tt, int pX,
 			c3r *= pBaseRed; c3g *= pBaseGreen; c3b *= pBaseBlue;
 			c4r *= pBaseRed; c4g *= pBaseGreen; c4b *= pBaseBlue;
 
-			renderEast(tt, (float) pX, (float) pY, (float) pZ, 38);
+			renderEast(tt, pX, pY, pZ, 38);
 		}
 		i = true;
 	}
@@ -1453,9 +1453,9 @@ bool TileRenderer::tesselateCactusInWorld(Tile* tt, int x, int y, int z, float r
 	float b3 = c3 * b;
 
 	float s = 1 / 16.0f;
-	const float X = (float)x;
-	const float Y = (float)y;
-	const float Z = (float)z;
+	const double X = x;
+	const double Y = y;
+	const double Z = z;
 
 	float centerBrightness = tt->getBrightness(level, x, y, z);
 
@@ -1820,11 +1820,11 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 		float v0 = (yt) / 256.0f;
 		float v1 = (yt + 16 - 0.01f) / 256.0f;
 
-		float x0 = x + tt->xx0;
-		float x1 = x + tt->xx1;
-		float y0 = y + tt->yy0 + 3.0f / 16.0f;
-		float z0 = z + tt->zz0;
-		float z1 = z + tt->zz1;
+		double x0 = x + tt->xx0;
+		double x1 = x + tt->xx1;
+		double y0 = y + tt->yy0 + 3.0f / 16.0f;
+		double z0 = z + tt->zz0;
+		double z1 = z + tt->zz1;
 
 		t.vertexUV(x0, y0, z1, u0, v1);
 		t.vertexUV(x0, y0, z0, u0, v0);
@@ -1881,11 +1881,11 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 		bottomRightV = v0;
 	}
 
-	float x0 = x + tt->xx0;
-	float x1 = x + tt->xx1;
-	float y1 = y + tt->yy1;
-	float z0 = z + tt->zz0;
-	float z1 = z + tt->zz1;
+	double x0 = x + tt->xx0;
+	double x1 = x + tt->xx1;
+	double y1 = y + tt->yy1;
+	double z0 = z + tt->zz0;
+	double z1 = z + tt->zz1;
 
 	t.vertexUV(x1, y1, z1, bottomLeftU, bottomLeftV);
 	t.vertexUV(x1, y1, z0, topLeftU, topLeftV);
@@ -1919,7 +1919,7 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 
 		t.color(r2 * br, g2 * br, b2 * br);
 		xFlipTexture = flipEdge == Facing::NORTH;
-		renderNorth(tt, float(x), float(y), float(z), tt->getTexture(level, x, y, z, 2));
+		renderNorth(tt, (x), (y), (z), tt->getTexture(level, x, y, z, 2));
 	}
 
 	if ((skipEdge != Facing::SOUTH) && (noCulling || tt->shouldRenderFace(level, x, y, z + 1, Facing::SOUTH))) {
@@ -1929,7 +1929,7 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 		t.color(r2 * br, g2 * br, b2 * br);
 
 		xFlipTexture = flipEdge == Facing::SOUTH;
-		renderSouth(tt, float(x), float(y), float(z), tt->getTexture(level, x, y, z, 3));
+		renderSouth(tt, (x), (y), (z), tt->getTexture(level, x, y, z, 3));
 	}
 
 	if ((skipEdge != Facing::WEST) && (noCulling || tt->shouldRenderFace(level, x - 1, y, z, Facing::WEST))) {
@@ -1938,7 +1938,7 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 
 		t.color(r3 * br, g3 * br, b3 * br);
 		xFlipTexture = flipEdge == Facing::WEST;
-		renderWest(tt, float(x), float(y), float(z), tt->getTexture(level, x, y, z, 4));
+		renderWest(tt, (x), (y), (z), tt->getTexture(level, x, y, z, 4));
 	}
 
 	if ((skipEdge != Facing::EAST) && (noCulling || tt->shouldRenderFace(level, x + 1, y, z, Facing::EAST))) {
@@ -1947,7 +1947,7 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 
 		t.color(r3 * br, g3 * br, b3 * br);
 		xFlipTexture = flipEdge == Facing::EAST;
-		renderEast(tt, float(x), float(y), float(z), tt->getTexture(level, x, y, z, 5));
+		renderEast(tt, (x), (y), (z), tt->getTexture(level, x, y, z, 5));
 	}
 	xFlipTexture = false;
 	return true;
@@ -1991,7 +1991,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 		if (dt->yy0 > 0) br = centerBrightness;
 		if (Tile::lightEmission[tt->id] > 0) br = 1.0f;
 		t.color(c10 * br, c10 * br, c10 * br);
-		renderFaceDown(tt, (float)x, (float)y, (float)z, tt->getTexture(level, x, y, z, 0));
+		renderFaceDown(tt, x, y, z, tt->getTexture(level, x, y, z, 0));
 		changed = true;
 	}
 
@@ -2000,7 +2000,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 		if (dt->yy1 < 1) br = centerBrightness;
 		if (Tile::lightEmission[tt->id] > 0) br = 1.0f;
 		t.color(c11 * br, c11 * br, c11 * br);
-		renderFaceUp(tt, (float)x, (float)y, (float)z, tt->getTexture(level, x, y, z, 1));
+		renderFaceUp(tt, x, y, z, tt->getTexture(level, x, y, z, 1));
 		changed = true;
 	}
 
@@ -2014,7 +2014,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 			xFlipTexture = true;
 			tex = -tex;
 		}
-		renderNorth(tt, (float)x, (float)y, (float)z, tex);
+		renderNorth(tt, x, y, z, tex);
 		changed = true;
 		xFlipTexture = false;
 	}
@@ -2029,7 +2029,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 			xFlipTexture = true;
 			tex = -tex;
 		}
-		renderSouth(tt, (float)x, (float)y, (float)z, tex);
+		renderSouth(tt, x, y, z, tex);
 		changed = true;
 		xFlipTexture = false;
 	}
@@ -2044,7 +2044,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 			xFlipTexture = true;
 			tex = -tex;
 		}
-		renderWest(tt, (float)x, (float)y, (float)z, tex);
+		renderWest(tt, x, y, z, tex);
 		changed = true;
 		xFlipTexture = false;
 	}
@@ -2059,7 +2059,7 @@ bool TileRenderer::tesselateDoorInWorld( Tile* tt, int x, int y, int z )
 			xFlipTexture = true;
 			tex = -tex;
 		}
-		renderEast(tt, (float)x, (float)y, (float)z, tex);
+		renderEast(tt, x, y, z, tex);
 		changed = true;
 		xFlipTexture = false;
 	}
@@ -2071,7 +2071,7 @@ bool TileRenderer::tesselateRowInWorld( Tile* tt, int x, int y, int z ) {
 	Tesselator& t = Tesselator::instance;
 	float br = tt->getBrightness(level, x, y, z);
 	t.color(br, br, br);
-	tesselateRowTexture(tt, level->getData(x, y, z), float(x), y - 1 / 16.0f, float(z));
+	tesselateRowTexture(tt, level->getData(x, y, z), (x), y - 1 / 16.0f, (z));
 	return true;
 }
 
@@ -2764,18 +2764,18 @@ bool TileRenderer::tesselateThinFenceInWorld(ThinFenceTile* tt, int x, int y, in
 	const float iv1 = (yet + 8) / 256.0f;
 	const float iv2 = (yet + 15.99f) / 256.0f;
 
-	const float x0 = (float)x;
-	const float x1 = x0 + .5f;
-	const float x2 = x0 + 1;
-	const float y0 = (float)y + 0.001f;
-	const float y1 = y0 + 1 - 0.002f;
-	const float z0 = (float)z;
-	const float z1 = z0 + .5f;
-	const float z2 = z0 + 1;
-	const float ix0 = x0 + .5f - 1.0f / 16.0f;
-	const float ix1 = x0 + .5f + 1.0f / 16.0f;
-	const float iz0 = z0 + .5f - 1.0f / 16.0f;
-	const float iz1 = z0 + .5f + 1.0f / 16.0f;
+	const double x0 = x;
+	const double x1 = x0 + .5f;
+	const double x2 = x0 + 1;
+	const double y0 = y + 0.001f;
+	const double y1 = y0 + 1 - 0.002f;
+	const double z0 = z;
+	const double z1 = z0 + .5f;
+	const double z2 = z0 + 1;
+	const double ix0 = x0 + .5f - 1.0f / 16.0f;
+	const double ix1 = x0 + .5f + 1.0f / 16.0f;
+	const double iz0 = z0 + .5f - 1.0f / 16.0f;
+	const double iz1 = z0 + .5f + 1.0f / 16.0f;
 
 	const bool n = tt->attachsTo(level->getTile(x, y, z - 1));
 	const bool s = tt->attachsTo(level->getTile(x, y, z + 1));
@@ -3176,10 +3176,10 @@ void TileRenderer::tesselateRowTexture( Tile* tt, int data, double x, double y, 
 	float v0 = (yt) / 256.0f;
 	float v1 = (yt + 15.99f) / 256.0f;
 
-	float x0 = x + 0.5f - 0.25f;
-	float x1 = x + 0.5f + 0.25f;
-	float z0 = z + 0.5f - 0.5f;
-	float z1 = z + 0.5f + 0.5f;
+	double x0 = x + 0.5f - 0.25f;
+	double x1 = x + 0.5f + 0.25f;
+	double z0 = z + 0.5f - 0.5f;
+	double z1 = z + 0.5f + 0.5f;
 	t.vertexUV(x0, y + 1, z0, u0, v0);
 	t.vertexUV(x0, y + 0, z0, u0, v1);
 	t.vertexUV(x0, y + 0, z1, u1, v1);
