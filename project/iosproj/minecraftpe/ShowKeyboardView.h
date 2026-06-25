@@ -21,4 +21,5 @@
 - (void)hideKeyboard;
 - (void)textFieldDidChange :(NSNotification *)notif;
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField;
+- (void)submitText;
 @end

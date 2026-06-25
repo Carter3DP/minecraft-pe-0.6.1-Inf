@@ -12,6 +12,7 @@
 #include <string>
 
 NSString* const MCPEKeyboardSubmittedNotification = @"MCPEKeyboardSubmittedNotification";
+NSString* const MCPEKeyboardCancelledNotification = @"MCPEKeyboardCancelledNotification";
 NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 
 @implementation ShowKeyboardView
@@ -22,6 +23,12 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
     submittedText = [[NSMutableString alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
     [textField setDelegate:self];
+    textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    textField.returnKeyType = UIReturnKeySend;
+    textField.frame = CGRectMake(-1000.0f, -1000.0f, 1.0f, 1.0f);
+    self.backgroundColor = [UIColor clearColor];
+    self.userInteractionEnabled = YES;
     [self addSubview:textField];
     textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
     return returnId;
@@ -67,6 +74,7 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 
 - (void)showKeyboard {
     [submittedText setString:@""];
+    textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
     //[self becomeFirstResponder];
     [textField becomeFirstResponder];
     //[self becomeFirstResponder];
@@ -88,6 +96,8 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
         } else if([txt.text characterAtIndex:(txt.text.length - 1)] == '\n') {
             Keyboard::feed((char)Keyboard::KEY_RETURN, 1);
             Keyboard::feed((char)Keyboard::KEY_RETURN, 0);
+            [self submitText];
+            return;
         } else {
             unichar c = [txt.text characterAtIndex:(txt.text.length - 1)];
             [submittedText appendFormat:@"%C", c];
@@ -99,8 +109,16 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
     Keyboard::feed((char)Keyboard::KEY_RETURN, 1);
     Keyboard::feed((char)Keyboard::KEY_RETURN, 0);
+    [self submitText];
+    return NO;
+}
+
+- (void)submitText {
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithString:submittedText] forKey:MCPEKeyboardSubmittedTextKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardSubmittedNotification object:self userInfo:userInfo];
-    return NO;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardCancelledNotification object:self];
 }
 @end
