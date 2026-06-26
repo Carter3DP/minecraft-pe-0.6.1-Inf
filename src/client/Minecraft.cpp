@@ -1291,6 +1291,18 @@ void Minecraft::setSize(int w, int h) {
 	Gui::InvGuiScale = 1.0f / Gui::GuiScale;
 	screenWidth  = (int)(width  * Gui::InvGuiScale);
 	screenHeight = (int)(height * Gui::InvGuiScale);
+	if (platform()) {
+		ScreenSafeBounds platformSafeZone = platform()->getSafeZone();
+		SafeZone.left = (int)(platformSafeZone.left * Gui::InvGuiScale);
+		SafeZone.right = (int)(platformSafeZone.right * Gui::InvGuiScale);
+		SafeZone.top = (int)(platformSafeZone.top * Gui::InvGuiScale);
+		SafeZone.bottom = (int)(platformSafeZone.bottom * Gui::InvGuiScale);
+	} else {
+		SafeZone.left = 0;
+		SafeZone.right = screenWidth;
+		SafeZone.top = 0;
+		SafeZone.bottom = screenHeight;
+	}
 
 	Config config = createConfig(this);
 	gui.onConfigChanged(config);

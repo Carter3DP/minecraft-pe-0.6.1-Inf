@@ -63,6 +63,14 @@ public:
 	static const int DEVICE_BUILD_MODEL = 0;
 };
 
+struct ScreenSafeBounds
+{
+	float left;
+	float right;
+	float top;
+	float bottom;
+};
+
 class AppPlatform
 {
 public:
@@ -136,6 +144,15 @@ public:
 		keyboardVisible = false;
 	}
 	virtual bool isKeyboardVisible() {return keyboardVisible;}
+
+	virtual ScreenSafeBounds getSafeZone() {
+		ScreenSafeBounds margin;
+    	margin.left = 0;
+    	margin.right = 0;
+    	margin.top = 0;
+    	margin.bottom = 0;
+    	return margin;
+	}
 protected:
 	bool keyboardVisible;
 };

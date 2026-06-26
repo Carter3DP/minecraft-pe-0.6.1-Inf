@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -250,6 +251,49 @@ public class MainActivity extends NativeActivity {
     	int out = Math.min(display.getWidth(), display.getHeight());
     	System.out.println("getheight: " + out);
     	return out;
+    }
+    public int[] getSafeZone() {
+    	int width = getScreenWidth();
+    	int height = getScreenHeight();
+    	int[] safeZone = new int[] { 0, width, 0, height };
+
+    	if (android.os.Build.VERSION.SDK_INT < 28)
+    		return safeZone;
+
+    	try {
+    		View decorView = getWindow().getDecorView();
+    		if (decorView == null)
+    			return safeZone;
+
+    		Method getRootWindowInsets = View.class.getMethod("getRootWindowInsets");
+    		Object windowInsets = getRootWindowInsets.invoke(decorView);
+    		if (windowInsets == null)
+    			return safeZone;
+
+    		Method getDisplayCutout = windowInsets.getClass().getMethod("getDisplayCutout");
+    		Object displayCutout = getDisplayCutout.invoke(windowInsets);
+    		if (displayCutout == null)
+    			return safeZone;
+
+    		Method getSafeInsetLeft = displayCutout.getClass().getMethod("getSafeInsetLeft");
+    		Method getSafeInsetRight = displayCutout.getClass().getMethod("getSafeInsetRight");
+    		Method getSafeInsetTop = displayCutout.getClass().getMethod("getSafeInsetTop");
+    		Method getSafeInsetBottom = displayCutout.getClass().getMethod("getSafeInsetBottom");
+
+    		int leftInset = ((Integer)getSafeInsetLeft.invoke(displayCutout)).intValue();
+    		int rightInset = ((Integer)getSafeInsetRight.invoke(displayCutout)).intValue();
+    		int topInset = ((Integer)getSafeInsetTop.invoke(displayCutout)).intValue();
+    		int bottomInset = ((Integer)getSafeInsetBottom.invoke(displayCutout)).intValue();
+
+    		safeZone[0] = leftInset;
+    		safeZone[1] = width - rightInset;
+    		safeZone[2] = topInset;
+    		safeZone[3] = height - bottomInset;
+    	} catch (Exception e) {
+    		Log.w("MCPE", "Unable to read Android safe zone", e);
+    	}
+
+    	return safeZone;
     }
     public float getPixelsPerMillimeter() {
     	 DisplayMetrics metrics = new DisplayMetrics();

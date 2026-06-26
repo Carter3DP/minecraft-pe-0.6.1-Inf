@@ -75,7 +75,8 @@ public:
 
         _getScreenWidth(0),
         _getScreenHeight(0),
-        _methodGetPixelsPerMillimeter(0),
+		_methodGetPixelsPerMillimeter(0),
+		_methodGetSafeZone(0),
 		_methodGetPlatformStringVar(0),
 
 		_classWindow(0),
@@ -150,6 +151,7 @@ public:
 		_methodIsNetworkEnabled = env->GetMethodID( _activityClass, "isNetworkEnabled", "(Z)Z");
 
 		_methodGetPixelsPerMillimeter = env->GetMethodID( _activityClass, "getPixelsPerMillimeter", "()F");
+		_methodGetSafeZone = env->GetMethodID( _activityClass, "getSafeZone", "()[I");
 		_methodGetPlatformStringVar = env->GetMethodID( _activityClass, "getPlatformStringVar", "(I)Ljava/lang/String;");
 		// custom helper to launch external URLs
 		_methodOpenURL = env->GetMethodID(_activityClass, "openURL", "(Ljava/lang/String;)V");
@@ -254,6 +256,36 @@ public:
         JNIEnv* env = ta.getEnv();
 
         return env->CallFloatMethod(instance, _methodGetPixelsPerMillimeter);
+    }
+
+    ScreenSafeBounds getSafeZone() {
+        ScreenSafeBounds bounds;
+        bounds.left = 0;
+        bounds.right = getScreenWidth();
+        bounds.top = 0;
+        bounds.bottom = getScreenHeight();
+
+        if (!_isInited) return bounds;
+        if (!_methodGetSafeZone) return bounds;
+
+        JVMAttacher ta(_vm);
+        JNIEnv* env = ta.getEnv();
+
+        jintArray arr = (jintArray)env->CallObjectMethod(instance, _methodGetSafeZone);
+        if (!arr) return bounds;
+
+        jsize len = env->GetArrayLength(arr);
+        if (len >= 4) {
+            jint safe[4];
+            env->GetIntArrayRegion(arr, 0, 4, safe);
+            bounds.left = safe[0];
+            bounds.right = safe[1];
+            bounds.top = safe[2];
+            bounds.bottom = safe[3];
+        }
+
+        env->DeleteLocalRef(arr);
+        return bounds;
     }
 
     StringVector getUserInput() {
@@ -622,6 +654,7 @@ private:
     jmethodID _getScreenWidth;
     jmethodID _getScreenHeight;
     jmethodID _methodGetPixelsPerMillimeter;
+    jmethodID _methodGetSafeZone;
     jmethodID _methodVibrate;
     jmethodID _methodSupportsTouchscreen;
     jmethodID _methodSetIsPowerVR;
