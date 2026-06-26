@@ -42,6 +42,7 @@ struct PingedCompatibleServer;
 
 #include "../App.h"
 #include "PixelCalc.h"
+#include "ScreenSafeBounds.h"
 class AppPlatform;
 class AppPlatform_android;
 

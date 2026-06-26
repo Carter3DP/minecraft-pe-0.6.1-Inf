@@ -1592,6 +1592,7 @@
 		D584928314FD23DB00741128 /* TargetGoal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TargetGoal.h; path = ai/goal/target/TargetGoal.h; sourceTree = "<group>"; };
 		D584928414FD240C00741128 /* IConfigListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IConfigListener.cpp; sourceTree = "<group>"; };
 		D584928514FD240C00741128 /* IConfigListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IConfigListener.h; sourceTree = "<group>"; };
+		D584928914FD240C00741128 /* ScreenSafeBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenSafeBounds.h; sourceTree = "<group>"; };
 		D584928814FD2FAF00741128 /* Path.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Path.cpp; sourceTree = "<group>"; };
 		D58BB5B5146A0B920002C9F5 /* minecraftpe.demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minecraftpe.demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5912008145FE9E600AE2E58 /* bg64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg64.png; sourceTree = "<group>"; };
@@ -3229,6 +3230,7 @@
 				044129061682FF9600B70EE6 /* MouseHandler.cpp */,
 				D584928414FD240C00741128 /* IConfigListener.cpp */,
 				D584928514FD240C00741128 /* IConfigListener.h */,
+				D584928914FD240C00741128 /* ScreenSafeBounds.h */,
 				D5B50C2014CFF66F005F7284 /* gamemode */,
 				D5B50C2614CFF66F005F7284 /* gui */,
 				D5B50C6614CFF66F005F7284 /* KeyMapping.h */,

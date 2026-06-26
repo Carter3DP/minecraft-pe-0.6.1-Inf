@@ -1,7 +1,7 @@
 #ifndef CONFIGLISTENER_H__
 #define CONFIGLISTENER_H__
-#include "Minecraft.h"
 #include "PixelCalc.h"
+#include "ScreenSafeBounds.h"
 class Minecraft;
 class Options;
 

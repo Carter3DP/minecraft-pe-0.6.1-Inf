@@ -12,6 +12,6 @@ Config createConfig(Minecraft* mc) {
 	c.pixelCalcUi = mc->pixelCalcUi;
 	c.minecraft = mc;
 	c.options   = &mc->options;
-	c.safeZone = mc->SafeZone;
+	c.safeZone = &mc->SafeZone;
 	return c;
 }

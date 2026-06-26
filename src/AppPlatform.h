@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <cstring>
+#include "client/ScreenSafeBounds.h"
 #include "client/renderer/TextureData.h"
 
 typedef std::vector<std::string> StringVector;
@@ -61,14 +62,6 @@ public:
 class PlatformStringVars {
 public:
 	static const int DEVICE_BUILD_MODEL = 0;
-};
-
-struct ScreenSafeBounds
-{
-	float left;
-	float right;
-	float top;
-	float bottom;
 };
 
 class AppPlatform
