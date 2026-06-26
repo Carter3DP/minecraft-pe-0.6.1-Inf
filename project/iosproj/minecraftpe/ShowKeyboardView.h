@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface ShowKeyboardView : UIView</*UIKeyInput, */UITextFieldDelegate> {
+@interface ShowKeyboardView : UIView<UIKeyInput, UITextInputTraits> {
     UITextField* textField;
     NSString* lastString;
     NSMutableString* submittedText;
 }
 - (id)initWithFrame:(CGRect)frame;
-//- (void)insertText:(NSString *)text;
-//- (void)deleteBackward;
+- (void)insertText:(NSString *)text;
+- (void)deleteBackward;
 - (BOOL)hasText;
 - (BOOL)canBecomeFirstResponder;
 - (void)showKeyboard;

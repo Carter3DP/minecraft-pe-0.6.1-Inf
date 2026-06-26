@@ -9,6 +9,7 @@
 #import "ShowKeyboardView.h"
 #import "../../../src/platform/log.h"
 #include "../../../src/platform/input/Keyboard.h"
+#include <cstring>
 #include <string>
 
 NSString* const MCPEKeyboardSubmittedNotification = @"MCPEKeyboardSubmittedNotification";
@@ -19,15 +20,9 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 
 - (id)initWithFrame:(CGRect)frame {
     id returnId = [super initWithFrame:frame];
-    textField = [[UITextField alloc] init];
+    textField = nil;
+    lastString = @"";
     submittedText = [[NSMutableString alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
-    [textField setDelegate:self];
-    textField.autocorrectionType = UITextAutocorrectionTypeNo;
-    textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    textField.returnKeyType = UIReturnKeySend;
-    textField.frame = CGRectMake(-1000.0f, -1000.0f, 1.0f, 1.0f);
-    [textField addTarget:self action:@selector(submitText) forControlEvents:UIControlEventEditingDidEndOnExit];
 
     UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelInput)];
     tapRecognizer.cancelsTouchesInView = YES;
@@ -36,8 +31,6 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 
     self.backgroundColor = [UIColor clearColor];
     self.userInteractionEnabled = YES;
-    [self addSubview:textField];
-    textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
     return returnId;
 }
 
@@ -48,71 +41,67 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
     [super dealloc];
 }
 
-/*- (void)insertText:(NSString *)text {
-    const char* cText = [text cStringUsingEncoding:[NSString defaultCStringEncoding]];
-    //std::string textString([text cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-    int strLength = strlen(cText);
-    for(int a = 0; a < strLength; ++a) {
-        LOGW("NewCharInput: %c (%d)\n", cText[a], cText[a]);
-        if(cText[a] == 0 || cText[a] == '\n') {
-            Keyboard::feed((char)Keyboard::KEY_RETURN, 1);
-            Keyboard::feed((char)Keyboard::KEY_RETURN, 0);
-        } else {
-            Keyboard::feedText(cText[a]);
-        }
-    }
-    //delete cText;
-    //LOGW("Insert text: %s\n", [text cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
-
-- (void)deleteBackward {
-    //LOGW("deleteBackward\n");
-    //Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 1);
-    //Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 0);§
-}*/
 
 - (BOOL)hasText {
     return YES;
 }
 
-- (BOOL)canBecomeFirstResponder {
-    return YES;
-}
-
-- (void)showKeyboard {
-    [submittedText setString:@""];
-    textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
-    //[self becomeFirstResponder];
-    [textField becomeFirstResponder];
-    //[self becomeFirstResponder];
-}
-
-- (void)hideKeyboard {
-    [textField resignFirstResponder];
-    [self resignFirstResponder];
-}
-
-- (void)textFieldDidChange :(NSNotification *)notif {
-    UITextField* txt = (UITextField*)notif.object;
-    if(![txt.text isEqualToString:lastString]) {
-        if(lastString.length > txt.text.length) {
-            if ([submittedText length] > 0)
-                [submittedText deleteCharactersInRange:NSMakeRange([submittedText length] - 1, 1)];
-            Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 1);
-            Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 0);
-        } else if([txt.text characterAtIndex:(txt.text.length - 1)] == '\n') {
+- (void)insertText:(NSString *)text {
+    const char* cText = [text cStringUsingEncoding:[NSString defaultCStringEncoding]];
+    if (!cText)
+        return;
+    int strLength = strlen(cText);
+    for (int a = 0; a < strLength; ++a) {
+        if (cText[a] == 0 || cText[a] == '\n') {
             Keyboard::feed((char)Keyboard::KEY_RETURN, 1);
             Keyboard::feed((char)Keyboard::KEY_RETURN, 0);
             [self submitText];
             return;
-        } else {
-            unichar c = [txt.text characterAtIndex:(txt.text.length - 1)];
-            [submittedText appendFormat:@"%C", c];
-            Keyboard::feedText((char)c);
         }
-        textField.text = lastString = @"AAAAAAAAAAAAAAAAAAAA";
+
+        [submittedText appendFormat:@"%c", cText[a]];
+        Keyboard::feedText(cText[a]);
     }
 }
+
+- (void)deleteBackward {
+    if ([submittedText length] > 0)
+        [submittedText deleteCharactersInRange:NSMakeRange([submittedText length] - 1, 1)];
+    Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 1);
+    Keyboard::feed((char)Keyboard::KEY_BACKSPACE, 0);
+}
+
+- (UIKeyboardType)keyboardType {
+    return UIKeyboardTypeDefault;
+}
+
+- (UIReturnKeyType)returnKeyType {
+    return UIReturnKeySend;
+}
+
+- (UITextAutocorrectionType)autocorrectionType {
+    return UITextAutocorrectionTypeNo;
+}
+
+- (UITextAutocapitalizationType)autocapitalizationType {
+    return UITextAutocapitalizationTypeNone;
+}
+
+- (void)showKeyboard {
+    [submittedText setString:@""];
+    [self becomeFirstResponder];
+}
+
+- (void)hideKeyboard {
+    [self resignFirstResponder];
+}
+
+- (void)textFieldDidChange :(NSNotification *)notif {
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
     Keyboard::feed((char)Keyboard::KEY_RETURN, 1);
     Keyboard::feed((char)Keyboard::KEY_RETURN, 0);
@@ -132,4 +121,5 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [self cancelInput];
 }
+
 @end
