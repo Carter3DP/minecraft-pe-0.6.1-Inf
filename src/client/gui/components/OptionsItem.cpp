@@ -52,7 +52,6 @@ void OptionsItem::render( Minecraft* minecraft, int xm, int ym ) {
 		switch (value) {
 		case 0: scaleText = I18n::get("options.debugStyle.javaBeta"); break;
 		case 1: scaleText = I18n::get("options.debugStyle.custom"); break;
-		case 2: scaleText = I18n::get("options.fogType.unused"); break;
 		}
 		text += ": " + scaleText;
 	}

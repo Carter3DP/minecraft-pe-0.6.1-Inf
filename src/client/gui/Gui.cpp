@@ -808,81 +808,81 @@ void Gui::renderDebugInfo() {
 
 	// if java beta's restored debug menu is enabled
 	if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 0){
-
-	char buf[128];
-
-	sprintf(buf, "Minecraft - Pocket Edition (%d fps, %d chunk updates)", (int)fps, displayChunkUpdates);
-	font->drawShadow(buf, 2, 2, 0xffffff);
-
-	font->drawShadow(minecraft->gatherStats1(), 2, 12, 0xFFFFFF);
-	font->drawShadow(minecraft->gatherStats2(), 2, 22, 0xFFFFFF);
-    font->drawShadow(minecraft->gatherStats3(), 2, 32, 0xFFFFFF);
-    font->drawShadow(minecraft->gatherStats4(), 2, 42, 0xFFFFFF);
-
-	sprintf(buf, "x: %.8f", minecraft->player->x);
-	drawString(font, buf, 2, 64, 0xE0E0E0);
-
-	sprintf(buf, "y: %.8f", minecraft->player->y);
-	drawString(font, buf, 2, 72, 0xE0E0E0);
-
-	sprintf(buf, "z: %.8f", minecraft->player->z);
-	drawString(font, buf, 2, 80, 0xE0E0E0);
-
-	sprintf(buf, "f: %d",Mth::floor(minecraft->player->yRot * 4.0f / 360.0f + 0.5) & 0x3);
-	drawString(font, buf, 2, 88, 0xE0E0E0);
-
-	sprintf(buf, "Seed: %.ld", lvl->getSeed());
-	drawString(font, buf, 2, 104, 0xE0E0E0);
-
-	sprintf(buf, "Dimension: %d (%s)", lvl->dimension->id, lvl->dimension->getDimension().c_str());
-	drawString(font, buf, 2, 114, 0xE0E0E0);
-
-	sprintf(buf, "Biome: %s", biomeName);
-	drawString(font, buf, 2, 124, 0xE0E0E0);
-
-	sprintf(buf, "Looking at: %s", CurrentTile.c_str());
-		drawString(font, buf, 2, 134, 0xE0E0E0);
+		
+		char buf[128];
+		
+		sprintf(buf, "Minecraft - Pocket Edition (%d fps, %d chunk updates)", (int)fps, displayChunkUpdates);
+		font->drawShadow(buf, 2, 2, 0xffffff);
+		
+		font->drawShadow(minecraft->gatherStats1(), 2, 12, 0xFFFFFF);
+		font->drawShadow(minecraft->gatherStats2(), 2, 22, 0xFFFFFF);
+    	font->drawShadow(minecraft->gatherStats3(), 2, 32, 0xFFFFFF);
+    	font->drawShadow(minecraft->gatherStats4(), 2, 42, 0xFFFFFF);
+		
+		sprintf(buf, "x: %.8f", minecraft->player->x);
+		drawString(font, buf, 2, 64, 0xE0E0E0);
+		
+		sprintf(buf, "y: %.8f", minecraft->player->y);
+		drawString(font, buf, 2, 72, 0xE0E0E0);
+		
+		sprintf(buf, "z: %.8f", minecraft->player->z);
+		drawString(font, buf, 2, 80, 0xE0E0E0);
+		
+		sprintf(buf, "f: %d",Mth::floor(minecraft->player->yRot * 4.0f / 360.0f + 0.5) & 0x3);
+		drawString(font, buf, 2, 88, 0xE0E0E0);
+		
+		sprintf(buf, "Seed: %.ld", lvl->getSeed());
+		drawString(font, buf, 2, 104, 0xE0E0E0);
+		
+		sprintf(buf, "Dimension: %d (%s)", lvl->dimension->id, lvl->dimension->getDimension().c_str());
+		drawString(font, buf, 2, 114, 0xE0E0E0);
+		
+		sprintf(buf, "Biome: %s", biomeName);
+		drawString(font, buf, 2, 124, 0xE0E0E0);
+		
+		sprintf(buf, "Looking at: %s", CurrentTile.c_str());
+			drawString(font, buf, 2, 134, 0xE0E0E0);
 	}
 	else if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 1){
-	const int N   = 9; 
+		const int N   = 9; 			//This makes alot more sense. Why would you change a number in two different places if they do the same thing. Especially if its a const
 
-	static char ln[N][96];
-	sprintf(ln[0], "Minecraft PE 0.6.1 alpha (mcpe64)");
-	sprintf(ln[1], "%.1f fps", fps);
-	ln[2][0] = '\0'; // blank separator
-	sprintf(ln[3], "XYZ: %.3f / %.3f / %.3f", px, py, pz);
-	sprintf(ln[4], "Block: %d %d %d   Chunk: %d %d", bx, by, bz, cx, cz);
-	sprintf(ln[5], "Facing: %s (%s)  (%.1f / %.1f)", facing, axis, p->yRot, p->xRot);
-	sprintf(ln[6], "Biome: %s", biomeName);
-	sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
-	sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
+		static char ln[N][96];
+		sprintf(ln[0], "Minecraft PE 0.6.1 alpha (mcpe64)");
+		sprintf(ln[1], "%.1f fps", fps);
+		ln[2][0] = '\0'; // blank separator
+		sprintf(ln[3], "XYZ: %.3f / %.3f / %.3f", px, py, pz);
+		sprintf(ln[4], "Block: %d %d %d   Chunk: %d %d", bx, by, bz, cx, cz);
+		sprintf(ln[5], "Facing: %s (%s)  (%.1f / %.1f)", facing, axis, p->yRot, p->xRot);
+		sprintf(ln[6], "Biome: %s", biomeName);
+		sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
+		sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
 
-	const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
-	const float MGN = 2.0f;  // left/top margin in font-pixels
-	const float PAD = 2.0f;  // horizontal padding for background
-//	Font* font = minecraft->font;
-	
-	// 1) Draw semi-transparent background boxes behind each line
-	for (int i = 0; i < N; i++) {
-		if (ln[i][0] == '\0') continue;
-		float w  = (float)font->width(ln[i]);
-		float x0 = MGN - PAD;
-		float y0 = MGN + i * LH - 1.0f;
-		float x1 = MGN + w + PAD;
-		float y1 = MGN + (i + 1) * LH - 1.0f;
-		fill(x0, y0, x1, y1, 0x90000000);
-	}
+		const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
+		const float MGN = 2.0f;  // left/top margin in font-pixels
+		const float PAD = 2.0f;  // horizontal padding for background
+		//Font* font = minecraft->font;
+		
+		// 1) Draw semi-transparent background boxes behind each line
+		for (int i = 0; i < N; i++) {
+			if (ln[i][0] == '\0') continue;
+			float w  = (float)font->width(ln[i]);
+			float x0 = MGN - PAD;
+			float y0 = MGN + i * LH - 1.0f;
+			float x1 = MGN + w + PAD;
+			float y1 = MGN + (i + 1) * LH - 1.0f;
+			fill(x0, y0, x1, y1, 0x90000000);
+		}
 
-	// 2) Draw text (no extra scale — font coords are in GUI units, same as fill)
-	Tesselator& t = Tesselator::instance;
-	t.beginOverride();
-	for (int i = 0; i < N; i++) {
-		if (ln[i][0] == '\0') continue;
-		float y = MGN + i * LH;
-		int col = (i == 0) ? 0xffFFFF55 : 0xffffffff; // title yellow, rest white
-		font->draw(ln[i], MGN, y, col);
-	}
-	t.endOverrideAndDraw();
+		// 2) Draw text (no extra scale — font coords are in GUI units, same as fill)
+		Tesselator& t = Tesselator::instance;
+		t.beginOverride();
+		for (int i = 0; i < N; i++) {
+			if (ln[i][0] == '\0') continue;
+			float y = MGN + i * LH;
+			int col = (i == 0) ? 0xffFFFF55 : 0xffffffff; // title yellow, rest white
+			font->draw(ln[i], MGN, y, col);
+		}
+		t.endOverrideAndDraw();
 	}
 }
 
