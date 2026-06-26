@@ -544,13 +544,6 @@ bool AppPlatform_iOS::isPowerVR() {
 
 //ios specific safe zone code
 ScreenSafeBounds AppPlatform_iOS::getSafeZone() {
-    bool AppPlatform_iOS::isPowerVR() {
-	const char* s = (const char*)glGetString(GL_RENDERER);
-	if (!s) return false;
-	return strstr(s, "SGX") != NULL;
-}
-
-ScreenSafeBounds AppPlatform_iOS::getSafeZone() {
     ScreenSafeBounds bounds;
     bounds.left = 0;
     bounds.right = getScreenWidth();
