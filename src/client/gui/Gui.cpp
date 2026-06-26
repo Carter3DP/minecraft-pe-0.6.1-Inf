@@ -150,7 +150,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 			renderPlayerList(font, screenWidth, screenHeight);
 		}
 
-		if (minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG))
+		if (/*minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG)*/ true)
 			renderDebugInfo();
 	}
 
@@ -846,7 +846,7 @@ void Gui::renderDebugInfo() {
 	else if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 1){
 	
 
-	static char ln[8][96];
+	static char ln[9][96];
 	sprintf(ln[0], "Minecraft PE 0.6.1 alpha (mcpe64)");
 	sprintf(ln[1], "%.1f fps", fps);
 	ln[2][0] = '\0'; // blank separator
@@ -855,6 +855,7 @@ void Gui::renderDebugInfo() {
 	sprintf(ln[5], "Facing: %s (%s)  (%.1f / %.1f)", facing, axis, p->yRot, p->xRot);
 	sprintf(ln[6], "Biome: %s", biomeName);
 	sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
+	sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
 
 	const int N   = 8;
 	const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
