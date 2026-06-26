@@ -556,8 +556,8 @@ ScreenSafeBounds AppPlatform_iOS::getSafeZone() {
 
     UIEdgeInsets insets = view.safeAreaInsets;
     bounds.left = (int)(insets.left * _viewController->viewScale);
-    bounds.right = (int)(insets.right * _viewController->viewScale);
+    bounds.right = getScreenWidth() - (int)(insets.right * _viewController->viewScale);
     bounds.top = (int)(insets.top * _viewController->viewScale);
-    bounds.bottom = (int)(insets.bottom * _viewController->viewScale);
+    bounds.bottom = getScreenHeight() - (int)(insets.bottom * _viewController->viewScale);
     return bounds;
 }

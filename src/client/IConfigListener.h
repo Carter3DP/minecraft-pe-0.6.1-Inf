@@ -25,6 +25,8 @@ public:
     int guiWidth;
     int guiHeight;
 
+    ScreenSafeBounds* safeZone;
+
     PixelCalc pixelCalc;
     PixelCalc pixelCalcUi;
 

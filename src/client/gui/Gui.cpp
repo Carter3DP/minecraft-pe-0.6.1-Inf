@@ -675,7 +675,7 @@ void Gui::renderHearts() {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
 
-	int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : 2;
+	int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : c.safeZone->left;
 
 	int armor = minecraft->player->getArmorValue();
 	for (int i = 0; i < Player::MAX_HEALTH / 2; i++) {
@@ -710,7 +710,7 @@ void Gui::renderBubbles() {
 		int screenWidth = (int)(minecraft->width * InvGuiScale);
 		int screenHeight = (int)(minecraft->height * InvGuiScale);
 
-		int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : 2;
+		int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : c.safeZone->left;
 		int yo = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenHeight - 42 : 12;
 		int count = (int) std::ceil((minecraft->player->airSupply - 2) * 10.0f / Player::TOTAL_AIR_SUPPLY);
 		int extra = (int) std::ceil((minecraft->player->airSupply) * 10.0f / Player::TOTAL_AIR_SUPPLY) - count;
