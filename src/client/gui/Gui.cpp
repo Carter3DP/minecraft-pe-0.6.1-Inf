@@ -855,7 +855,7 @@ void Gui::renderDebugInfo() {
 		sprintf(ln[5], "Facing: %s (%s)  (%.1f / %.1f)", facing, axis, p->yRot, p->xRot);
 		sprintf(ln[6], "Biome: %s", biomeName);
 		sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
-		sprintf(ln[8], "ST: %1f SB: %1f SL: %1f SR: %1f", minecraft->, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
+		sprintf(ln[8], "ST: %1f SB: %1f SL: %1f SR: %1f", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
 
 		const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
 		const float MGN = 2.0f;  // left/top margin in font-pixels
