@@ -130,6 +130,8 @@ public:
 
 	virtual float getPixelsPerMillimeter() override;
 
+	virtual ScreenSafeBounds getSafeZone() override;
+
 	virtual bool supportsTouchscreen() override { return false; /* glfw supports only mouse and keyboard */ }
 
 	virtual void hideCursor(bool hide) override {

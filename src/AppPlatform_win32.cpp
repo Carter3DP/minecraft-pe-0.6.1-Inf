@@ -14,3 +14,4 @@ float AppPlatform_win32::getPixelsPerMillimeter() {
 }
 
 bool AppPlatform_win32::supportsTouchscreen()  { return true; }
+

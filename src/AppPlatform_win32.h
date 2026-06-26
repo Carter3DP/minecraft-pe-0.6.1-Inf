@@ -135,7 +135,6 @@ public:
 	virtual void openURL(const std::string& url) {
 		ShellExecuteA(NULL, "open", url.c_str(), NULL, NULL, SW_SHOWNORMAL);
 	}
-
 private:
 };
 

@@ -10,3 +10,12 @@ float AppPlatform_glfw::getPixelsPerMillimeter() {
 
     return (float)mode->width / (float)width_mm;
 }
+
+ScreenSafeBounds AppPlatform_glfw::getSafeZone() {
+	ScreenSafeBounds margin;
+    margin.left = 0;
+    margin.right = getScreenWidth();
+    margin.top = 0;
+    margin.bottom = getScreenHeight();
+    return margin;
+}

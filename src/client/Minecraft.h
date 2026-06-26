@@ -144,6 +144,8 @@ public:
 	int width;
 	int height;
 
+	ScreenSafeBounds SafeZone;
+
 	// Vars that the platform is allowed to use in the future
 	int commandPort;
 	int reserved_d1, reserved_d2;
