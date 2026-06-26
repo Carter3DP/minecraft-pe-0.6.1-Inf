@@ -73,7 +73,7 @@ void OptionsItem::render( Minecraft* minecraft, int xm, int ym ) {
 		case 0: scaleText = I18n::get("options.logLevel.infinite"); break;
 		case 1: scaleText = I18n::get("options.logLevel.normal"); break;
 		case 2: scaleText = I18n::get("options.logLevel.silent"); break;
-		default: scaleText = I18n::get("options.logLevel.infinite"); break;
+		default: scaleText = I18n::get("options.logLevel.silent"); break;
 		}
 		text += ": " + scaleText;
 	}

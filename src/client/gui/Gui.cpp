@@ -844,9 +844,9 @@ void Gui::renderDebugInfo() {
 		drawString(font, buf, 2, 134, 0xE0E0E0);
 	}
 	else if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 1){
-	
+	const int N   = 9; 
 
-	static char ln[9][96];
+	static char ln[N][96];
 	sprintf(ln[0], "Minecraft PE 0.6.1 alpha (mcpe64)");
 	sprintf(ln[1], "%.1f fps", fps);
 	ln[2][0] = '\0'; // blank separator
@@ -857,7 +857,6 @@ void Gui::renderDebugInfo() {
 	sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
 	sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
 
-	const int N   = 8;
 	const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
 	const float MGN = 2.0f;  // left/top margin in font-pixels
 	const float PAD = 2.0f;  // horizontal padding for background

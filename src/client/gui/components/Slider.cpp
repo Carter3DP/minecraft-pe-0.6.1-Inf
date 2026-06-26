@@ -9,9 +9,17 @@
 
 Slider::Slider(OptionId optId) : m_mouseDownOnElement(false), m_optId(optId), m_numSteps(0) {}
 
+static int sliderTrackStart(int x) {
+	return x + 5;
+}
+
+static int sliderTrackWidth(int width) {
+	return width - 10;
+}
+
 void Slider::render( Minecraft* minecraft, int xm, int ym ) {
-	int xSliderStart = x + 5;
-	int xSliderEnd = x + width - 5;
+	int xSliderStart = sliderTrackStart(x);
+	int xSliderEnd = xSliderStart + sliderTrackWidth(width);
 	int ySliderStart = y + 6;
 	int ySliderEnd = y + 9;
 	int handleSizeX = 9;
@@ -50,7 +58,7 @@ void Slider::tick(Minecraft* minecraft) {
 		minecraft->screen->toGUICoordinate(xm, ym);
 
 		if(m_mouseDownOnElement) {
-			m_percentage = float(xm - x) / float(width);
+			m_percentage = float(xm - sliderTrackStart(x)) / float(sliderTrackWidth(width));
 			m_percentage = Mth::clamp(m_percentage, 0.0f, 1.0f);
 		}
 	}
@@ -74,9 +82,10 @@ void SliderInt::render( Minecraft* minecraft, int xm, int ym ) {
 }
 
 void SliderInt::mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) {
+	bool wasDragging = m_mouseDownOnElement;
 	Slider::mouseReleased(minecraft, x, y, buttonNum);
 
-	if (pointInside(x, y)) {
+	if (wasDragging) {
 		int curStep = int(m_percentage * (m_numSteps-1) + 0.5f);
 		curStep = Mth::clamp(curStep + m_option->getMin(), m_option->getMin(), m_option->getMax());
 		m_percentage = float(curStep - m_option->getMin()) / (m_numSteps-1);
