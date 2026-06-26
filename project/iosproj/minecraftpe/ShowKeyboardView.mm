@@ -115,6 +115,7 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 }
 
 - (void)cancelInput {
+    [self hideKeyboard];
     [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardCancelledNotification object:self];
 }
 
