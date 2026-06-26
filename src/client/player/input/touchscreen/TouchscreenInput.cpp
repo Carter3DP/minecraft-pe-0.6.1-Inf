@@ -113,8 +113,8 @@ bool TouchscreenInput_TestFps::isButtonDown(int areaId) {
 void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 	clear();
 
-	const float w = (float)c.width;
-	const float h = (float)c.height;
+	const float w = (float)c.safeZone->right;
+	const float h = (float)c.safeZone->bottom;
 
 	/*
 	// Code for "Move when touching left side of the screen"
@@ -165,8 +165,8 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
     float maxPixels = _minecraft->pixelCalc.millimetersToPixels(10);
     // float btnSize = Mth::Min(18 * Gui::GuiScale, maxPixels);
 	float btnSize = pc.millimetersToPixels(18 * Gui::GuiScale);
-	_model.addArea(AREA_PAUSE, aPause = new RectangleArea(c.safeZone->left - 4 - btnSize, 4, c.safeZone->left - 4, 4 + btnSize));
-	_model.addArea(AREA_CHAT,  aChat  = new RectangleArea(c.safeZone->left - 8 - btnSize * 2, 4, c.safeZone->left - 8 - btnSize, 4 + btnSize));
+	_model.addArea(AREA_PAUSE, aPause = new RectangleArea(w - 4 - btnSize, 4, w - 4, 4 + btnSize));
+	_model.addArea(AREA_CHAT,  aChat  = new RectangleArea(w - 8 - btnSize * 2, 4, w - 8 - btnSize, 4 + btnSize));
 
 	//rebuild();
 }
