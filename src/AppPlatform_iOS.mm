@@ -197,6 +197,26 @@ std::string AppPlatform_iOS::getDateString(int s) {
     return std::string( [timeStamp UTF8String] );
 }
 
+std::string AppPlatform_iOS::getAppleHardwareMachine() {
+    size_t size = 0;
+
+    if (sysctlbyname("hw.machine", NULL, &size, NULL, 0) != 0 || size == 0) {
+        return "";
+    }
+
+    std::string machine(size, '\0');
+
+    if (sysctlbyname("hw.machine", &machine[0], &size, NULL, 0) != 0) {
+        return "";
+    }
+
+    if (!machine.empty() && machine[machine.size() - 1] == '\0') {
+        machine.resize(machine.size() - 1);
+    }
+
+    return machine;
+}
+
 int AppPlatform_iOS::getScreenWidth()  {
     CGRect screen = [[UIScreen mainScreen] bounds];
     return (int)(MAX(screen.size.width, screen.size.height) * _viewController->viewScale);

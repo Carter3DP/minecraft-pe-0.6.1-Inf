@@ -34,26 +34,7 @@ public:
         return (p & 0xff00ff00) | ((p >> 16) & 0xff) | ((p << 16) & 0xff0000);
     }
 
-    static std::string getAppleHardwareMachine() {
-        size_t size = 0;
-    
-        if (sysctlbyname("hw.machine", nullptr, &size, nullptr, 0) != 0 || size == 0) {
-            return "";
-        }
-    
-        std::string machine(size, '\0');
-    
-        if (sysctlbyname("hw.machine", &machine[0], &size, nullptr, 0) != 0) {
-            return "";
-        }
-    
-        // sysctl returns a null-terminated string.
-        if (!machine.empty() && machine.back() == '\0') {
-            machine.pop_back();
-        }
-    
-        return machine;
-    }
+    static std::string getAppleHardwareMachine();
 
 	virtual void showDialog(int dialogId);
 	virtual int getUserInputStatus();
