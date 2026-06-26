@@ -68,7 +68,7 @@ public:
 	virtual int getScreenWidth();
 	virtual int getScreenHeight();
     virtual float getPixelsPerMillimeter();
-    static float machineIsOneOf(const std::string& machine, const char* const* list, int count);
+    static bool machineIsOneOf(const std::string& machine, const char* const* list, int count);
     static float applePixelsPerMillimeterForMachine(const std::string& machine);
     
 	virtual bool isTouchscreen();
