@@ -1,6 +1,6 @@
 #ifndef CONFIGLISTENER_H__
 #define CONFIGLISTENER_H__
-
+#include "Minecraft.h"
 #include "PixelCalc.h"
 class Minecraft;
 class Options;
