@@ -808,38 +808,38 @@ void Gui::renderDebugInfo() {
 
 	// if java beta's restored debug menu is enabled
 	if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 0){
-		
+
 		char buf[128];
-		
+
 		sprintf(buf, "Minecraft - Pocket Edition (%d fps, %d chunk updates)", (int)fps, displayChunkUpdates);
 		font->drawShadow(buf, 2, 2, 0xffffff);
-		
+
 		font->drawShadow(minecraft->gatherStats1(), 2, 12, 0xFFFFFF);
 		font->drawShadow(minecraft->gatherStats2(), 2, 22, 0xFFFFFF);
     	font->drawShadow(minecraft->gatherStats3(), 2, 32, 0xFFFFFF);
     	font->drawShadow(minecraft->gatherStats4(), 2, 42, 0xFFFFFF);
-		
+
 		sprintf(buf, "x: %.8f", minecraft->player->x);
 		drawString(font, buf, 2, 64, 0xE0E0E0);
-		
+
 		sprintf(buf, "y: %.8f", minecraft->player->y);
 		drawString(font, buf, 2, 72, 0xE0E0E0);
-		
+
 		sprintf(buf, "z: %.8f", minecraft->player->z);
 		drawString(font, buf, 2, 80, 0xE0E0E0);
-		
+
 		sprintf(buf, "f: %d",Mth::floor(minecraft->player->yRot * 4.0f / 360.0f + 0.5) & 0x3);
 		drawString(font, buf, 2, 88, 0xE0E0E0);
-		
+
 		sprintf(buf, "Seed: %.ld", lvl->getSeed());
 		drawString(font, buf, 2, 104, 0xE0E0E0);
-		
+
 		sprintf(buf, "Dimension: %d (%s)", lvl->dimension->id, lvl->dimension->getDimension().c_str());
 		drawString(font, buf, 2, 114, 0xE0E0E0);
-		
+
 		sprintf(buf, "Biome: %s", biomeName);
 		drawString(font, buf, 2, 124, 0xE0E0E0);
-		
+
 		sprintf(buf, "Looking at: %s", CurrentTile.c_str());
 			drawString(font, buf, 2, 134, 0xE0E0E0);
 	}
@@ -855,7 +855,7 @@ void Gui::renderDebugInfo() {
 		sprintf(ln[5], "Facing: %s (%s)  (%.1f / %.1f)", facing, axis, p->yRot, p->xRot);
 		sprintf(ln[6], "Biome: %s", biomeName);
 		sprintf(ln[7], "Day %ld  Time: %ld  Seed: %ld", day, dayTime, seed);
-		sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->SafeZone.top, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
+		sprintf(ln[8], "ST: %1d SB: %1d SL: %1d SR: %1d", minecraft->, minecraft->SafeZone.bottom, minecraft->SafeZone.left, minecraft->SafeZone.right);
 
 		const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
 		const float MGN = 2.0f;  // left/top margin in font-pixels

@@ -110,6 +110,7 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 }
 
 - (void)submitText {
+    [self hideKeyboard];
     NSDictionary* userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithString:submittedText] forKey:MCPEKeyboardSubmittedTextKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:MCPEKeyboardSubmittedNotification object:self userInfo:userInfo];
 }

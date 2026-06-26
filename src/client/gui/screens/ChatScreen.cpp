@@ -21,8 +21,11 @@ void ChatScreen::removed() {
 
 void ChatScreen::render(int xm, int ym, float a)
 {
-#ifndef __APPLE__
 	int status = minecraft->platform()->getUserInputStatus();
+#ifdef __APPLE__
+	if (status == 0)
+		minecraft->setScreen(NULL);
+#else
 	if (status > -1) {
 		if (status == 1) {
 			std::vector<std::string> v = minecraft->platform()->getUserInput();

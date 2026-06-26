@@ -550,6 +550,8 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
 
 - (void)keyboardInputCancelled:(NSNotification*)notification
 {
+    _dialogResultStatus = 0;
+    _dialogResultStrings.clear();
     [self cancelKeyboardInput];
 }
 
@@ -634,6 +636,8 @@ NSString* DefaultUsername = @"Stevie";
 }
 
 - (void)showKeyboard {
+    _dialogResultStatus = -1;
+    _dialogResultStrings.clear();
     for(UIView* view in self.view.subviews) {
         if([view isKindOfClass:[ShowKeyboardView class]]) {
             ShowKeyboardView* kview = (ShowKeyboardView*) view;
@@ -649,6 +653,8 @@ NSString* DefaultUsername = @"Stevie";
     [_keyboardView showKeyboard];
 }
 - (void)hideKeyboard {
+    [self.view endEditing:YES];
+    [_keyboardView hideKeyboard];
     for(UIView* view in self.view.subviews) {
         if([view isKindOfClass:[ShowKeyboardView class]]) {
             ShowKeyboardView* kview = (ShowKeyboardView*) view;
