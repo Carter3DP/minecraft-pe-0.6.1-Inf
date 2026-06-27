@@ -92,11 +92,16 @@ NSString* const MCPEKeyboardSubmittedTextKey = @"text";
 
 - (void)showKeyboard {
     [submittedText setString:@""];
+    self.userInteractionEnabled = YES;
+    self.hidden = NO;
     [self becomeFirstResponder];
 }
 
 - (void)hideKeyboard {
     [self resignFirstResponder];
+    self.userInteractionEnabled = NO;
+    self.hidden = YES;
+    [self removeFromSuperview];
 }
 
 - (void)textFieldDidChange :(NSNotification *)notif {

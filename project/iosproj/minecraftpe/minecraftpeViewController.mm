@@ -655,13 +655,6 @@ NSString* DefaultUsername = @"Stevie";
 - (void)hideKeyboard {
     [self.view endEditing:YES];
     [_keyboardView hideKeyboard];
-    for(UIView* view in self.view.subviews) {
-        if([view isKindOfClass:[ShowKeyboardView class]]) {
-            ShowKeyboardView* kview = (ShowKeyboardView*) view;
-            [kview hideKeyboard];
-            [kview removeFromSuperview];
-        }
-    }
 }
 
 @end
