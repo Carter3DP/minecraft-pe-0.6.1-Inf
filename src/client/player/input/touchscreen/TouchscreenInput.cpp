@@ -139,7 +139,7 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 
 	const float BaseY = -8 + h - 3.0f * Bh;
 	const float BaseX = _options->getBooleanValue(OPTIONS_IS_LEFT_HANDED)? -8 + w - 3 * Bw
-											:	8 + 0;
+											:	c.safeZone->left;
 	// Setup the bounding rectangle
 	_boundingRectangle = RectangleArea(BaseX, BaseY, BaseX + 3 * Bw, BaseY + 3 * Bh);
 
