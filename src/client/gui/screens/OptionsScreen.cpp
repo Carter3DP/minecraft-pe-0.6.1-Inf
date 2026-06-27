@@ -89,14 +89,14 @@ void OptionsScreen::init() {
 void OptionsScreen::setupPositions() {
 	int buttonHeight = btnClose->height;
 
-	btnClose->x = minecraft->SafeZone.right - btnClose->width;
+	btnClose->x = (minecraft->SafeZone.right * InvGuiScale) - btnClose->width;
 	btnClose->y = 0;
 
 	int offsetNum = 1;
 
 	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 
-		(*it)->x = minecraft->SafeZone.left;
+		(*it)->x = minecraft->SafeZone.left * InvGuiScale;
 		(*it)->y = offsetNum * buttonHeight;
 		(*it)->selected = false;
 
@@ -110,7 +110,7 @@ void OptionsScreen::setupPositions() {
 
 	// Credits button (bottom-right)
 	if (btnCredits != NULL) {
-		btnCredits->x = minecraft->SafeZone.right - btnCredits->width;
+		btnCredits->x = (minecraft->SafeZone.right * InvGuiScale) - btnCredits->width;
 		btnCredits->y = height - btnCredits->height;
 	}
 
@@ -118,9 +118,9 @@ void OptionsScreen::setupPositions() {
 
 		if (categoryButtons.size() > 0 && categoryButtons[0] != NULL) {
 
-			(*it)->x = categoryButtons[0]->width;
+			(*it)->x = (minecraft->SafeZone.left * InvGuiScale) + categoryButtons[0]->width;
 			(*it)->y = bHeader->height;
-			(*it)->width = width - categoryButtons[0]->width;
+			(*it)->width = width - (*it)->x;
 
 			(*it)->setupPositions();
 		}
