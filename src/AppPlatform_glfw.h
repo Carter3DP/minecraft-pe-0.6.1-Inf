@@ -112,9 +112,16 @@ public:
 			emscripten_get_canvas_element_size("canvas", &w, &h);
 
 			return w;
-		#endif
+		#else
+    	if (window) {
+    	    int w = 0;
+    	    int h = 0;
+    	    glfwGetFramebufferSize(window, &w, &h);
+    	    return w;
+    	}
 
 		return 854; 
+		#endif
 	};
 
 	virtual int getScreenHeight() override { 
@@ -123,9 +130,16 @@ public:
 			emscripten_get_canvas_element_size("canvas", &w, &h);
 
 			return h;
-		#endif
+		#else
+    	if (window) {
+    	    int w = 0;
+    	    int h = 0;
+    	    glfwGetFramebufferSize(window, &w, &h);
+    	    return h;
+    	}
 
 		return 480; 
+		#endif
 	};
 
 	virtual float getPixelsPerMillimeter() override;
