@@ -111,7 +111,7 @@ void ArmorScreen::setupPositions() {
 	bHeader.width = width;// -  bDone.w;
 
 	btnClose.width = btnClose.height = 19;
-	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - btnClose.width;
+	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 	btnClose.y = 0;
 
 	// Inventory pane

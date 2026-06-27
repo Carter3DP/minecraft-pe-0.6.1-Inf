@@ -119,7 +119,7 @@ void IngameBlockSelectionScreen::init()
 
 void IngameBlockSelectionScreen::setupPositions() {
 	bHeader.y = bDone.y = bCraft.y = 0;
-	bDone.x   = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) -  bDone.width;
+	bDone.x   = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 	bCraft.x  = 0;//width - bDone.w - bCraft.w;
 	bCraft.width = bArmor.width = 48;
 	bArmor.x = bCraft.width;
