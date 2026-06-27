@@ -34,6 +34,8 @@
 @property (nonatomic, assign) CADisplayLink *displayLink;
 - (BOOL) initView;
 - (BOOL) releaseView;
+- (void)applyAppSize;
+- (void)scheduleDelayedSizeUpdate;
 
 - (void) _resetAllPointers;
 - (void)keyboardInputSubmitted:(NSNotification*)notification;
@@ -166,6 +168,8 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
 
 - (void)dealloc
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(applyAppSize) object:nil];
+
     // Tear down context.
     if ([EAGLContext currentContext] == context)
         [EAGLContext setCurrentContext:nil];
@@ -209,6 +213,13 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardInputCancelled:) name:@"MCPEKeyboardCancelledNotification" object:_keyboardView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 	[super viewDidLoad];
+    [self scheduleDelayedSizeUpdate];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self scheduleDelayedSizeUpdate];
 }
 
 - (void)viewDidUnload
@@ -321,17 +332,34 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
     else
         _app->onGraphicsReset(*_context);
     
+    [self applyAppSize];
+    [self scheduleDelayedSizeUpdate];
+    
+    return true;
+}
+
+- (void)applyAppSize
+{
+    if (!_app || !_app->isInited())
+        return;
+
+    viewScale = ((EAGLView*)self.view)->viewScale;
+
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGFloat width  = MAX(screen.size.width, screen.size.height) * viewScale;
     CGFloat height = MIN(screen.size.width, screen.size.height) * viewScale;
-    
+
 //    CGFloat width  = ((EAGLView*)self.view)->framebufferWidth;
 //    CGFloat height = ((EAGLView*)self.view)->framebufferHeight;
-    
-    //NSLog(@"initView. Setting size: %f, %f\n", width, height);
+
+    //NSLog(@"applyAppSize. Setting size: %f, %f\n", width, height);
     _app->setSize((int)width, (int)height);
-    
-    return true;
+}
+
+- (void)scheduleDelayedSizeUpdate
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(applyAppSize) object:nil];
+    [self performSelector:@selector(applyAppSize) withObject:nil afterDelay:0.25];
 }
 
 - (BOOL) releaseView
