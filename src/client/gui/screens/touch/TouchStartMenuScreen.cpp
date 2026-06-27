@@ -127,7 +127,7 @@ void StartMenuScreen::setupPositions() {
 	bQuit.x = width - bQuit.width;
 	bQuit.y = 0;
 
-	copyrightPosX = width - minecraft->font->width(copyright) - 1;
+	copyrightPosX = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - minecraft->font->width(copyright) - 1;
 	versionPosX = (width - minecraft->font->width(version)) / 2;// - minecraft->font->width(version) - 2;
 }
 
@@ -167,7 +167,7 @@ void StartMenuScreen::render( int xm, int ym, float a )
 	renderBackground();
 
 	// Show current username in the top-left corner
-	drawString(font, username, 2, 2, 0xffffffff);
+	drawString(font, username, (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, 2, 0xffffffff);
     
     glEnable2(GL_BLEND);
 
@@ -201,8 +201,8 @@ void StartMenuScreen::render( int xm, int ym, float a )
 		drawString(font, copyright, copyrightPosX, height - 10, 0xffffff);
 		glColor4f2(1, 1, 1, 1);
 		if (Textures::isTextureIdValid(minecraft->textures->loadAndBindTexture("gui/logo/github.png")))
-			blit(2, height - 10, 0, 0, 8, 8, 256, 256);
-		drawString(font, "Kolyah35/minecraft-pe-0.6.1", 12, height - 10, 0xffcccccc);
+			blit((minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, height - 10, 0, 0, 8, 8, 256, 256);
+		drawString(font, "Kolyah35/minecraft-pe-0.6.1", (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 12, height - 10, 0xffcccccc);
 		//patch->draw(t, 0, 20);
 	}
 	Screen::render(xm, ym, a);

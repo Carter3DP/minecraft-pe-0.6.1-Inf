@@ -167,7 +167,7 @@ void StartMenuScreen::render( int xm, int ym, float a )
 	renderBackground();
 
 	// Show current username in the top-left corner
-	drawString(font, username, 2, 2, 0xffffffff);
+	drawString(font, username, (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, 2, 0xffffffff);
 
 #if defined(RPI)
 	TextureId id = minecraft->textures->loadTexture("gui/pi_title.png");
@@ -202,17 +202,17 @@ void StartMenuScreen::render( int xm, int ym, float a )
 		blit(0, height - 12, 0, 0, 43, 12, 256, 72+72);
 #endif
 
-	drawString(font, version, width - font->width(version) - 2, height - 10, 0xffcccccc);//0x666666);
-	drawString(font, copyright, 2, height - 20, 0xffffff);
+	drawString(font, version, (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - font->width(version) - 2, height - 10, 0xffcccccc);//0x666666);
+	drawString(font, copyright, (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, height - 20, 0xffffff);
 	glEnable2(GL_BLEND);
 	glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glColor4f2(1, 1, 1, 1);
 	if (Textures::isTextureIdValid(minecraft->textures->loadAndBindTexture("gui/logo/github.png")))
-		blit(2, height - 10, 0, 0, 8, 8, 256, 256);
+		blit((minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, height - 10, 0, 0, 8, 8, 256, 256);
 	{
 			std::string txt = "Kolyah35/minecraft-pe-0.6.1";
 			float wtxt = font->width(txt);
-			Gui::drawColoredString(font, txt, 12, height - 10, 255);
+			Gui::drawColoredString(font, txt, (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 12, height - 10, 255);
 			// underline link
 			float y0 = height - 10 + font->lineHeight - 1;
 			this->fill(12, (int)y0, 12 + (int)wtxt, (int)(y0 + 1), 0xffffffff);
