@@ -158,7 +158,7 @@ void PauseScreen::setupPositions() {
 	// bThirdPerson.x = bSound.x + 4 + bSound.width;
 	// bHideGui.x = bThirdPerson.x + 4 + bThirdPerson.width;
 
-	//bThirdPerson->x = (width - bThirdPerson->w) / 2;
+	bThirdPerson->x = minecraft->SafeZone.left;
 	//bThirdPerson->y = yBase + 32 * 4;
 }
 
