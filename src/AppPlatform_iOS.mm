@@ -546,9 +546,9 @@ bool AppPlatform_iOS::isPowerVR() {
 ScreenSafeBounds AppPlatform_iOS::getSafeZone() {
     ScreenSafeBounds bounds;
     bounds.left = 0;
-    bounds.right = getScreenWidth();
+    bounds.right = 0;
     bounds.top = 0;
-    bounds.bottom = getScreenHeight();
+    bounds.bottom = 0;
 
     UIView* view = [_viewController view];
     if (!view || ![view respondsToSelector:@selector(safeAreaInsets)])
