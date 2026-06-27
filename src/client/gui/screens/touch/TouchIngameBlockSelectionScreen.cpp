@@ -106,6 +106,7 @@ void IngameBlockSelectionScreen::init()
 	def.setSrc(IntRectangle(60, 0, 18, 18));
 	bDone.setImageDef(def, true);
     bDone.width = bDone.height = 19;
+	bDone.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 
 	bDone.scaleWhenPressed = false;
 
