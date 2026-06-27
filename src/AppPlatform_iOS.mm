@@ -550,44 +550,14 @@ ScreenSafeBounds AppPlatform_iOS::getSafeZone() {
     bounds.top = 0;
     bounds.bottom = 0;
 
-    /*UIView* view = [_viewController view];
+    UIView* view = [_viewController view];
     if (!view || ![view respondsToSelector:@selector(safeAreaInsets)])
         return bounds;
-
+    
     UIEdgeInsets insets = view.safeAreaInsets;
     bounds.left = (int)(insets.left * _viewController->viewScale);
     bounds.right = getScreenWidth() - (int)(insets.right * _viewController->viewScale);
     bounds.top = (int)(insets.top * _viewController->viewScale);
     bounds.bottom = getScreenHeight() - (int)(insets.bottom * _viewController->viewScale);
-    return bounds;*/
-
-    UIView* view = [_viewController view];
-    if (!view) {
-        return bounds;
-    }
-
-    float scale = _viewController->viewScale;
-
-    CGRect viewBounds = view.bounds;
-    CGRect safeFrame = viewBounds;
-
-    if ([view respondsToSelector:@selector(safeAreaLayoutGuide)]) {
-        safeFrame = view.safeAreaLayoutGuide.layoutFrame;
-    } else if ([view respondsToSelector:@selector(safeAreaInsets)]) {
-        UIEdgeInsets insets = view.safeAreaInsets;
-        safeFrame = UIEdgeInsetsInsetRect(viewBounds, insets);
-    } else {
-        return bounds;
-    }
-
-    if (safeFrame.size.width <= 0 || safeFrame.size.height <= 0) {
-        return bounds;
-    }
-
-    bounds.left = safeFrame.origin.x * scale;
-    bounds.right = (safeFrame.origin.x + safeFrame.size.width) * scale;
-    bounds.top = safeFrame.origin.y * scale;
-    bounds.bottom = (safeFrame.origin.y + safeFrame.size.height) * scale;
-
     return bounds;
 }
