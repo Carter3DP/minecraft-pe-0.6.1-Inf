@@ -804,7 +804,7 @@ void Gui::renderDebugInfo() {
 	}
 	// Build lines (NULL entry = blank gap)
 	Font* font = minecraft->font;
-	const float PAD = minecraft->SafeZone.left == 0 ? 2 : minecraft->SafeZone.left;  // horizontal padding for background; Added here since both debug infos use the same padding
+	const float PAD = minecraft->SafeZone.left == 0 ? 2 : minecraft->SafeZone.left * InvGuiScale;  // horizontal padding for background; Added here since both debug infos use the same padding
 	// @todo - add our own debug screen as an option alongside the restored java one, why does renderdebug have to be so jank - shredder
 
 	// if java beta's restored debug menu is enabled
