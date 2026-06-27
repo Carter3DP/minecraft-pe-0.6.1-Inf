@@ -191,7 +191,7 @@ void Gui::flashSlot(int slotId) {
 
 void Gui::getSlotPos(int slot, int& posX, int& posY) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
-	int screenHeight = (int)(minecraft->height * InvGuiScale);
+	int screenHeight = (int)(minecraft->SafeZone.bottom * InvGuiScale);
 	posX = screenWidth / 2 - getNumSlots() * 10 + slot * 20, 
 		posY = screenHeight - 22;
 }
