@@ -803,7 +803,7 @@ void Gui::renderDebugInfo() {
 	}
 	// Build lines (NULL entry = blank gap)
 	Font* font = minecraft->font;
-
+	const float PAD = minecraft->SafeZone.left == 0 ? 2 : minecraft->SafeZone.left;  // horizontal padding for background; Added here since both debug infos use the same padding
 	// @todo - add our own debug screen as an option alongside the restored java one, why does renderdebug have to be so jank - shredder
 
 	// if java beta's restored debug menu is enabled
@@ -812,36 +812,36 @@ void Gui::renderDebugInfo() {
 		char buf[128];
 
 		sprintf(buf, "Minecraft - Pocket Edition (%d fps, %d chunk updates)", (int)fps, displayChunkUpdates);
-		font->drawShadow(buf, 2, 2, 0xffffff);
+		font->drawShadow(buf, PAD, 2, 0xffffff);
 
-		font->drawShadow(minecraft->gatherStats1(), 2, 12, 0xFFFFFF);
-		font->drawShadow(minecraft->gatherStats2(), 2, 22, 0xFFFFFF);
-    	font->drawShadow(minecraft->gatherStats3(), 2, 32, 0xFFFFFF);
-    	font->drawShadow(minecraft->gatherStats4(), 2, 42, 0xFFFFFF);
+		font->drawShadow(minecraft->gatherStats1(), PAD, 12, 0xFFFFFF);
+		font->drawShadow(minecraft->gatherStats2(), PAD, 22, 0xFFFFFF);
+    	font->drawShadow(minecraft->gatherStats3(), PAD, 32, 0xFFFFFF);
+    	font->drawShadow(minecraft->gatherStats4(), PAD, 42, 0xFFFFFF);
 
 		sprintf(buf, "x: %.8f", minecraft->player->x);
-		drawString(font, buf, 2, 64, 0xE0E0E0);
+		drawString(font, buf, PAD, 64, 0xE0E0E0);
 
 		sprintf(buf, "y: %.8f", minecraft->player->y);
-		drawString(font, buf, 2, 72, 0xE0E0E0);
+		drawString(font, buf, PAD, 72, 0xE0E0E0);
 
 		sprintf(buf, "z: %.8f", minecraft->player->z);
-		drawString(font, buf, 2, 80, 0xE0E0E0);
+		drawString(font, buf, PAD, 80, 0xE0E0E0);
 
 		sprintf(buf, "f: %d",Mth::floor(minecraft->player->yRot * 4.0f / 360.0f + 0.5) & 0x3);
-		drawString(font, buf, 2, 88, 0xE0E0E0);
+		drawString(font, buf, PAD, 88, 0xE0E0E0);
 
 		sprintf(buf, "Seed: %.ld", lvl->getSeed());
-		drawString(font, buf, 2, 104, 0xE0E0E0);
+		drawString(font, buf, PAD, 104, 0xE0E0E0);
 
 		sprintf(buf, "Dimension: %d (%s)", lvl->dimension->id, lvl->dimension->getDimension().c_str());
-		drawString(font, buf, 2, 114, 0xE0E0E0);
+		drawString(font, buf, PAD, 114, 0xE0E0E0);
 
 		sprintf(buf, "Biome: %s", biomeName);
-		drawString(font, buf, 2, 124, 0xE0E0E0);
+		drawString(font, buf, PAD, 124, 0xE0E0E0);
 
 		sprintf(buf, "Looking at: %s", CurrentTile.c_str());
-			drawString(font, buf, 2, 134, 0xE0E0E0);
+			drawString(font, buf, PAD, 134, 0xE0E0E0);
 	}
 	else if (minecraft->options.getIntValue(OPTIONS_DEBUG_STYLE) == 1){
 		const int N   = 9; 			//This makes alot more sense. Why would you change a number in two different places if they do the same thing. Especially if its a const
@@ -859,16 +859,15 @@ void Gui::renderDebugInfo() {
 
 		const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
 		const float MGN = 2.0f;  // left/top margin in font-pixels
-		const float PAD = 2.0f;  // horizontal padding for background
 		//Font* font = minecraft->font;
 		
 		// 1) Draw semi-transparent background boxes behind each line
 		for (int i = 0; i < N; i++) {
 			if (ln[i][0] == '\0') continue;
 			float w  = (float)font->width(ln[i]);
-			float x0 = MGN - PAD;
+			float x0 = PAD - MGN;
 			float y0 = MGN + i * LH - 1.0f;
-			float x1 = MGN + w + PAD;
+			float x1 = PAD + w + MGN;
 			float y1 = MGN + (i + 1) * LH - 1.0f;
 			fill(x0, y0, x1, y1, 0x90000000);
 		}
@@ -880,7 +879,7 @@ void Gui::renderDebugInfo() {
 			if (ln[i][0] == '\0') continue;
 			float y = MGN + i * LH;
 			int col = (i == 0) ? 0xffFFFF55 : 0xffffffff; // title yellow, rest white
-			font->draw(ln[i], MGN, y, col);
+			font->draw(ln[i], PAD, y, col);
 		}
 		t.endOverrideAndDraw();
 	}
