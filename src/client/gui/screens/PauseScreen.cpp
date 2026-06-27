@@ -158,8 +158,8 @@ void PauseScreen::setupPositions() {
 	// bThirdPerson.x = bSound.x + 4 + bSound.width;
 	// bHideGui.x = bThirdPerson.x + 4 + bThirdPerson.width;
 
-	bThirdPerson->x = (minecraft->SafeZone.left * minecraft->gui.InvGuiScale);
-	bThirdPerson->y = 0;
+	bThirdPerson.x = (minecraft->SafeZone.left * minecraft->gui.InvGuiScale);
+	bThirdPerson.y = 0;
 }
 
 void PauseScreen::tick() {

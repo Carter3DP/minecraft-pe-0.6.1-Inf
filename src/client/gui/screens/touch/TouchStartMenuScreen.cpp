@@ -201,8 +201,8 @@ void StartMenuScreen::render( int xm, int ym, float a )
 		drawString(font, copyright, copyrightPosX, height - 10, 0xffffff);
 		glColor4f2(1, 1, 1, 1);
 		if (Textures::isTextureIdValid(minecraft->textures->loadAndBindTexture("gui/logo/github.png")))
-			blit((minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, height - 10, 0, 0, 8, 8, 256, 256);
-		drawString(font, "Kolyah35/minecraft-pe-0.6.1", (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 12, height - 10, 0xffcccccc);
+			blit((int) (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 2, height - 10, 0, 0, 8, 8, 256, 256);
+		drawString(font, "Kolyah35/minecraft-pe-0.6.1", (int) (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 12, height - 10, 0xffcccccc);
 		//patch->draw(t, 0, 20);
 	}
 	Screen::render(xm, ym, a);
