@@ -23,14 +23,8 @@
 //@class AppPlatform_iOS;
 @class BaseDialogController;
 
-typedef enum {
-    MCPEAppleRenderBackendEAGL = 0,
-    MCPEAppleRenderBackendMetal = 1
-} MCPEAppleRenderBackend;
-
 @interface minecraftpeViewController : UIViewController<IASKSettingsDelegate> {
     EAGLContext *context;
-    MCPEAppleRenderBackend renderBackend;
     
     // App and AppPlatform
     App* _app;

@@ -15,7 +15,6 @@ if(EMSCRIPTEN)
 endif()
 
 enum_option(PLATFORM "Desktop;Web" "Platform to build for.")
-option(USE_METAL_RENDERER "Build the optional Apple Metal renderer backend." OFF)
 
 find_package(Threads REQUIRED)
 find_package(OpenSSL)
@@ -43,10 +42,6 @@ if (${PLATFORM} STREQUAL "Desktop")
 elseif (${PLATFORM} STREQUAL "Web")
     set(PLATFORM_CPP "PLATFORM_WEB")
     set(EXTRA_LIBS "idbfs.js")
-endif()
-
-if(USE_METAL_RENDERER AND NOT APPLE)
-    message(FATAL_ERROR "USE_METAL_RENDERER is only supported on Apple platforms.")
 endif()
 
 # I totally shocked
@@ -310,13 +305,6 @@ if (${PLATFORM} STREQUAL "Desktop")
     list(APPEND CLIENT_SOURCES glad/src/glad.c)
 endif()
 
-if(APPLE AND USE_METAL_RENDERER)
-    enable_language(OBJCXX)
-    list(APPEND CLIENT_SOURCES
-        src/client/renderer/MetalRendererBackend.mm
-    )
-endif()
-
 # Server
 if(UNIX)
     add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
@@ -390,15 +378,6 @@ endif()
 # Client
 target_compile_definitions(${PROJECT_NAME} PUBLIC "OPENGL_ES" "NO_EGL" ${PLATFORM})
 target_link_libraries(${PROJECT_NAME} zlib ${PNG_LIB} OpenAL::OpenAL glfw ${EXTRA_LIBS})
-
-if(APPLE AND USE_METAL_RENDERER)
-    target_compile_definitions(${PROJECT_NAME} PUBLIC "USE_METAL_RENDERER")
-    target_link_libraries(${PROJECT_NAME}
-        "-framework Foundation"
-        "-framework QuartzCore"
-        "-framework Metal"
-    )
-endif()
 
 if (OpenSSL_FOUND)
     target_link_libraries(${PROJECT_NAME} OpenSSL::SSL OpenSSL::Crypto)

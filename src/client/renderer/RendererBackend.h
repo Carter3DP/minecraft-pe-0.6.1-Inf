@@ -8,8 +8,7 @@ typedef GLuint TextureId;
 
 enum RendererBackendType
 {
-	RENDERER_BACKEND_GLES,
-	RENDERER_BACKEND_METAL
+	RENDERER_BACKEND_GLES
 };
 
 enum RendererVertexFormat
@@ -68,7 +67,6 @@ public:
 };
 
 RendererBackend& rendererBackend();
-bool rendererUseMetalBackend(void* nativeLayer = 0);
 void rendererUseGLESBackend();
 
 #endif

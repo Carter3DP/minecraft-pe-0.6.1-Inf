@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <TargetConditionals.h>
-#import <dlfcn.h>
 
 #import "minecraftpeViewController.h"
 #import "EAGLView.h"
@@ -46,40 +45,6 @@
 
 static NSThread* lastThread = nil;
 
-static BOOL MCPEAppleDeviceSupportsMetal()
-{
-#if TARGET_OS_IPHONE
-    void* metal = dlopen("/System/Library/Frameworks/Metal.framework/Metal", RTLD_LAZY);
-    if (!metal)
-        return NO;
-
-    typedef id (*MTLCreateSystemDefaultDeviceFn)(void);
-    MTLCreateSystemDefaultDeviceFn createDevice = (MTLCreateSystemDefaultDeviceFn)dlsym(metal, "MTLCreateSystemDefaultDevice");
-    if (!createDevice)
-        return NO;
-
-    id device = createDevice();
-    return device != nil;
-#else
-    return NO;
-#endif
-}
-
-static MCPEAppleRenderBackend MCPESelectAppleRenderBackend()
-{
-    /*
-     * The current game renderer is OpenGL ES 1.x fixed-function. Metal support
-     * must be plugged in here once a Metal renderer or GLES-to-Metal bridge is
-     * available; until then, Metal-capable devices keep the existing EAGL path.
-     */
-    return MCPEAppleRenderBackendEAGL;
-}
-
-static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
-{
-    return backend == MCPEAppleRenderBackendMetal ? "Metal" : "EAGL";
-}
-
 @implementation minecraftpeViewController
 
 @synthesize animating;
@@ -100,15 +65,6 @@ static const char* MCPEAppleRenderBackendName(MCPEAppleRenderBackend backend)
 
 - (void)awakeFromNib
 {
-    renderBackend = MCPESelectAppleRenderBackend();
-    NSLog(@"Minecraft PE Apple render backend: %s%s",
-          MCPEAppleRenderBackendName(renderBackend),
-          (renderBackend == MCPEAppleRenderBackendEAGL && MCPEAppleDeviceSupportsMetal()) ? " (Metal supported, EAGL fallback active)" : "");
-
-    if (renderBackend == MCPEAppleRenderBackendMetal) {
-        NSLog(@"Metal renderer selected, but the current game renderer is still OpenGL ES 1.x.");
-    }
-
     EAGLContext *aContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
     
     if (!aContext)
