@@ -675,7 +675,7 @@ void Gui::renderHearts() {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
 
-	int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : minecraft->SafeZone.left; //minecraft called because we cant call config here
+	int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : minecraft->SafeZone.left * InvGuiScale; //minecraft called because we cant call config here
 
 	int armor = minecraft->player->getArmorValue();
 	for (int i = 0; i < Player::MAX_HEALTH / 2; i++) {
