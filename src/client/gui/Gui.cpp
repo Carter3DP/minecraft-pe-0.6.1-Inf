@@ -151,12 +151,16 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 			renderPlayerList(font, screenWidth, screenHeight);
 		}
 
-		if (minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG))
+		if (minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG)) {
 			renderDebugInfo();
-	}
+		}
+		if	(!minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG) && minecraft->options.getBooleanValue(OPTIONS_SHOW_POS)){
+			renderXYZ();
+		}
 
 	glDisable(GL_BLEND);
 	glEnable2(GL_ALPHA_TEST);
+	}
 }
 
 int Gui::getSlotIdAt(int x, int y) {
@@ -674,7 +678,7 @@ void Gui::renderHearts() {
 	random.setSeed(tickCount * 312871);
 
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
-	int screenHeight = (int)(minecraft->height * InvGuiScale);
+	int screenHeight = (int)(minecraft->SafeZone.bottom * InvGuiScale);
 
 	int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : minecraft->SafeZone.left * InvGuiScale; //minecraft called because we cant call config here
 
@@ -709,7 +713,7 @@ void Gui::renderHearts() {
 void Gui::renderBubbles() {
 	if (minecraft->player->isUnderLiquid(Material::water)) {
 		int screenWidth = (int)(minecraft->width * InvGuiScale);
-		int screenHeight = (int)(minecraft->height * InvGuiScale);
+		int screenHeight = (int)(minecraft->SafeZone.bottom * InvGuiScale);
 
 		int xx = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenWidth / 2 - getNumSlots() * 10 - 1 : minecraft->SafeZone.left * InvGuiScale; //Minecraft called because we cant call config here
 		int yo = (minecraft->options.getBooleanValue(OPTIONS_BAR_ON_TOP)) ? screenHeight - 42 : 12;
@@ -1234,4 +1238,50 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 		glPopMatrix2();
 	}
 
+}
+
+void Gui::renderXYZ() {
+	LocalPlayer* p   = minecraft->player;
+	Level*       lvl = minecraft->level;
+
+	// Position
+	float px = p->x, py = p->y - p->heightOffset, pz = p->z;
+	posTranslator.to(px, py, pz);
+	int bx = (int)floorf(px), by = (int)floorf(py), bz = (int)floorf(pz);
+	int cx = bx >> 4, cz = bz >> 4;
+
+	// Facing direction
+	float yMod = fmodf(p->yRot, 360.0f);
+	if (yMod < 0) yMod += 360.0f;
+	const char* facing;
+	const char* axis;
+	if      (yMod < 45  || yMod >= 315) { facing = "South"; axis = "+Z"; }
+	else if (yMod < 135)                 { facing = "West";  axis = "-X"; }
+	else if (yMod < 225)                 { facing = "North"; axis = "-Z"; }
+	else                                 { facing = "East";  axis = "+X"; }
+
+	// Build lines (NULL entry = blank gap)
+	Font* font = minecraft->font;
+	const float PAD = (minecraft->width * InvGuiScale) / 2; // horizontal padding for text
+
+	static char ln[1][96];
+	sprintf(ln[0], "X: %.3f / Y: %.3f / Z: %.3f", px, py, pz);
+	const float LH  = (float)Font::DefaultLineHeight; // 10 font-pixels
+	const float MGN = 2.0f;  // left margin in font-pixels
+	const float MGNT = 2.0f;
+	//Font* font = minecraft->font;
+	float w  = (float)font->width(ln[0]);
+	// 1) Draw semi-transparent background boxes behind each line
+	float x0 = PAD - MGN - (w / 2);
+	float y0 = MGNT - 1.0f;
+	float x1 = PAD + (w / 2) + MGN;
+	float y1 = MGNT + 1 * LH - 1.0f;
+	fill(x0, y0, x1, y1, 0x90000000);
+	// 2) Draw text (no extra scale — font coords are in GUI units, same as fill)
+	Tesselator& t = Tesselator::instance;
+	t.beginOverride();
+	float y = MGNT;
+	int col = 0xffffffff;
+	font->draw(ln[0], PAD - (w / 2), y, col);
+	t.endOverrideAndDraw();
 }

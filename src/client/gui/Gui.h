@@ -84,6 +84,8 @@ public:
 
 	static float floorAlignToScreenPixel(float);
 	static int itemCountItoa(char* buf, int count);
+
+	void renderXYZ();
 private:
 	void renderVignette(float br, int w, int h);
 	void renderSlot(int slot, int x, int y, float a);

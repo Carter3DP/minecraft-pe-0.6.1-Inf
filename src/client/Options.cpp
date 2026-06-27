@@ -16,6 +16,7 @@ OptionInt difficulty("difficulty", Difficulty::NORMAL, 0, Difficulty::COUNT);
 OptionBool hidegui("hidegui", false);
 OptionBool thirdPersonView("thirdperson", false);
 OptionBool renderDebug("renderDebug", false);
+OptionBool showPos("showPos", false);
 OptionBool smoothCamera("smoothCamera", false);
 OptionBool fixedCamera("fixedCamera", false);
 OptionBool isFlying("isflying", false);
@@ -115,6 +116,7 @@ void Options::initTable() {
     m_options[OPTIONS_HIDEGUI] = &hidegui;
     m_options[OPTIONS_THIRD_PERSON_VIEW] = &thirdPersonView;
     m_options[OPTIONS_RENDER_DEBUG] = &renderDebug;
+	m_options[OPTIONS_SHOW_POS] = &showPos;
     m_options[OPTIONS_SMOOTH_CAMERA] = &smoothCamera;
     m_options[OPTIONS_FIXED_CAMERA] = &fixedCamera;
 	m_options[OPTIONS_IS_FLYING] = &isFlying;

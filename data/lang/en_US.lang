@@ -231,6 +231,7 @@ options.isLeftHanded=Left handed
 options.useTouchscreen=Use touchscreen
 options.fancyGraphics=Fancy graphics
 options.renderDebug=Debug render
+options.showPos=Show Position
 options.anaglyph3d=3D anaglyph
 
 options.windowScale =Window Scaling

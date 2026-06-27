@@ -314,6 +314,7 @@ void OptionsScreen::generateOptionScreens() {
 		.addOptionItem(OPTIONS_VSYNC, minecraft)
 		.addOptionItem(OPTIONS_VIEW_DISTANCE, minecraft)
 		.addOptionItem(OPTIONS_RENDER_DEBUG, minecraft)
+		.addOptionItem(OPTIONS_SHOW_POS, minecraft)
 		.addOptionItem(OPTIONS_ANAGLYPH_3D, minecraft)
 		.addOptionItem(OPTIONS_VIEW_BOBBING, minecraft)
 		.addOptionItem(OPTIONS_AMBIENT_OCCLUSION, minecraft)
