@@ -173,7 +173,7 @@ void PaneCraftingScreen::setupPositions() {
 	btnCraft.setSize((float)craftW, 62);
 
 	btnClose.width = btnClose.height = 19;
-	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
+	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - btnClose.width;
 	btnClose.y = 0;
 
 	// Middle - Scrolling pane
