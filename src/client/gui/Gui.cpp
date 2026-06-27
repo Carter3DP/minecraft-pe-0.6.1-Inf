@@ -151,7 +151,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 			renderPlayerList(font, screenWidth, screenHeight);
 		}
 
-		if (/*minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG)*/ true)
+		if (minecraft->options.getBooleanValue(OPTIONS_RENDER_DEBUG))
 			renderDebugInfo();
 	}
 
