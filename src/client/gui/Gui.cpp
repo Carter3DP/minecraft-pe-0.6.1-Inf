@@ -90,7 +90,8 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 	// T: 7
 	// L: 6
 	// F: 3
-	int ySlot = screenHeight - 16 - 3;
+
+	int ySlot = minecraft->SafeZone.bottom - 16 - 3;  //maybe fix for items still rendering low
 
 	if (!minecraft->options.getBooleanValue(OPTIONS_HIDEGUI)) {
 		if (minecraft->gameMode->canHurtPlayer()) {
