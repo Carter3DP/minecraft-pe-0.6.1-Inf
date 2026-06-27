@@ -8,6 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		04004533169EE72E003EB6FA /* clouds.png in Resources */ = {isa = PBXBuildFile; fileRef = 04004532169EE72E003EB6FA /* clouds.png */; };
+		F99D35202F73800000DC153E /* cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35002F73800000DC153E /* cursor.png */; };
+		F99D35212F73800000DC153E /* gui2.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35012F73800000DC153E /* gui2.png */; };
+		F99D35222F73800000DC153E /* pi_title.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35022F73800000DC153E /* pi_title.png */; };
+		F99D35232F73800000DC153E /* github.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35032F73800000DC153E /* github.png */; };
+		F99D35242F73800000DC153E /* raknet_high_72.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35042F73800000DC153E /* raknet_high_72.png */; };
+		F99D35252F73800000DC153E /* raknet_low_18.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35052F73800000DC153E /* raknet_low_18.png */; };
+		F99D35262F73800000DC153E /* foliagecolor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35062F73800000DC153E /* foliagecolor.png */; };
+		F99D35272F73800000DC153E /* grasscolor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35072F73800000DC153E /* grasscolor.png */; };
+		F99D35282F73800000DC153E /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35082F73800000DC153E /* shadow.png */; };
+		F99D35292F73800000DC153E /* vignette.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35092F73800000DC153E /* vignette.png */; };
+		F99D352A2F73800000DC153E /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350A2F73800000DC153E /* water.png */; };
+		F99D352B2F73800000DC153E /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350B2F73800000DC153E /* moon.png */; };
+		F99D352C2F73800000DC153E /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350C2F73800000DC153E /* sun.png */; };
+		F99D35302F73800000DC153E /* cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35002F73800000DC153E /* cursor.png */; };
+		F99D35312F73800000DC153E /* gui2.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35012F73800000DC153E /* gui2.png */; };
+		F99D35322F73800000DC153E /* pi_title.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35022F73800000DC153E /* pi_title.png */; };
+		F99D35332F73800000DC153E /* github.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35032F73800000DC153E /* github.png */; };
+		F99D35342F73800000DC153E /* raknet_high_72.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35042F73800000DC153E /* raknet_high_72.png */; };
+		F99D35352F73800000DC153E /* raknet_low_18.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35052F73800000DC153E /* raknet_low_18.png */; };
+		F99D35362F73800000DC153E /* foliagecolor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35062F73800000DC153E /* foliagecolor.png */; };
+		F99D35372F73800000DC153E /* grasscolor.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35072F73800000DC153E /* grasscolor.png */; };
+		F99D35382F73800000DC153E /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35082F73800000DC153E /* shadow.png */; };
+		F99D35392F73800000DC153E /* vignette.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D35092F73800000DC153E /* vignette.png */; };
+		F99D353A2F73800000DC153E /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350A2F73800000DC153E /* water.png */; };
+		F99D353B2F73800000DC153E /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350B2F73800000DC153E /* moon.png */; };
+		F99D353C2F73800000DC153E /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350C2F73800000DC153E /* sun.png */; };
 		0400453716A41236003EB6FA /* HeavyTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0400453516A41236003EB6FA /* HeavyTile.cpp */; };
 		0400453A16A4125C003EB6FA /* FallingTileRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0400453816A4125B003EB6FA /* FallingTileRenderer.cpp */; };
 		0413970716A82E1E008A9F1A /* ArmorItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0413970516A82E1E008A9F1A /* ArmorItem.cpp */; };
@@ -1572,6 +1598,19 @@
 		D572D3C6144C6A1400E67862 /* char.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = char.png; sourceTree = "<group>"; };
 		D572D3C7144C6A1400E67862 /* particles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particles.png; sourceTree = "<group>"; };
 		D572D3C8144C6A1400E67862 /* terrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain.png; sourceTree = "<group>"; };
+		F99D35002F73800000DC153E /* cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cursor.png; sourceTree = "<group>"; };
+		F99D35012F73800000DC153E /* gui2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gui2.png; sourceTree = "<group>"; };
+		F99D35022F73800000DC153E /* pi_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pi_title.png; sourceTree = "<group>"; };
+		F99D35032F73800000DC153E /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github.png; sourceTree = "<group>"; };
+		F99D35042F73800000DC153E /* raknet_high_72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = raknet_high_72.png; sourceTree = "<group>"; };
+		F99D35052F73800000DC153E /* raknet_low_18.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = raknet_low_18.png; sourceTree = "<group>"; };
+		F99D35062F73800000DC153E /* foliagecolor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = foliagecolor.png; sourceTree = "<group>"; };
+		F99D35072F73800000DC153E /* grasscolor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grasscolor.png; sourceTree = "<group>"; };
+		F99D35082F73800000DC153E /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
+		F99D35092F73800000DC153E /* vignette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vignette.png; sourceTree = "<group>"; };
+		F99D350A2F73800000DC153E /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
+		F99D350B2F73800000DC153E /* moon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon.png; sourceTree = "<group>"; };
+		F99D350C2F73800000DC153E /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
 		D572D3DF144CB23200E67862 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D584926C14FD234400741128 /* SharedConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedConstants.cpp; sourceTree = "<group>"; };
 		D584926F14FD236700741128 /* Control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Control.h; path = ai/control/Control.h; sourceTree = "<group>"; };
@@ -2907,8 +2946,10 @@
 				D572D3AC144C6A1400E67862 /* font */,
 				D572D3AE144C6A1400E67862 /* gui */,
 				D572D3C3144C6A1400E67862 /* item */,
+				F99D35112F73800000DC153E /* misc */,
 				D572D3C5144C6A1400E67862 /* mob */,
 				D572D3C7144C6A1400E67862 /* particles.png */,
+				F99D35122F73800000DC153E /* terrain */,
 				D572D3C8144C6A1400E67862 /* terrain.png */,
 			);
 			name = images;
@@ -2927,14 +2968,18 @@
 			isa = PBXGroup;
 			children = (
 				D598BD9B164157C300A36438 /* badge */,
+				F99D35102F73800000DC153E /* logo */,
 				D51DC73514581D4E00E3D761 /* itemframe.png */,
 				D5A55E4E1450761600A7571B /* bg32.png */,
 				D572D3AF144C6A1400E67862 /* background.png */,
+				F99D35002F73800000DC153E /* cursor.png */,
 				D572D3B3144C6A1400E67862 /* default_world.png */,
 				D572D3B6144C6A1400E67862 /* gui.png */,
+				F99D35012F73800000DC153E /* gui2.png */,
 				D572D3B7144C6A1400E67862 /* gui_blocks.png */,
 				D572D3B8144C6A1400E67862 /* icons.png */,
 				D572D3B9144C6A1400E67862 /* items.png */,
+				F99D35022F73800000DC153E /* pi_title.png */,
 				D5251E6F15381D0500FC82C8 /* spritesheet.png */,
 				D572D3C1144C6A1400E67862 /* title.png */,
 				D572D3C2144C6A1400E67862 /* touchgui.png */,
@@ -2968,6 +3013,37 @@
 				D572D3C6144C6A1400E67862 /* char.png */,
 			);
 			path = mob;
+			sourceTree = "<group>";
+		};
+		F99D35102F73800000DC153E /* logo */ = {
+			isa = PBXGroup;
+			children = (
+				F99D35032F73800000DC153E /* github.png */,
+				F99D35042F73800000DC153E /* raknet_high_72.png */,
+				F99D35052F73800000DC153E /* raknet_low_18.png */,
+			);
+			path = logo;
+			sourceTree = "<group>";
+		};
+		F99D35112F73800000DC153E /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				F99D35062F73800000DC153E /* foliagecolor.png */,
+				F99D35072F73800000DC153E /* grasscolor.png */,
+				F99D35082F73800000DC153E /* shadow.png */,
+				F99D35092F73800000DC153E /* vignette.png */,
+				F99D350A2F73800000DC153E /* water.png */,
+			);
+			path = misc;
+			sourceTree = "<group>";
+		};
+		F99D35122F73800000DC153E /* terrain */ = {
+			isa = PBXGroup;
+			children = (
+				F99D350B2F73800000DC153E /* moon.png */,
+				F99D350C2F73800000DC153E /* sun.png */,
+			);
+			path = terrain;
 			sourceTree = "<group>";
 		};
 		D584926914FD22EE00741128 /* ai */ = {
@@ -4673,6 +4749,19 @@
 				D58BB58D146A0B920002C9F5 /* char.png in Resources */,
 				D58BB58E146A0B920002C9F5 /* particles.png in Resources */,
 				D58BB58F146A0B920002C9F5 /* terrain.png in Resources */,
+				F99D35202F73800000DC153E /* cursor.png in Resources */,
+				F99D35212F73800000DC153E /* gui2.png in Resources */,
+				F99D35222F73800000DC153E /* pi_title.png in Resources */,
+				F99D35232F73800000DC153E /* github.png in Resources */,
+				F99D35242F73800000DC153E /* raknet_high_72.png in Resources */,
+				F99D35252F73800000DC153E /* raknet_low_18.png in Resources */,
+				F99D35262F73800000DC153E /* foliagecolor.png in Resources */,
+				F99D35272F73800000DC153E /* grasscolor.png in Resources */,
+				F99D35282F73800000DC153E /* shadow.png in Resources */,
+				F99D35292F73800000DC153E /* vignette.png in Resources */,
+				F99D352A2F73800000DC153E /* water.png in Resources */,
+				F99D352B2F73800000DC153E /* moon.png in Resources */,
+				F99D352C2F73800000DC153E /* sun.png in Resources */,
 				D58BB590146A0B920002C9F5 /* bg32.png in Resources */,
 				D58BB591146A0B920002C9F5 /* CreateNewWorld_ipad.xib in Resources */,
 				D58BB592146A0B920002C9F5 /* Default@2x.png in Resources */,
@@ -4891,6 +4980,19 @@
 				D572D3DC144C6A1400E67862 /* char.png in Resources */,
 				D572D3DD144C6A1400E67862 /* particles.png in Resources */,
 				D572D3DE144C6A1400E67862 /* terrain.png in Resources */,
+				F99D35302F73800000DC153E /* cursor.png in Resources */,
+				F99D35312F73800000DC153E /* gui2.png in Resources */,
+				F99D35322F73800000DC153E /* pi_title.png in Resources */,
+				F99D35332F73800000DC153E /* github.png in Resources */,
+				F99D35342F73800000DC153E /* raknet_high_72.png in Resources */,
+				F99D35352F73800000DC153E /* raknet_low_18.png in Resources */,
+				F99D35362F73800000DC153E /* foliagecolor.png in Resources */,
+				F99D35372F73800000DC153E /* grasscolor.png in Resources */,
+				F99D35382F73800000DC153E /* shadow.png in Resources */,
+				F99D35392F73800000DC153E /* vignette.png in Resources */,
+				F99D353A2F73800000DC153E /* water.png in Resources */,
+				F99D353B2F73800000DC153E /* moon.png in Resources */,
+				F99D353C2F73800000DC153E /* sun.png in Resources */,
 				D5A55E4F1450761600A7571B /* bg32.png in Resources */,
 				D5BFCF1B14513FF400A443B0 /* CreateNewWorld_ipad.xib in Resources */,
 				D5E1BA9B1451C8A0007DCC4F /* Default@2x.png in Resources */,
