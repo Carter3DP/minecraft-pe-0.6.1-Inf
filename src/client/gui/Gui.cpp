@@ -161,7 +161,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 int Gui::getSlotIdAt(int x, int y) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
-	int screenHeight = (int)(minecraft->height * InvGuiScale);
+	int screenHeight = (int)(minecraft->SafeZone.bottom * InvGuiScale);
 	x = (int)(x * InvGuiScale);
 	y = (int)(y * InvGuiScale);
 
