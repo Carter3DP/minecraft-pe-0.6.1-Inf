@@ -109,7 +109,7 @@ bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r
 		t.color(r2 * br, g2 * br, b2 * br);
 		renderNorth(tt, xf, yf, zf, tt->getTexture(level, x, y, z, 2));
 		if ((tt->getTexture(level, x, y, z, 2) == 3) && sideTinting) { // checking if the texture from terrain.png is the normal grass side texture
-			t.color(c2 * br * biomeR, c2 * br * biomeG, c2 * br * biomeB);
+			t.color(c2 * biomeR, c2 * biomeG, c2 * biomeB);
 			renderNorth(tt, xf, yf, zf, 38); // rendering an extra face over the side of the cube that is a grayscale grass fringe tinted by t.color using biome colors, kinda inefficient
 		}
 		changed = true;
@@ -121,7 +121,7 @@ bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r
 		t.color(r2 * br, g2 * br, b2 * br);
 		renderSouth(tt, xf, yf, zf, tt->getTexture(level, x, y, z, 3));
 		if ((tt->getTexture(level, x, y, z, 3) == 3) && sideTinting){ // checking if the texture from terrain.png is the normal grass side texture
-			t.color(c2 * br * biomeR, c2 * br * biomeG, c2 * br * biomeB);
+			t.color(c2 * biomeR, c2 * biomeG, c2 * biomeB);
 			renderSouth(tt, xf, yf, zf, 38); // rendering an extra face over the side of the cube that is a grayscale grass fringe tinted by t.color using biome colors, kinda inefficient
 		}
 		changed = true;
@@ -133,7 +133,7 @@ bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r
 		t.color(r3 * br, g3 * br, b3 * br);
 		renderWest(tt, xf, yf, zf, tt->getTexture(level, x, y, z, 4));
 		if ((tt->getTexture(level, x, y, z, 4) == 3) && sideTinting) { // checking if the texture from terrain.png is the normal grass side texture
-			t.color(c2 * br * biomeR, c2 * br * biomeG, c2 * br * biomeB);
+			t.color(c2 * biomeR, c2 * biomeG, c2 * biomeB);
 			renderWest(tt, xf, yf, zf, 38); // rendering an extra face over the side of the cube that is a grayscale grass fringe tinted by t.color using biome colors, kinda inefficient
 		}
 		changed = true;
@@ -145,7 +145,7 @@ bool TileRenderer::tesselateBlockInWorld( Tile* tt, int x, int y, int z, float r
 		t.color(r3 * br, g3 * br, b3 * br);
 		renderEast(tt, xf, yf, zf, tt->getTexture(level, x, y, z, 5));
 		if ((tt->getTexture(level, x, y, z, 5) == 3) && sideTinting) { // checking if the texture from terrain.png is the normal grass side texture
-			t.color(c2 * br * biomeR, c2 * br * biomeG, c2 * br * biomeB);
+			t.color(c2 * biomeR, c2 * biomeG, c2 * biomeB);
 			renderEast(tt, xf, yf, zf, 38); // rendering an extra face over the side of the cube that is a grayscale grass fringe tinted by t.color using biome colors, kinda inefficient
 		}
 		changed = true;
