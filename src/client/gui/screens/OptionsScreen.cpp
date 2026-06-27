@@ -97,7 +97,7 @@ void OptionsScreen::init() {
 void OptionsScreen::setupPositions() {
 	int buttonHeight = btnClose->height;
 
-	btnClose->x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - btnClose->width;
+	btnClose->x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 	btnClose->y = 0;
 
 	int offsetNum = 1;
