@@ -106,7 +106,6 @@ void IngameBlockSelectionScreen::init()
 	def.setSrc(IntRectangle(60, 0, 18, 18));
 	bDone.setImageDef(def, true);
     bDone.width = bDone.height = 19;
-	bDone.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 
 	bDone.scaleWhenPressed = false;
 
@@ -120,7 +119,7 @@ void IngameBlockSelectionScreen::init()
 
 void IngameBlockSelectionScreen::setupPositions() {
 	bHeader.y = bDone.y = bCraft.y = 0;
-	bDone.x   = width -  bDone.width;
+	bDone.x   = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) -  bDone.width;
 	bCraft.x  = 0;//width - bDone.w - bCraft.w;
 	bCraft.width = bArmor.width = 48;
 	bArmor.x = bCraft.width;

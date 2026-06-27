@@ -83,7 +83,6 @@ void ArmorScreen::init() {
 	def.setSrc(IntRectangle(60, 0, 18, 18));
 	btnClose.setImageDef(def, true);
 	btnClose.scaleWhenPressed = false;
-	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale);
 
 	buttons.push_back(&bHeader);
 	buttons.push_back(&btnClose);
@@ -112,7 +111,7 @@ void ArmorScreen::setupPositions() {
 	bHeader.width = width;// -  bDone.w;
 
 	btnClose.width = btnClose.height = 19;
-	btnClose.x = width - btnClose.width;
+	btnClose.x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - btnClose.width;
 	btnClose.y = 0;
 
 	// Inventory pane

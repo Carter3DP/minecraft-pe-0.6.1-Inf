@@ -17,7 +17,13 @@ public:
 	OptionsGroup(std::string labelID);
 	virtual void setupPositions();
 	virtual void render(Minecraft* minecraft, int xm, int ym);
+	virtual void tick(Minecraft* minecraft);
+	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum);
+	virtual void mouseReleased(Minecraft* minecraft, int x, int y, int buttonNum);
 	OptionsGroup& addOptionItem(OptionId optId, Minecraft* minecraft);
+	void setViewportHeight(int height);
+	void scrollBy(int amount);
+	bool mouseDragged(Minecraft* minecraft, int x, int y);
 protected:
 
 	void createToggle(OptionId optId, Minecraft* minecraft);
@@ -27,6 +33,18 @@ protected:
 	void createKey(OptionId optId, Minecraft* minecraft);
 
 	std::string label;
+	int viewportHeight;
+	int contentBottom;
+	int scrollOffset;
+	int maxScrollOffset;
+	bool dragging;
+	bool dragged;
+	int dragStartY;
+	int dragStartScrollOffset;
+
+	void updateScrollBounds();
+	void offsetChildren(int dy);
+	bool isInsideViewport(int px, int py) const;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_GUI_COMPONENTS__OptionsGroup_H__*/

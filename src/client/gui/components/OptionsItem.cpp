@@ -19,6 +19,13 @@ void OptionsItem::setupPositions() {
 	height = currentHeight;
 }
 
+void OptionsItem::translate( int dy ) {
+	y += dy;
+	for(std::vector<GuiElement*>::iterator it = children.begin(); it != children.end(); ++it) {
+		(*it)->y += dy;
+	}
+}
+
 void OptionsItem::render( Minecraft* minecraft, int xm, int ym ) {
 	int yOffset = (height - 8) / 2;
 	std::string text = m_label;

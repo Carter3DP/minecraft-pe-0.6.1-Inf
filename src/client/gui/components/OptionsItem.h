@@ -18,6 +18,7 @@ public:
 	OptionsItem(OptionId optionId, std::string label, GuiElement* element);
 	virtual void render(Minecraft* minecraft, int xm, int ym);
 	void setupPositions();
+	void translate(int dy);
 
 private:
 	OptionId m_optionId;

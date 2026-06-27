@@ -9,13 +9,26 @@
 
 #include "../components/ImageButton.h"
 #include "../components/OptionsGroup.h"
+#include "../Gui.h"
 #include "platform/input/Keyboard.h"
+#include "platform/input/Mouse.h"
+
+namespace {
+const int CATEGORY_SCROLL_STEP = 24;
+const int CATEGORY_SCROLL_DRAG_SLOP = 4;
+}
 
 OptionsScreen::OptionsScreen()
 	: btnClose(NULL),
 	bHeader(NULL),
 	btnCredits(NULL),
-	selectedCategory(0) {
+	selectedCategory(0),
+	categoryScrollOffset(0),
+	maxCategoryScrollOffset(0),
+	categoryDragging(false),
+	categoryDragged(false),
+	categoryDragStartY(0),
+	categoryDragStartScrollOffset(0) {
 }
 
 OptionsScreen::~OptionsScreen() {
@@ -27,11 +40,6 @@ OptionsScreen::~OptionsScreen() {
 	if (bHeader != NULL) {
 		delete bHeader;
 		bHeader = NULL;
-	}
-
-	if (btnCredits != NULL) {
-		delete btnCredits;
-		btnCredits = NULL;
 	}
 
 	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
@@ -71,10 +79,10 @@ void OptionsScreen::init() {
 	categoryButtons.push_back(new Touch::TButton(6, "Tweaks"));
 
 	btnCredits = new Touch::TButton(11, "Credits");
+	categoryButtons.push_back(btnCredits);
 
 	buttons.push_back(bHeader);
 	buttons.push_back(btnClose);
-	buttons.push_back(btnCredits);
 
 	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
 		buttons.push_back(*it);
@@ -108,11 +116,7 @@ void OptionsScreen::setupPositions() {
 	bHeader->width = width; //- btnClose->width; looked a little bad with safe zones. hopefully this is better.
 	bHeader->height = btnClose->height;
 
-	// Credits button (bottom-right)
-	if (btnCredits != NULL) {
-		btnCredits->x = (minecraft->SafeZone.left * minecraft->gui.InvGuiScale);
-		btnCredits->y = height - btnCredits->height;
-	}
+	updateCategoryScrollBounds();
 
 	for (std::vector<OptionsGroup*>::iterator it = optionPanes.begin(); it != optionPanes.end(); ++it) {
 
@@ -121,6 +125,7 @@ void OptionsScreen::setupPositions() {
 			(*it)->x = (minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + categoryButtons[0]->width;
 			(*it)->y = bHeader->height;
 			(*it)->width = width - (*it)->x;
+			(*it)->setViewportHeight(height - bHeader->height);
 
 			(*it)->setupPositions();
 		}
@@ -139,7 +144,33 @@ void OptionsScreen::render(int xm, int ym, float a) {
 	if (currentOptionsGroup != NULL)
 		currentOptionsGroup->render(minecraft, xmm, ymm);
 
-	super::render(xm, ym, a);
+	if (bHeader != NULL)
+		((Button*)bHeader)->render(minecraft, xm, ym);
+	if (btnClose != NULL)
+		((Button*)btnClose)->render(minecraft, xm, ym);
+
+	updateCategoryScrollBounds();
+	int categoryX = minecraft->SafeZone.left * minecraft->gui.InvGuiScale;
+	int categoryY = bHeader->height;
+	int categoryWidth = categoryButtons.empty() ? 0 : categoryButtons[0]->width;
+	int categoryHeight = height - categoryY;
+	if (categoryHeight < 0)
+		categoryHeight = 0;
+
+	glEnable2(GL_SCISSOR_TEST);
+	glScissor(
+		Gui::GuiScale * categoryX,
+		minecraft->height - Gui::GuiScale * (categoryY + categoryHeight),
+		Gui::GuiScale * categoryWidth,
+		Gui::GuiScale * categoryHeight
+	);
+
+	offsetCategoryButtons(-categoryScrollOffset);
+	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it)
+		(*it)->render(minecraft, xm, ym);
+	offsetCategoryButtons(categoryScrollOffset);
+
+	glDisable2(GL_SCISSOR_TEST);
 }
 
 void OptionsScreen::removed() {
@@ -178,6 +209,63 @@ void OptionsScreen::selectCategory(int index) {
 
 	if (index < (int)optionPanes.size())
 		currentOptionsGroup = optionPanes[index];
+}
+
+void OptionsScreen::updateCategoryScrollBounds() {
+	int contentBottom = bHeader ? bHeader->height : 0;
+	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+		if ((*it)->y + (*it)->height > contentBottom)
+			contentBottom = (*it)->y + (*it)->height;
+	}
+
+	int viewportBottom = height;
+	maxCategoryScrollOffset = contentBottom - viewportBottom;
+	if (maxCategoryScrollOffset < 0)
+		maxCategoryScrollOffset = 0;
+
+	if (categoryScrollOffset < 0)
+		categoryScrollOffset = 0;
+	if (categoryScrollOffset > maxCategoryScrollOffset)
+		categoryScrollOffset = maxCategoryScrollOffset;
+}
+
+void OptionsScreen::scrollCategoriesBy(int amount) {
+	categoryScrollOffset += amount;
+	updateCategoryScrollBounds();
+}
+
+void OptionsScreen::offsetCategoryButtons(int dy) {
+	if (dy == 0)
+		return;
+
+	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it)
+		(*it)->y += dy;
+}
+
+bool OptionsScreen::isInsideCategoryViewport(int x, int y) const {
+	if (categoryButtons.empty() || bHeader == NULL)
+		return false;
+
+	int categoryX = minecraft->SafeZone.left * minecraft->gui.InvGuiScale;
+	int categoryY = bHeader->height;
+	int categoryWidth = categoryButtons[0]->width;
+	return x >= categoryX && y >= categoryY && x < categoryX + categoryWidth && y < height;
+}
+
+bool OptionsScreen::handleCategoryDrag(int x, int y) {
+	if (!categoryDragging || !Mouse::isButtonDown(MouseAction::ACTION_LEFT))
+		return false;
+
+	int dy = y - categoryDragStartY;
+	if (dy < -CATEGORY_SCROLL_DRAG_SLOP || dy > CATEGORY_SCROLL_DRAG_SLOP)
+		categoryDragged = true;
+
+	if (!categoryDragged)
+		return false;
+
+	categoryScrollOffset = categoryDragStartScrollOffset - dy;
+	updateCategoryScrollBounds();
+	return true;
 }
 
 void OptionsScreen::generateOptionScreens() {
@@ -252,14 +340,81 @@ void OptionsScreen::mouseClicked(int x, int y, int buttonNum) {
 	if (currentOptionsGroup != NULL)
 		currentOptionsGroup->mouseClicked(minecraft, x, y, buttonNum);
 
+	bool allowCategories = isInsideCategoryViewport(x, y);
+	if (buttonNum == MouseAction::ACTION_LEFT && allowCategories) {
+		categoryDragging = true;
+		categoryDragged = false;
+		categoryDragStartY = y;
+		categoryDragStartScrollOffset = categoryScrollOffset;
+	}
+
+	std::vector<bool> activeStates;
+	activeStates.reserve(categoryButtons.size());
+	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+		activeStates.push_back((*it)->active);
+		if (!allowCategories)
+			(*it)->active = false;
+	}
+	offsetCategoryButtons(-categoryScrollOffset);
 	super::mouseClicked(x, y, buttonNum);
+	offsetCategoryButtons(categoryScrollOffset);
+	for (unsigned int i = 0; i < categoryButtons.size(); ++i) {
+		categoryButtons[i]->active = activeStates[i];
+		if (!allowCategories)
+			categoryButtons[i]->released(x, y);
+	}
 }
 
 void OptionsScreen::mouseReleased(int x, int y, int buttonNum) {
 	if (currentOptionsGroup != NULL)
 		currentOptionsGroup->mouseReleased(minecraft, x, y, buttonNum);
 
+	bool allowCategories = isInsideCategoryViewport(x, y) && !categoryDragged;
+	categoryDragging = false;
+
+	std::vector<bool> activeStates;
+	activeStates.reserve(categoryButtons.size());
+	for (std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
+		activeStates.push_back((*it)->active);
+		if (!allowCategories)
+			(*it)->active = false;
+	}
+	offsetCategoryButtons(-categoryScrollOffset);
 	super::mouseReleased(x, y, buttonNum);
+	offsetCategoryButtons(categoryScrollOffset);
+	for (unsigned int i = 0; i < categoryButtons.size(); ++i)
+		categoryButtons[i]->active = activeStates[i];
+}
+
+void OptionsScreen::mouseEvent() {
+	const MouseAction& e = Mouse::getEvent();
+	if (e.action == MouseAction::ACTION_MOVE) {
+		int xm = e.x * width / minecraft->width;
+		int ym = e.y * height / minecraft->height - 1;
+		if (handleCategoryDrag(xm, ym))
+			return;
+	}
+
+	if (currentOptionsGroup != NULL && e.action == MouseAction::ACTION_MOVE) {
+		int xm = e.x * width / minecraft->width;
+		int ym = e.y * height / minecraft->height - 1;
+		if (currentOptionsGroup->mouseDragged(minecraft, xm, ym))
+			return;
+	}
+
+	super::mouseEvent();
+}
+
+void OptionsScreen::mouseWheel(int dx, int dy, int xm, int ym) {
+	(void)dx;
+
+	if (dy == 0)
+		return;
+
+	if (isInsideCategoryViewport(xm, ym))
+		scrollCategoriesBy(dy > 0 ? -CATEGORY_SCROLL_STEP : CATEGORY_SCROLL_STEP);
+	else if (currentOptionsGroup != NULL)
+		currentOptionsGroup->scrollBy(dy > 0 ? -24 : 24);
 }
 
 void OptionsScreen::keyPressed(int eventKey) {
