@@ -110,7 +110,7 @@ void OptionsScreen::setupPositions() {
 
 	// Credits button (bottom-right)
 	if (btnCredits != NULL) {
-		btnCredits->x = (minecraft->SafeZone.right * minecraft->gui.InvGuiScale) - btnCredits->width;
+		btnCredits->x = (minecraft->SafeZone.left * minecraft->gui.InvGuiScale);
 		btnCredits->y = height - btnCredits->height;
 	}
 
