@@ -49,6 +49,6 @@ class EntityBoat: public Entity{
         void entityInit();
         virtual bool save(CompoundTag* entityTag) override;
         virtual bool load(CompoundTag* entityTag) override;
-}
+};
 
 #endif
