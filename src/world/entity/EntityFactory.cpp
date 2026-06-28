@@ -9,6 +9,8 @@
 #include "Painting.h"
 #include "item/FallingTile.h"
 
+#include "Boat.h"
+
 Entity* EntityFactory::CreateEntity( int typeId, Level* level )
 {
 	switch (typeId) {
@@ -19,6 +21,7 @@ Entity* EntityFactory::CreateEntity( int typeId, Level* level )
         case EntityTypes::IdThrownEgg:  return new ThrownEgg(level);
         case EntityTypes::IdSnowball:   return new Snowball(level);
 		case EntityTypes::IdPainting:   return new Painting(level);
+		case EntityTypes::boatEntity:   return new EntityBoat(level);
 	}
 	return NULL;
 }

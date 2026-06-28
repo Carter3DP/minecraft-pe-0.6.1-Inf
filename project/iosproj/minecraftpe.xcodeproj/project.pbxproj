@@ -1225,6 +1225,8 @@
 		F99F101E2F84390000F2B29A /* Boat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10072F84390000F2B29A /* Boat.cpp */; };
 		F99F101F2F84390000F2B29A /* SandTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10082F84390000F2B29A /* SandTile.cpp */; };
 		F99F10202F84390000F2B29A /* SandTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10082F84390000F2B29A /* SandTile.cpp */; };
+		F99F10212F843A0000F2B29A /* BoatRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10092F843A0000F2B29A /* BoatRenderer.cpp */; };
+		F99F10222F843A0000F2B29A /* BoatRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10092F843A0000F2B29A /* BoatRenderer.cpp */; };
 		BEEF202614CFF670005F0002 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
 		BEEF202614CFF670005F0003 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
 /* End PBXBuildFile section */
@@ -2539,6 +2541,7 @@
 		F99F10062F84390000F2B29A /* CreatorLevel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CreatorLevel.cpp; sourceTree = "<group>"; };
 		F99F10072F84390000F2B29A /* Boat.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Boat.cpp; sourceTree = "<group>"; };
 		F99F10082F84390000F2B29A /* SandTile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SandTile.cpp; sourceTree = "<group>"; };
+		F99F10092F843A0000F2B29A /* BoatRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BoatRenderer.cpp; sourceTree = "<group>"; };
 		BEEF202614CFF670005F0001 /* Lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lighting.cpp; path = Lighting.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3690,6 +3693,7 @@
 				0419D9A1167F20CC0080CB96 /* SheepRenderer.cpp */,
 				D5ACF15415C01F7D00E21C22 /* ArrowRenderer.cpp */,
 				D5ACF15515C01F7D00E21C22 /* ArrowRenderer.h */,
+				F99F10092F843A0000F2B29A /* BoatRenderer.cpp */,
 				D5B50CC614CFF66F005F7284 /* ChickenRenderer.cpp */,
 				D5B50CC714CFF66F005F7284 /* ChickenRenderer.h */,
 				D5D8C4AD163932CF00FD35F0 /* PaintingRenderer.cpp */,
@@ -5320,6 +5324,7 @@
 				D5B50FCE14CFF670005F7284 /* Chunk.cpp in Sources */,
 				D5B50FD014CFF670005F7284 /* Frustum.cpp in Sources */,
 				D5B50FD214CFF670005F7284 /* ChickenRenderer.cpp in Sources */,
+				F99F10222F843A0000F2B29A /* BoatRenderer.cpp in Sources */,
 				D5B50FD414CFF670005F7284 /* EntityRenderDispatcher.cpp in Sources */,
 				D5B50FD614CFF670005F7284 /* EntityRenderer.cpp in Sources */,
 				D5B50FD814CFF670005F7284 /* HumanoidMobRenderer.cpp in Sources */,
@@ -5685,6 +5690,7 @@
 				D5B50FCD14CFF670005F7284 /* Chunk.cpp in Sources */,
 				D5B50FCF14CFF670005F7284 /* Frustum.cpp in Sources */,
 				D5B50FD114CFF670005F7284 /* ChickenRenderer.cpp in Sources */,
+				F99F10212F843A0000F2B29A /* BoatRenderer.cpp in Sources */,
 				D5B50FD314CFF670005F7284 /* EntityRenderDispatcher.cpp in Sources */,
 				D5B50FD514CFF670005F7284 /* EntityRenderer.cpp in Sources */,
 				D5B50FD714CFF670005F7284 /* HumanoidMobRenderer.cpp in Sources */,

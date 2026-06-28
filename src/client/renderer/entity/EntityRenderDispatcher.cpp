@@ -26,6 +26,8 @@
 #include "ArrowRenderer.h"
 #include "PaintingRenderer.h"
 
+#include "BoatRenderer.h"
+
 
 /*static*/
 EntityRenderDispatcher* EntityRenderDispatcher::instance = NULL;
@@ -56,6 +58,7 @@ EntityRenderDispatcher::EntityRenderDispatcher()
 	assign( ER_SNOWBALL_RENDERER,   new ItemSpriteRenderer(Item::snowBall->getIcon(0)));
 	assign( ER_PAINTING_RENDERER,   new PaintingRenderer());
 	assign( ER_FALLINGTILE_RENDERER,new FallingTileRenderer());
+	assign( ER_BOAT_RENDERER,       new BoatRenderer(new BoatModel()));
 
 	for (RendererIterator it = _renderers.begin(); it != _renderers.end(); ++it) {
 		it->second->init(this);

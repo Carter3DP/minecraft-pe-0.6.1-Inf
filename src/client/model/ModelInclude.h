@@ -14,4 +14,6 @@
 
 #include "SignModel.h"
 
+#include "BoatModel.h"
+
 #endif /*NET_MINECRAFT_CLIENT_MODEL__ModelInclude_H__*/

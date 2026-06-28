@@ -315,6 +315,18 @@ bool EntityBoat::interact(Player* player) {
     }
 }
 
-int EntityBoat::getEntityTypeId() {
-    return EntityTypes::boatEntity;
+void EntityBoat::addAdditonalSaveData( CompoundTag* entityTag )
+{
+	entityTag->putShort("Health", (short) boatCurrentDamage);
+	entityTag->putShort("HurtTime", (short) boatTimeSinceHit);
+
+	//if (isPlayer()) LOGI("Saving %d, %d, %d, %d\n", health, hurtTime, deathTime, attackTime);
+}
+
+void EntityBoat::readAdditionalSaveData( CompoundTag* tag )
+{
+	boatCurrentDamage = tag->getShort("Health");
+	boatTimeSinceHit = tag->getShort("HurtTime");
+
+	//if (isPlayer()) LOGI("Reading %d, %d, %d, %d\n", health, hurtTime, deathTime, attackTime);
 }
