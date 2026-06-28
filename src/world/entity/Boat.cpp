@@ -34,6 +34,10 @@ EntityBoat::EntityBoat(Level* lvl):
     super::yo = y;
     super::zo = z;
 }
+
+EntityBoat::~EntityBoat(){
+}
+
 bool EntityBoat::canTriggerWalking() {
     return false;
 }

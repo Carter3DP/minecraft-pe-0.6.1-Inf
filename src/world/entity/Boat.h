@@ -24,7 +24,7 @@ class EntityBoat: public Entity{
         int boatCurrentDamage;
         int boatTimeSinceHit;
         int boatRockDirection;
-        virtual void playerTouch(Player* player) override;
+        //virtual void playerTouch(Player* player) override;
         AABB getCollisionBox(Entity* e);
         AABB getBoundingBox();
         virtual bool isPushable() override;
@@ -46,7 +46,7 @@ class EntityBoat: public Entity{
         double vx, vy, vz;  //velocity x, y, z
     protected:
         bool canTriggerWalking();
-        void entityInit();
+        //void entityInit();
         virtual bool save(CompoundTag* entityTag) override;
         virtual bool load(CompoundTag* entityTag) override;
 };
