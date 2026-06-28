@@ -2,7 +2,7 @@
 #include "../../world/entity/Entity.h"
 
 BoatModel::BoatModel()
-:   boatSide0(0, 0),
+:   boatSide0(0, 8),
 	boatSide1(0, 0),
 	boatSide2(0, 0),
 	boatSide3(0, 0),
