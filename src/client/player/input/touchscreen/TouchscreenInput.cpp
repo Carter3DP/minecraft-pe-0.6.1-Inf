@@ -377,7 +377,7 @@ void TouchscreenInput_TestFps::tick( Player* player )
 	}
 	//printf("\n>- %f %f\n", xa, ya);
 	_pressedJump = heldJump;
-	_sneakingheldthisloop == false;
+	_sneakingheldthisloop = false;
 }
 
 static void drawRectangleArea(Tesselator& t, RectangleArea* a, int ux, int vy, float ssz = 64.0f) {
