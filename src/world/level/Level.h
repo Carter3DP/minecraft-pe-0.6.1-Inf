@@ -184,6 +184,7 @@ public:
 	virtual void tick();
     void tick(Entity* e);
     void tick(Entity* e, bool actual);
+    void updateEntityWithOptionalForce(Entity* e, bool force);
 	bool tickPendingTicks(bool force);
 	void animateTick(int xt, int yt, int zt);
     void addToTickNextTick(int x, int y, int z, int tileId, int tickDelay);

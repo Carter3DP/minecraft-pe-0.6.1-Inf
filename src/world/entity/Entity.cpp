@@ -27,6 +27,8 @@ Entity::Entity( Level* level )
 	canRemove(true), //@todo: remove
 	noPhysics(false),
 	firstTick(true),
+	riddenByEntity(NULL),
+	ridingEntity(NULL),
 
 	bbWidth(0.6f),
 	bbHeight(1.8f),

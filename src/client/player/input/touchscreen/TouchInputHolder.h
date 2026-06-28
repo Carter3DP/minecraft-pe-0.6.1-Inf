@@ -339,7 +339,7 @@ public:
 				if (state <= State_Deciding) {
 					if (since >= 0.0f && since < 0.25f) {
 						// We've pressed and released in haste; Let's build!
-						*bai = BuildActionIntention(BuildActionIntention::BAI_BUILD | BuildActionIntention::BAI_ATTACK);
+						*bai = BuildActionIntention(BuildActionIntention::BAI_BUILD | BuildActionIntention::BAI_INTERACT);
 						handled = true;
 					}
 				}

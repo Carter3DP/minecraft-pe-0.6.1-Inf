@@ -1,4 +1,7 @@
 #include "Level.h"
+
+#include <cmath>
+
 #include "LevelListener.h"
 #include "tile/entity/TileEntity.h"
 #include "../entity/player/Player.h"
@@ -1406,6 +1409,15 @@ void Level::tickEntities() {
 	for (unsigned int i = 0; i < entities.size(); i++) {
 		Entity* e = entities[i];
 
+		if (e->ridingEntity != NULL) {
+			if (!e->ridingEntity->removed && e->ridingEntity->riddenByEntity == e) {
+				continue;
+			}
+
+			e->ridingEntity->riddenByEntity = NULL;
+			e->ridingEntity = NULL;
+		}
+
 		if (!e->removed) {
 			tick(e);
 			if (e->getEntityTypeId() == MobTypes::Zombie) {
@@ -1549,14 +1561,18 @@ void Level::setZombieAi(std::vector<Zombie*>& zombies) {
 }
 
 void Level::tick(Entity* e) {
-	tick(e, true);
+	updateEntityWithOptionalForce(e, true);
 }
 
 void Level::tick(Entity* e, bool actual) {
+	updateEntityWithOptionalForce(e, actual);
+}
+
+void Level::updateEntityWithOptionalForce(Entity* e, bool force) {
 	int xc = Mth::floor(e->x);
 	int zc = Mth::floor(e->z);
 	int r = 32;
-	if (actual && !hasChunksAt(xc - r, 0, zc - r, xc + r, 128, zc + r)) {
+	if (force && !hasChunksAt(xc - r, 0, zc - r, xc + r, 128, zc + r)) {
 		return;
 	}
 
@@ -1566,17 +1582,21 @@ void Level::tick(Entity* e, bool actual) {
 	e->yRotO = e->yRot;
 	e->xRotO = e->xRot;
 
-	if (actual && e->inChunk) {
-		e->tick();
+	if (force && e->inChunk) {
+		if (e->ridingEntity != NULL) {
+			e->updateRidden();
+		} else {
+			e->tick();
+		}
 	}
 
 	TIMER_PUSH("chunkCheck");
 	// SANITY!!
-	if (e->x != e->x) e->x = e->xOld; // @note: checking for NaN, not sure about Infinite
-	if (e->y != e->y) e->y = e->yOld;
-	if (e->z != e->z) e->z = e->zOld;
-	if (e->xRot != e->xRot) e->xRot = e->xRotO;
-	if (e->yRot != e->yRot) e->yRot = e->yRotO;
+	if (!std::isfinite(e->x)) e->x = e->xOld;
+	if (!std::isfinite(e->y)) e->y = e->yOld;
+	if (!std::isfinite(e->z)) e->z = e->zOld;
+	if (!std::isfinite(e->xRot)) e->xRot = e->xRotO;
+	if (!std::isfinite(e->yRot)) e->yRot = e->yRotO;
 
 	int xcn = Mth::floor(e->x / 16.0f);
 	int ycn = Mth::floor(e->y / 16.0f);
@@ -1595,6 +1615,15 @@ void Level::tick(Entity* e, bool actual) {
 		}
 	}
 	TIMER_POP();
+
+	if (force && e->inChunk && e->riddenByEntity != NULL) {
+		if (!e->riddenByEntity->removed && e->riddenByEntity->ridingEntity == e) {
+			updateEntityWithOptionalForce(e->riddenByEntity, true);
+		} else {
+			e->riddenByEntity->ridingEntity = NULL;
+			e->riddenByEntity = NULL;
+		}
+	}
 
 	// Save player info every n:th second
 	const float now = getTimeS();

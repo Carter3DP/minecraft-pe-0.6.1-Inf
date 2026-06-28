@@ -67,7 +67,7 @@ PaneCraftingScreen::PaneCraftingScreen(int craftingSize)
 	guiBackground(NULL),
 	guiSlotCategory(NULL),
 	guiSlotCategorySelected(NULL),
-	numCategories(4)
+	numCategories(ItemCategory::NUM_CATEGORIES)
 {
 	for (int i = 0; i < numCategories; ++i) {
 		categoryBitmasks.push_back(1 << i);

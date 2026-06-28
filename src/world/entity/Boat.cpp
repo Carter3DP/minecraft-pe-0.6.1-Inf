@@ -98,6 +98,10 @@ bool EntityBoat::canBeCollidedWith() {
     return isAlive();
 }
 
+bool EntityBoat::isPickable() {
+    return isAlive();
+}
+
 void EntityBoat::lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
     boatX = x;
     boatY = y;
@@ -303,9 +307,7 @@ bool EntityBoat::interact(Player* player) {
     if (riddenByEntity != NULL && dynamic_cast<Player*>(riddenByEntity) != nullptr && riddenByEntity != player) {
         return true;
     } else {
-        if (level->isClientSide) {
-            player->mountEntity(this);
-        }
+        player->mountEntity(this);
         return true;
     }
 }

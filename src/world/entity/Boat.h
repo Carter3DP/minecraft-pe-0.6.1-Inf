@@ -32,6 +32,7 @@ class EntityBoat: public Entity{
         virtual bool hurt(Entity* e, int var2) override;
         virtual void animateHurt() override;
         virtual bool canBeCollidedWith();
+        virtual bool isPickable() override;
         virtual void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) override;
         virtual void push(double xa, double ya, double za) override;
         virtual void tick() override;

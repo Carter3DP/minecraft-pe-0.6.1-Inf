@@ -141,6 +141,10 @@ static const signed short _mapper[] = {-1, 7, 9, 8, 0, 5, -2, -1, -1, -1, -1, -1
 
 int ItemRenderer::getAtlasPos(const ItemInstance* item) {
 	int id = item->id;
+
+	if (Item::boat && id == Item::boat->id)
+		return 237;
+
 	if (id < 0 || id >= sizeof(_mapper) / sizeof(const signed short))
 		return -1;
 

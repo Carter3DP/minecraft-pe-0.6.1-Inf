@@ -938,6 +938,11 @@ int Player::getArmorValue() {
 }
 
 void Player::updateRidden() {
+    if (isSneaking()) {
+        mountEntity(NULL);
+        return;
+    }
+
     double var1 = x;
     double var3 = y;
     double var5 = z;
