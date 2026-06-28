@@ -20,6 +20,7 @@
 
 EntityBoat::EntityBoat(Level* lvl):
     super(lvl) {
+    entityRendererId = ER_BOAT_RENDERER;
     boatCurrentDamage = 0;
     boatTimeSinceHit = 0;
     boatRockDirection = 1;
@@ -292,12 +293,6 @@ void EntityBoat::updateRiderPosition() {
         double var3 = sin((double)yRot * 3.141592653589793 / 180.0) * 0.4;
         riddenByEntity->setPos(x + var1, y + getMountedYOffset() + riddenByEntity->heightOffset, z + var3);
     }
-}
-
-bool EntityBoat::save(CompoundTag* entityTag) {
-}
-
-bool EntityBoat::load(CompoundTag* entityTag) {
 }
 
 float EntityBoat::getShadowHeightOffs() {

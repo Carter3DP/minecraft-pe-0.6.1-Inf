@@ -111,7 +111,7 @@ Item* Item::door_iron = NULL;
 //Item* Item::redStone = NULL;
 Item* Item::snowBall = NULL;
 
-//Item* Item::boat = NULL;
+Item* Item::boat = NULL;
 
 Item* Item::leather = NULL;
 //Item* Item::milk = NULL;
@@ -248,7 +248,7 @@ void Item::initItems() {
 	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(12, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
 	//Item::redStone = (new RedStoneItem(75))->setIcon(8, 3)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstone");
 	Item::snowBall = (new SnowballItem(76))->setIcon(14, 0)->setCategory(ItemCategory::Decorations)->setDescriptionId("snowball");
-	//Item::boat = (new BoatItem(77))->setIcon(8, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("boat");
+	Item::boat = (new BoatItem(77))->setIcon(8, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("boat");
 	Item::leather = (new Item(78))->setIcon(7, 6)->setCategory(ItemCategory::Tools)->setDescriptionId("leather");
 	//Item::milk = (new BucketItem(79, -1))->setIcon(13, 4)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("milk")->setCraftingRemainingItem(Item.bucket_empty);
 	Item::brick = (new Item(80))->setIcon(6, 1)->setCategory(ItemCategory::Structures)->setDescriptionId("brick");

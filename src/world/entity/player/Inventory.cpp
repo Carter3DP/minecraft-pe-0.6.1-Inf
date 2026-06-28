@@ -79,6 +79,7 @@ void Inventory::setupDefault() {
         addItem(new ItemInstance(Tile::workBench));
 		addItem(new ItemInstance(Tile::chest));
 		addItem(new ItemInstance(Tile::furnace));
+		addItem(new ItemInstance(Item::boat));
 
 		addItem(new ItemInstance(((Tile*)Tile::flower)));
 		addItem(new ItemInstance(Tile::cactus));
@@ -221,6 +222,7 @@ void Inventory::setupDefault() {
 		addItem(new ItemInstance(Item::bed));
 		addItem(new ItemInstance(Tile::bookshelf));
 		addItem(new ItemInstance(Item::painting));
+		addItem(new ItemInstance(Item::boat));
 		addItem(new ItemInstance(Tile::workBench));
 		addItem(new ItemInstance(Tile::stonecutterBench));
 		addItem(new ItemInstance(Tile::chest));

@@ -1227,6 +1227,8 @@
 		F99F10202F84390000F2B29A /* SandTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10082F84390000F2B29A /* SandTile.cpp */; };
 		F99F10212F843A0000F2B29A /* BoatRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10092F843A0000F2B29A /* BoatRenderer.cpp */; };
 		F99F10222F843A0000F2B29A /* BoatRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F10092F843A0000F2B29A /* BoatRenderer.cpp */; };
+		F99F10232F843B0000F2B29A /* BoatItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F100A2F843B0000F2B29A /* BoatItem.cpp */; };
+		F99F10242F843B0000F2B29A /* BoatItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99F100A2F843B0000F2B29A /* BoatItem.cpp */; };
 		BEEF202614CFF670005F0002 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
 		BEEF202614CFF670005F0003 /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEEF202614CFF670005F0001 /* Lighting.cpp */; };
 /* End PBXBuildFile section */
@@ -1555,6 +1557,8 @@
 		D54493F815D13C35005FA9B0 /* SeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedItem.h; sourceTree = "<group>"; };
 		D54493FB15D13C59005FA9B0 /* BedItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BedItem.cpp; sourceTree = "<group>"; };
 		D54493FC15D13C59005FA9B0 /* BedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BedItem.h; sourceTree = "<group>"; };
+		F99F100A2F843B0000F2B29A /* BoatItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoatItem.cpp; sourceTree = "<group>"; };
+		F99F100B2F843B0000F2B29A /* BoatItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoatItem.h; sourceTree = "<group>"; };
 		D54493FF15D13C93005FA9B0 /* BowlFoodItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BowlFoodItem.h; sourceTree = "<group>"; };
 		D544940015D13C93005FA9B0 /* ClothTileItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClothTileItem.h; sourceTree = "<group>"; };
 		D544940115D13C93005FA9B0 /* CoalItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoalItem.h; sourceTree = "<group>"; };
@@ -4065,6 +4069,8 @@
 				0413970616A82E1E008A9F1A /* ArmorItem.h */,
 				D54493FB15D13C59005FA9B0 /* BedItem.cpp */,
 				D54493FC15D13C59005FA9B0 /* BedItem.h */,
+				F99F100A2F843B0000F2B29A /* BoatItem.cpp */,
+				F99F100B2F843B0000F2B29A /* BoatItem.h */,
 				D5B50EB014CFF66F005F7284 /* BowItem.h */,
 				D5B50EB114CFF66F005F7284 /* CameraItem.h */,
 				D5B50EB214CFF66F005F7284 /* crafting */,
@@ -5433,6 +5439,7 @@
 				D5B5118F14DEA27F005F7284 /* DeathScreen.cpp in Sources */,
 				D5B5119214DEA2B7005F7284 /* LevelData.cpp in Sources */,
 				D5B5119514DEA2EF005F7284 /* DyePowderItem.cpp in Sources */,
+				F99F10242F843B0000F2B29A /* BoatItem.cpp in Sources */,
 				D584926E14FD234400741128 /* SharedConstants.cpp in Sources */,
 				D584927414FD236700741128 /* MoveControl.cpp in Sources */,
 				D584928714FD240D00741128 /* IConfigListener.cpp in Sources */,
@@ -5800,6 +5807,7 @@
 				F99D34242F736AD400DC153E /* TextOption.cpp in Sources */,
 				D5B5119114DEA2B7005F7284 /* LevelData.cpp in Sources */,
 				D5B5119414DEA2EF005F7284 /* DyePowderItem.cpp in Sources */,
+				F99F10232F843B0000F2B29A /* BoatItem.cpp in Sources */,
 				D584926D14FD234400741128 /* SharedConstants.cpp in Sources */,
 				D584927314FD236700741128 /* MoveControl.cpp in Sources */,
 				F99D344C2F7370CF00DC153E /* Slider.cpp in Sources */,

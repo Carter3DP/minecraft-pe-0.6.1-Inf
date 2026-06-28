@@ -201,6 +201,7 @@ LOCAL_SRC_FILES := ../../../src/main.cpp \
 ../../../src/world/inventory/FurnaceMenu.cpp \
 ../../../src/world/item/ArmorItem.cpp \
 ../../../src/world/item/BedItem.cpp \
+../../../src/world/item/BoatItem.cpp \
 ../../../src/world/item/DyePowderItem.cpp \
 ../../../src/world/item/Item.cpp \
 ../../../src/world/item/ItemInstance.cpp \

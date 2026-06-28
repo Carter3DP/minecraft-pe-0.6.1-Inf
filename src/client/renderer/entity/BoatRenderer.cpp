@@ -26,7 +26,7 @@ void BoatRenderer::renderboat(EntityBoat* boat, double x, double y, double z, fl
     glScalef(1.0F / var12, 1.0F / var12, 1.0F / var12);
     bindTexture("/item/boat.png");
     glScalef(-1.0F, -1.0F, 1.0F);
-    modelBoat->renderHorrible(0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+    modelBoat->render(boat, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
     glPopMatrix();
 }
 

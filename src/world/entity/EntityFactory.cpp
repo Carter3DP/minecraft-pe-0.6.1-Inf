@@ -36,6 +36,8 @@ Entity* EntityFactory::loadEntity( CompoundTag* tag, Level* level )
 
 	if (id < 0) {
 		LOGE("Negative ItemId: %d at MobFactory::loadEntity\n", id);
+	} else if (id == EntityTypes::boatEntity) {
+		e = CreateEntity(id, level);
 	} else if (id < 64) {
 		e = MobFactory::CreateMob(id, level);
 	} else {

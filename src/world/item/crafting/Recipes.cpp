@@ -291,11 +291,11 @@ Recipes::Recipes()
 
 	//	definition('A', Tile::furnace, 'B', Item::minecart));
 
-	//addShapedRecipe(ItemInstance(Item::boat, 1), //
-	//	"# #", //
-	//	"###", //
+	addShapedRecipe(ItemInstance(Item::boat, 1), //
+		"# #", //
+		"###", //
 
-	//	definition('#', Tile::wood));
+		definition('#', Tile::wood));
 
 	//addShapedRecipe(ItemInstance(Item::bucket_empty, 1), //
 	//	"# #", //

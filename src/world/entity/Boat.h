@@ -51,8 +51,6 @@ class EntityBoat: public Entity{
     protected:
         bool canTriggerWalking();
         //void entityInit();
-        virtual bool save(CompoundTag* entityTag) override;
-        virtual bool load(CompoundTag* entityTag) override;
 };
 
 #endif
