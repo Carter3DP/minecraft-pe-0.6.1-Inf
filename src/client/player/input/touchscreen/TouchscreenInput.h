@@ -60,6 +60,7 @@ private:
 	RectangleArea* aRight;
 	RectangleArea* aUp;
 	RectangleArea* aDown;
+	RectangleArea* aCrouch;
 	RectangleArea* aPause;
 	RectangleArea* aChat;
 	//RectangleArea* aUpJump;
@@ -67,12 +68,14 @@ private:
 	RectangleArea* aUpLeft;
 	RectangleArea* aUpRight;
 	bool _pauseIsDown;
+	bool _sneakingheld = false;
+	bool _sneakingheldthisloop = false;
 
 	RenderChunk _render;
 	bool _allowHeightChange;
 	float _sneakTapTime;
 
-	bool _buttons[8];
+	bool _buttons[9];
 	bool isButtonDown(int areaId);
 	void rebuild();
 };

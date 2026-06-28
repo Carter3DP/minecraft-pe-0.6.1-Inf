@@ -21,6 +21,7 @@ static const int AREA_DPAD_E = 103;
 static const int AREA_DPAD_C = 104;
 static const int AREA_PAUSE = 105;
 static const int AREA_CHAT = 106;
+static const int AREA_DPAD_CR = 107;
 
 static int cPressed = 0;
 static int cReleased = 0;
@@ -77,6 +78,7 @@ TouchscreenInput_TestFps::TouchscreenInput_TestFps( Minecraft* mc, Options* opti
 	aRight(0),
 	aUp(0),
 	aDown(0),
+	aCrouch(0),
 	aJump(0),
 	aUpLeft(0),
 	aUpRight(0),
@@ -161,6 +163,9 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 
 	xx = BaseX + 2 * Bw; yy = BaseY + Bh;
 	_model.addArea(AREA_DPAD_E, aRight = new RectangleArea(xx, yy, xx+Bw, yy+Bh));
+
+	xx = BaseX; yy = BaseY + 2 * Bh;
+	_model.addArea(AREA_DPAD_CR, aCrouch = new RectangleArea(xx, yy, xx+Bw, yy+Bh));
 
     float maxPixels = _minecraft->pixelCalc.millimetersToPixels(10);
     // float btnSize = Mth::Min(18 * Gui::GuiScale, maxPixels);
@@ -305,10 +310,16 @@ void TouchscreenInput_TestFps::tick( Player* player )
 			setButton = true;
 			xa += 1;
 		}
-		else if (areaId == AREA_DPAD_E && !_forward)
+		else if (areaId == AREA_DPAD_CR && !_sneakingheld)
 		{
+			_sneakingheld = true;
+			_sneakingheldthisloop = true;
 			setButton = true;
-			xa -= 1;
+			sneaking = !sneaking;
+		}
+		else if (areaId == AREA_DPAD_CR && _sneakingheld)
+		{
+			_sneakingheldthisloop = true;
 		}
 		else if (areaId == AREA_PAUSE) {
 			if (Multitouch::isReleased(p)) {
@@ -323,10 +334,12 @@ void TouchscreenInput_TestFps::tick( Player* player )
 				_minecraft->platform()->showKeyboard();
             }
 		}
-
 		_buttons[areaId - AREA_DPAD_FIRST] = setButton;
 	}
-
+	if(!_sneakingheldthisloop)
+	{
+		_sneakingheld = false;
+	}
 	_forward = tmpForward;
 
 	// Only jump once at a time
@@ -364,6 +377,7 @@ void TouchscreenInput_TestFps::tick( Player* player )
 	}
 	//printf("\n>- %f %f\n", xa, ya);
 	_pressedJump = heldJump;
+	_sneakingheldthisloop == false;
 }
 
 static void drawRectangleArea(Tesselator& t, RectangleArea* a, int ux, int vy, float ssz = 64.0f) {
@@ -505,6 +519,11 @@ void TouchscreenInput_TestFps::rebuild() {
 	{
 		drawRectangleArea(t, aJump, imageU + imageSize * 4, imageV, (float)imageSize);
 	}
+
+	//Render crouch button
+	if (sneaking) t.colorABGR(cPressed);
+	else		  t.colorABGR(cReleased);
+	drawRectangleArea(t, aCrouch, imageU + imageSize * 3, imageV + imageSize, (float)imageSize);
 	
 	if (!_minecraft->screen) {
 		t.colorABGR(0xFFFFFFFF);
