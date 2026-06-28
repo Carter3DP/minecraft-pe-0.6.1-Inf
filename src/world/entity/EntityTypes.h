@@ -21,6 +21,8 @@ public:
 
 	// Forgive me, but I'm not sure I have time to finish my RTTI
 	// implementation -> this. Mobs up to 63, rest on top of that
+	static const int boatEntity = 55; 
+
 	static const int IdItemEntity = 64;
 
 	static const int IdPrimedTnt = 65;
@@ -67,7 +69,8 @@ struct ParticleType {
 		iconcrack,
 		snowballpoof,
 		largeexplode,
-		hugeexplosion
+		hugeexplosion,
+		splash
 	};
 };
 

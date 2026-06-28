@@ -1197,3 +1197,9 @@ int Mob::getArmorValue() {
 }
 
 void Mob::hurtArmor(int damage) {}
+
+void Mob::updateRidden() {
+    super::updateRidden();
+    oTilt = tilt;
+    tilt = 0.0;
+}

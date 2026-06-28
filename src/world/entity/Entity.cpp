@@ -651,29 +651,31 @@ void Entity::playerTouch( Player* player )
 
 void Entity::push( Entity* e )
 {
-	double xa = e->x - x;
-	double za = e->z - z;
+	if (e->riddenByEntity != this && e->ridingEntity != this) {
+		double xa = e->x - x;
+		double za = e->z - z;
 
-	double dd = Mth::absMax(xa, za);
+		double dd = Mth::absMax(xa, za);
 
-	if (dd >= 0.01f) {
-		dd = sqrt(dd);
-		xa /= dd;
-		za /= dd;
+		if (dd >= 0.01f) {
+			dd = sqrt(dd);
+			xa /= dd;
+			za /= dd;
 
-		double pow = 1 / dd;
-		if (pow > 1) pow = 1;
-		xa *= pow;
-		za *= pow;
+			double pow = 1 / dd;
+			if (pow > 1) pow = 1;
+			xa *= pow;
+			za *= pow;
 
-		xa *= 0.05f;
-		za *= 0.05f;
+			xa *= 0.05f;
+			za *= 0.05f;
 
-		xa *= 1 - pushthrough;
-		za *= 1 - pushthrough;
+			xa *= 1 - pushthrough;
+			za *= 1 - pushthrough;
 
-		this->push(-xa, 0, -za);
-		e->push(xa, 0, za);
+			this->push(-xa, 0, -za);
+			e->push(xa, 0, za);
+		}
 	}
 }
 
@@ -965,3 +967,97 @@ void Entity::playStepSound( int xt, int yt, int zt, int t ) {
         level->playSound(this, soundType->getStepSound(), soundType->getVolume() * 0.25f, soundType->getPitch());
     }
 }
+
+double Entity::getMountedYOffset() {
+        return (double)bbHeight * 0.75;
+}
+
+ void Entity::mountEntity(Entity* ent) {
+        entityRiderPitchDelta = 0;
+        entityRiderYawDelta = 0;
+        if (ent == NULL) {
+            if (ridingEntity != NULL) {
+                moveTo(ridingEntity->x, ridingEntity->bb.y0 + (double)ridingEntity->bbHeight, ridingEntity->z, yRot, xRot);
+                ridingEntity->riddenByEntity = NULL;
+            }
+
+            ridingEntity = NULL;
+        } else if (ridingEntity == ent) {
+            ridingEntity->riddenByEntity = NULL;
+            ridingEntity = NULL;
+            moveTo(ent->x, ent->bb.y0 + (double)ent->bbHeight, ent->z, yRot, xRot);
+        } else {
+            if (ridingEntity != NULL) {
+                ridingEntity->riddenByEntity = NULL;
+            }
+
+            if (ent->riddenByEntity != NULL) {
+                ent->riddenByEntity->ridingEntity = NULL;
+            }
+
+            ridingEntity = ent;
+            ent->riddenByEntity = this;
+        }
+    }
+
+	void Entity::updateRidden() {
+        if (ridingEntity->removed) {
+            ridingEntity = NULL;
+        } else {
+            xd = 0.0;
+            yd = 0.0;
+            zd = 0.0;
+            tick();
+            if (ridingEntity != NULL) {
+                ridingEntity->updateRiderPosition();
+                entityRiderYawDelta += (double)(ridingEntity->yRot - ridingEntity->yRotO);
+
+                for(entityRiderPitchDelta += (double)(ridingEntity->yRot - ridingEntity->yRotO); entityRiderYawDelta >= 180.0; entityRiderYawDelta -= 360.0) {
+                }
+
+                while(entityRiderYawDelta < -180.0) {
+                    entityRiderYawDelta += 360.0;
+                }
+
+                while(entityRiderPitchDelta >= 180.0) {
+                    entityRiderPitchDelta -= 360.0;
+                }
+
+                while(entityRiderPitchDelta < -180.0) {
+                    entityRiderPitchDelta += 360.0;
+                }
+
+                double var1 = entityRiderYawDelta * 0.5;
+                double var3 = entityRiderPitchDelta * 0.5;
+                float var5 = 10.0;
+                if (var1 > (double)var5) {
+                    var1 = (double)var5;
+                }
+
+                if (var1 < (double)(-var5)) {
+                    var1 = (double)(-var5);
+                }
+
+                if (var3 > (double)var5) {
+                    var3 = (double)var5;
+                }
+
+                if (var3 < (double)(-var5)) {
+                    var3 = (double)(-var5);
+                }
+
+                entityRiderYawDelta -= var1;
+                entityRiderPitchDelta -= var3;
+                yRot = (float)((double)yRot + var1);
+                xRot = (float)((double)xRot + var3);
+            }
+        }
+    }
+
+void Entity::updateRiderPosition() {
+		riddenByEntity->setPos(x, y + getMountedYOffset() + riddenByEntity->heightOffset, z);
+    }
+
+bool Entity::isRiding() {
+        return ridingEntity != NULL;
+    }

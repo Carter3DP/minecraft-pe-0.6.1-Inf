@@ -164,6 +164,8 @@ protected:
 	void checkDespawn(Mob* nearestBlocking);
 	void checkDespawn();
 	void updateAttackAnim();
+
+	virtual void updateRidden() override;
 private:
 	float rotlerp(float a, float b, float max);
 public:

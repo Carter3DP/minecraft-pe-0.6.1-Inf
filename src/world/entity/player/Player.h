@@ -142,6 +142,9 @@ public:
     //AbstractContainerMenu inventoryMenu;
     //AbstractContainerMenu containerMenu;
     int getArmorValue();
+
+	virtual void updateRidden() override;
+
 protected:
 	bool isImmobile();
 	void updateAi();
@@ -158,6 +161,7 @@ protected:
 	void spawnEatParticles(const ItemInstance* useItem, int count);
 private:
 	void touch(Entity* entity);
+
 	
 	//void eat( ItemInstance* instance );
 	

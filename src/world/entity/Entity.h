@@ -26,6 +26,9 @@ public:
 	static int entityCounter;
 	static const int TOTAL_AIR_SUPPLY = 15 * SharedConstants::TicksPerSecond;
 
+	Entity* riddenByEntity;
+    Entity* ridingEntity;
+
     Entity(Level* level);
 	virtual ~Entity();
 
@@ -132,6 +135,12 @@ public:
 
 	virtual int getAuxData();
 
+	virtual double getMountedYOffset();
+	virtual void mountEntity(Entity* var1);
+	virtual void updateRiderPosition();
+	virtual bool isRiding();
+	virtual void updateRidden();
+
 protected:
 	virtual void setRot(float yRot, float xRot);
 	virtual void setSize(float w, float h);
@@ -223,6 +232,9 @@ protected:
 	int nextStep;
 	static const int DATA_AIR_SUPPLY_ID = 1;
 	bool isStuckInWeb;
+private:
+	double entityRiderPitchDelta;
+    double entityRiderYawDelta;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ENTITY__Entity_H__*/

@@ -16,6 +16,7 @@
 #include "../EntityEvent.h"
 #include "../../Difficulty.h"
 #include "../../item/ArmorItem.h"
+#include "../Boat.h"
 
 const float Player::DEFAULT_WALK_SPEED = 0.1f;
 const float Player::DEFAULT_FLY_SPEED = 0.02f;
@@ -936,3 +937,12 @@ int Player::getArmorValue() {
     return val;
 }
 
+void Player::updateRidden() {
+    double var1 = x;
+    double var3 = y;
+    double var5 = z;
+    super::updateRidden();
+    oTilt = tilt;
+    tilt = 0.0;
+    //this.addMountedMovementStat(this.posX - var1, this.posY - var3, this.posZ - var5); stats not implemented yet.
+}
