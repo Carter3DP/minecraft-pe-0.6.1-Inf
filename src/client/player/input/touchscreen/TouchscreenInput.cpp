@@ -310,6 +310,11 @@ void TouchscreenInput_TestFps::tick( Player* player )
 			setButton = true;
 			xa += 1;
 		}
+		else if (areaId == AREA_DPAD_E && !_forward)
+		{
+			setButton = true;
+			xa -= 1;
+		}
 		else if (areaId == AREA_DPAD_CR && !_sneakingheld)
 		{
 			_sneakingheld = true;
