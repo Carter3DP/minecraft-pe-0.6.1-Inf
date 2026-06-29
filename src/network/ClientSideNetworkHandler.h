@@ -53,6 +53,7 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, AddPlayerPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, RemoveEntityPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, RemovePlayerPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, RidePacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, MovePlayerPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, MoveEntityPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, UpdateBlockPacket* packet);

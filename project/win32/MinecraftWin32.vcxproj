@@ -580,6 +580,7 @@
     <ClInclude Include="..\..\src\network\packet\RemoveBlockPacket.h" />
     <ClInclude Include="..\..\src\network\packet\RemoveEntityPacket.h" />
     <ClInclude Include="..\..\src\network\packet\RequestChunkPacket.h" />
+    <ClInclude Include="..\..\src\network\packet\RidePacket.h" />
     <ClInclude Include="..\..\src\network\packet\SendInventoryPacket.h" />
     <ClInclude Include="..\..\src\network\packet\SetEntityDataPacket.h" />
     <ClInclude Include="..\..\src\network\packet\SetEntityMotionPacket.h" />

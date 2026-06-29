@@ -33,6 +33,7 @@ class EntityBoat: public Entity{
         virtual void animateHurt() override;
         virtual bool canBeCollidedWith();
         virtual bool isPickable() override;
+        virtual void handleEntityEvent(char eventId) override;
         virtual void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) override;
         virtual void push(double xa, double ya, double za) override;
         virtual void tick() override;
@@ -49,6 +50,9 @@ class EntityBoat: public Entity{
         double boatX, boatY, boatZ;
         float  boatYaw, boatPitch; 
         double vx, vy, vz;  //velocity x, y, z
+        double sentX, sentY, sentZ;
+        double sentXd, sentYd, sentZd;
+        float sentRotX, sentRotY;
     protected:
         bool canTriggerWalking();
         //void entityInit();

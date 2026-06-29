@@ -46,6 +46,7 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, PlayerArmorEquipmentPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, SetHealthPacket* packet);
 	//virtual void handle(const RakNet::RakNetGUID& source, TeleportEntityPacket* packet);
+	virtual void handle(const RakNet::RakNetGUID& source, RidePacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, InteractPacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, AnimatePacket* packet);
 	virtual void handle(const RakNet::RakNetGUID& source, UseItemPacket* packet);

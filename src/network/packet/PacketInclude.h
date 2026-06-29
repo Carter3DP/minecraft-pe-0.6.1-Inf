@@ -35,6 +35,7 @@
 #include "RemoveBlockPacket.h"
 #include "RemoveEntityPacket.h"
 #include "RemovePlayerPacket.h"
+#include "RidePacket.h"
 #include "RespawnPacket.h"
 #include "RequestChunkPacket.h"
 #include "SendInventoryPacket.h"

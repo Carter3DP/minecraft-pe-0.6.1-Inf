@@ -2089,6 +2089,7 @@
 		D5B50D4414CFF66F005F7284 /* RemoveBlockPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveBlockPacket.h; sourceTree = "<group>"; };
 		D5B50D4514CFF66F005F7284 /* RemoveEntityPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveEntityPacket.h; sourceTree = "<group>"; };
 		D5B50D4614CFF66F005F7284 /* RequestChunkPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestChunkPacket.h; sourceTree = "<group>"; };
+		D5B50FFF14CFF66F005F7284 /* RidePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RidePacket.h; sourceTree = "<group>"; };
 		D5B50D4714CFF66F005F7284 /* StartGamePacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartGamePacket.h; sourceTree = "<group>"; };
 		D5B50D4814CFF66F005F7284 /* UpdateBlockPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateBlockPacket.h; sourceTree = "<group>"; };
 		D5B50D4914CFF66F005F7284 /* UseItemPacket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseItemPacket.h; sourceTree = "<group>"; };
@@ -3826,6 +3827,7 @@
 				D5B50D4414CFF66F005F7284 /* RemoveBlockPacket.h */,
 				D5B50D4514CFF66F005F7284 /* RemoveEntityPacket.h */,
 				D5B50D4614CFF66F005F7284 /* RequestChunkPacket.h */,
+				D5B50FFF14CFF66F005F7284 /* RidePacket.h */,
 				D5B50D4714CFF66F005F7284 /* StartGamePacket.h */,
 				D5B50D4814CFF66F005F7284 /* UpdateBlockPacket.h */,
 				D5B50D4914CFF66F005F7284 /* UseItemPacket.h */,

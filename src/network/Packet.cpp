@@ -122,6 +122,9 @@ Packet* MinecraftPackets::createPacket(int id)
 	case PACKET_SETENTITYMOTION:
 		packet = new SetEntityMotionPacket();
 		break;
+	case PACKET_RIDE:
+		packet = new RidePacket();
+		break;
 	case PACKET_SETHEALTH:
 		packet = new SetHealthPacket();
 		break;

@@ -34,6 +34,14 @@ EntityBoat::EntityBoat(Level* lvl):
     super::xo = x;
     super::yo = y;
     super::zo = z;
+    sentX = x;
+    sentY = y;
+    sentZ = z;
+    sentXd = xd;
+    sentYd = yd;
+    sentZd = zd;
+    sentRotX = xRot;
+    sentRotY = yRot;
 }
 
 EntityBoat::~EntityBoat(){
@@ -65,9 +73,10 @@ bool EntityBoat::hurt(Entity* e, int damage) {
         boatTimeSinceHit = 10;
         boatCurrentDamage += damage * 10;
         markHurt();
+        level->broadcastEntityEvent(this, EntityEvent::HURT);
         if (boatCurrentDamage > 40) {
             if (riddenByEntity != NULL) {
-                riddenByEntity->mountEntity(this);
+                riddenByEntity->mountEntity(NULL);
             }
             int drops;
 
@@ -85,6 +94,14 @@ bool EntityBoat::hurt(Entity* e, int damage) {
         return true;
     } else {
         return true;
+    }
+}
+
+void EntityBoat::handleEntityEvent(char eventId) {
+    if (eventId == EntityEvent::HURT) {
+        animateHurt();
+    } else {
+        super::handleEntityEvent(eventId);
     }
 }
 
@@ -286,6 +303,29 @@ void EntityBoat::tick() {
         }*/
         if (riddenByEntity != NULL && riddenByEntity->removed) {
             riddenByEntity = NULL;
+        }
+
+        if (std::abs(x - sentX) > .1f || std::abs(y - sentY) > .05f || std::abs(z - sentZ) > .1f || std::abs(sentRotX - xRot) > 1 || std::abs(sentRotY - yRot) > 1) {
+            MoveEntityPacket_PosRot packet(this);
+            level->raknetInstance->send(packet);
+            sentX = x;
+            sentY = y;
+            sentZ = z;
+            sentRotX = xRot;
+            sentRotY = yRot;
+        }
+
+        double ddx = std::abs(xd - sentXd);
+        double ddy = std::abs(yd - sentYd);
+        double ddz = std::abs(zd - sentZd);
+        const double max = 0.02;
+        const double diff = ddx * ddx + ddy * ddy + ddz * ddz;
+        if (diff > max * max || (diff > 0 && xd == 0 && yd == 0 && zd == 0)) {
+            sentXd = xd;
+            sentYd = yd;
+            sentZd = zd;
+            SetEntityMotionPacket packet(this);
+            level->raknetInstance->send(packet);
         }
     }
 }

@@ -352,6 +352,17 @@ void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RemoveEn
 	level->removeEntity(entity);
 }
 
+void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RidePacket* packet)
+{
+	if (!level) return;
+
+	Entity* rider = level->getEntity(packet->riderId);
+	if (!rider) return;
+
+	Entity* vehicle = packet->vehicleId ? level->getEntity(packet->vehicleId) : NULL;
+	rider->mountEntity(vehicle);
+}
+
 void ClientSideNetworkHandler::handle(const RakNet::RakNetGUID& source, AddItemEntityPacket* packet)
 {
 	if (!level) return;

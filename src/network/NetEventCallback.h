@@ -16,6 +16,7 @@ class AddMobPacket;
 class AddPlayerPacket;
 class RemovePlayerPacket;
 class RemoveEntityPacket;
+class RidePacket;
 class MoveEntityPacket;
 //class TeleportEntityPacket;
 class MovePlayerPacket;
@@ -85,6 +86,7 @@ public:
 	virtual void handle(const RakNet::RakNetGUID& source, AddPlayerPacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, RemovePlayerPacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, RemoveEntityPacket* packet) {}
+	virtual void handle(const RakNet::RakNetGUID& source, RidePacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, MoveEntityPacket* packet) {}
 	//virtual void handle(const RakNet::RakNetGUID& source, TeleportEntityPacket* packet) {}
 	virtual void handle(const RakNet::RakNetGUID& source, MovePlayerPacket* packet) {}

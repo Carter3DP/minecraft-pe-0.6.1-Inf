@@ -6,6 +6,8 @@
 #include "../item/ItemInstance.h"
 #include "../../nbt/CompoundTag.h"
 #include "../../util/PerfTimer.h"
+#include "../../network/RakNetInstance.h"
+#include "../../network/packet/RidePacket.h"
 
 int
 	Entity::entityCounter = 0;
@@ -975,6 +977,7 @@ double Entity::getMountedYOffset() {
 }
 
  void Entity::mountEntity(Entity* ent) {
+		Entity* oldVehicle = ridingEntity;
         entityRiderPitchDelta = 0;
         entityRiderYawDelta = 0;
         if (ent == NULL) {
@@ -1000,6 +1003,10 @@ double Entity::getMountedYOffset() {
             ridingEntity = ent;
             ent->riddenByEntity = this;
         }
+		if (!level->isClientSide && oldVehicle != ridingEntity) {
+			RidePacket packet(this, ridingEntity);
+			level->raknetInstance->send(packet);
+		}
     }
 
 	void Entity::updateRidden() {

@@ -2905,6 +2905,9 @@
     <ClInclude Include="..\..\src\network\packet\SetEntityMotionPacket.h">
       <Filter>Source Files\network\packet</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\network\packet\RidePacket.h">
+      <Filter>Source Files\network\packet</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\client\renderer\tileentity\ChestRenderer.h">
       <Filter>Source Files\client\renderer\tileentity</Filter>
     </ClInclude>

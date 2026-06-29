@@ -459,6 +459,16 @@ void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, PlayerAr
     redistributePacket(packet, source);
 }
 
+void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, RidePacket* packet) {
+	if (!level) return;
+
+	Entity* rider = level->getEntity(packet->riderId);
+	Entity* vehicle = packet->vehicleId ? level->getEntity(packet->vehicleId) : NULL;
+	if (rider && rider->isPlayer() && ((Player*)rider)->owner == source) {
+		rider->mountEntity(vehicle);
+	}
+}
+
 void ServerSideNetworkHandler::handle(const RakNet::RakNetGUID& source, InteractPacket* packet) {
 	if (!level) return;
 
