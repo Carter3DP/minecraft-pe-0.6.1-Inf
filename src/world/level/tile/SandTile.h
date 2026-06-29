@@ -24,19 +24,19 @@ public:
 	// id == 0 -> not possible to create via serialization (yet)
 	int getEntityTypeId() const { return 0; } // @todo
 
-    void onPlace(Level* level, int x, int y, int z) {
+    void onPlace(Level* level, int x, int y, int z) override {
         //level->addToTickNextTick(x, y, z, id, getTickDelay());
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         //level->addToTickNextTick(x, y, z, id, getTickDelay());
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
 		checkSlide(level, x, y, z);
     }
 
-    int getTickDelay() {
+    int getTickDelay() override {
         return 3;
     }
 

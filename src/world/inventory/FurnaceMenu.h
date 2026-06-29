@@ -17,14 +17,14 @@ public:
 
     virtual ~FurnaceMenu() {}
 
-    virtual void setSlot(int slot, ItemInstance* item);
-	virtual void setData(int id, int value);
-	virtual std::vector<ItemInstance> getItems();
+    virtual void setSlot(int slot, ItemInstance* item) override;
+	virtual void setData(int id, int value) override;
+	virtual std::vector<ItemInstance> getItems() override;
 
-	virtual void broadcastChanges();
-	virtual void setListener(IContainerListener* listener);
+	virtual void broadcastChanges() override;
+	virtual void setListener(IContainerListener* listener) override;
 
-	virtual bool tileEntityDestroyedIsInvalid( int tileEntityId );
+	virtual bool tileEntityDestroyedIsInvalid( int tileEntityId ) override;
 
 	FurnaceTileEntity* furnace;
 

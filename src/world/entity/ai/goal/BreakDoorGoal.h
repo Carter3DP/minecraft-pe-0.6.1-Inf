@@ -19,22 +19,22 @@ public:
     :   super(mob)
     {}
 
-    bool canUse() {
+    bool canUse() override {
         if (!super::canUse()) return false;
         return !doorTile->isOpen(mob->level, doorX, doorY, doorZ);
     }
 
-    void start() {
+    void start() override {
         super::start();
         breakTime = SharedConstants::TicksPerSecond * 12;
     }
 
-    bool canContinueToUse() {
+    bool canContinueToUse() override {
         float d = mob->distanceToSqr((float)doorX, (float)doorY, (float)doorZ);
         return breakTime >= 0 && !doorTile->isOpen(mob->level, doorX, doorY, doorZ) && d < 2 * 2;
     }
 
-    void tick() {
+    void tick() override {
         super::tick();
           if (mob->random.nextInt(20) == 0) {
               //mob->level->levelEvent(LevelEvent::SOUND_ZOMBIE_WOODEN_DOOR, doorX, doorY, doorZ, 0);

@@ -5,36 +5,36 @@ namespace
 class GLESRendererBackend : public RendererBackend
 {
 public:
-	RendererBackendType type() const { return RENDERER_BACKEND_GLES; }
+	RendererBackendType type() const override { return RENDERER_BACKEND_GLES; }
 
-	bool initialize(void* nativeLayer)
+	bool initialize(void* nativeLayer) override
 	{
 		(void)nativeLayer;
 		return true;
 	}
 
-	void shutdown() {}
-	void beginFrame() {}
-	void endFrame() {}
-	void present() {}
+	void shutdown() override {}
+	void beginFrame() override {}
+	void endFrame() override {}
+	void present() override {}
 
-	void createVertexBuffers(GLsizei count, GLuint* buffers)
+	void createVertexBuffers(GLsizei count, GLuint* buffers) override
 	{
 		anGenBuffers(count, buffers);
 	}
 
-	void deleteVertexBuffer(GLuint buffer)
+	void deleteVertexBuffer(GLuint buffer) override
 	{
 		(void)buffer;
 	}
 
-	void updateVertexBuffer(GLuint buffer, const void* data, GLsizei bytes, bool dynamic)
+	void updateVertexBuffer(GLuint buffer, const void* data, GLsizei bytes, bool dynamic) override
 	{
 		glBindBuffer2(GL_ARRAY_BUFFER, buffer);
 		glBufferData2(GL_ARRAY_BUFFER, bytes, data, dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 	}
 
-	void drawVertexBuffer(GLuint buffer, int vertices, int vertexSize, RendererVertexFormat format, unsigned int mode)
+	void drawVertexBuffer(GLuint buffer, int vertices, int vertexSize, RendererVertexFormat format, unsigned int mode) override
 	{
 		const bool hasTexture = format == RENDERER_VERTEX_FORMAT_VT ||
 			format == RENDERER_VERTEX_FORMAT_VTC ||
@@ -75,24 +75,24 @@ public:
 		if (hasNormal) glDisableClientState2(GL_NORMAL_ARRAY);
 	}
 
-	TextureId createTexture()
+	TextureId createTexture() override
 	{
 		TextureId texture;
 		glGenTextures(1, &texture);
 		return texture;
 	}
 
-	void deleteTexture(TextureId texture)
+	void deleteTexture(TextureId texture) override
 	{
 		glDeleteTextures(1, &texture);
 	}
 
-	void bindTexture(TextureId texture)
+	void bindTexture(TextureId texture) override
 	{
 		glBindTexture2(GL_TEXTURE_2D, texture);
 	}
 
-	void uploadTexture(TextureId texture, const TextureData& data, const TextureUploadOptions& options)
+	void uploadTexture(TextureId texture, const TextureData& data, const TextureUploadOptions& options) override
 	{
 		bindTexture(texture);
 
@@ -145,32 +145,32 @@ public:
 		}
 	}
 
-	void updateTextureRegion(TextureId texture, int x, int y, int width, int height, const void* data)
+	void updateTextureRegion(TextureId texture, int x, int y, int width, int height, const void* data) override
 	{
 		bindTexture(texture);
 		glTexSubImage2D2(GL_TEXTURE_2D, 0, x, y, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	}
 
-	void setProjectionMatrix(const float* matrix16) { (void)matrix16; }
-	void setModelViewMatrix(const float* matrix16) { (void)matrix16; }
-	void setViewport(int x, int y, int width, int height)
+	void setProjectionMatrix(const float* matrix16) override { (void)matrix16; }
+	void setModelViewMatrix(const float* matrix16) override { (void)matrix16; }
+	void setViewport(int x, int y, int width, int height) override
 	{
 		glViewport(x, y, width, height);
 	}
 
-	void setBlendEnabled(bool enabled)
+	void setBlendEnabled(bool enabled) override
 	{
 		if (enabled) glEnable2(GL_BLEND);
 		else glDisable2(GL_BLEND);
 	}
 
-	void setDepthTestEnabled(bool enabled)
+	void setDepthTestEnabled(bool enabled) override
 	{
 		if (enabled) glEnable2(GL_DEPTH_TEST);
 		else glDisable2(GL_DEPTH_TEST);
 	}
 
-	void setCullFaceEnabled(bool enabled)
+	void setCullFaceEnabled(bool enabled) override
 	{
 		if (enabled) glEnable2(GL_CULL_FACE);
 		else glDisable2(GL_CULL_FACE);

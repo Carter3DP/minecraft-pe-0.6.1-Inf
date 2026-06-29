@@ -17,7 +17,7 @@ public:
 	{
 	}
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         if (random->nextInt(10) == 0) return Item::flint->id;
         return id;
     }

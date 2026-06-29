@@ -20,7 +20,7 @@ public:
 	{
 	}
 
-	bool place(Level* level, Random* random, int x, int y, int z) {
+	bool place(Level* level, Random* random, int x, int y, int z) override {
         int treeHeight = random->nextInt(3) + 4;
 
         bool free = true;

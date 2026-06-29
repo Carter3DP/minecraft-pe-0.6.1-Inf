@@ -15,13 +15,13 @@ public:
 	PauseScreen(bool wasBackPaused);
 	~PauseScreen();
 
-	void init();
-	void setupPositions();
+	void init() override;
+	void setupPositions() override;
 
-	void tick();
-	void render(int xm, int ym, float a);
+	void tick() override;
+	void render(int xm, int ym, float a) override;
 protected:
-    void buttonClicked(Button* button);
+    void buttonClicked(Button* button) override;
 private:
 	void updateServerVisibilityText();
 

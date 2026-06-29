@@ -15,9 +15,9 @@ class PickaxeItem: public DiggerItem
 public:
     PickaxeItem(int id, const Tier& tier);
 
-    bool canDestroySpecial(const Tile* tile) const;
+    bool canDestroySpecial(const Tile* tile) const override;
     //@Override
-    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile);
+    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ITEM__PickaxeItem_H__*/

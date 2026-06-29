@@ -28,7 +28,7 @@ public:
 		return Mouse::getButtonState(MouseAction::ACTION_LEFT) == MouseAction::DATA_DOWN;
 	}
 
-	void onConfigChanged(const Config& c) {
+	void onConfigChanged(const Config& c) override {
 		getMoveInput()->onConfigChanged(c);
 		getTurnInput()->onConfigChanged(c);
 		getBuildInput()->onConfigChanged(c);
@@ -62,9 +62,9 @@ public:
 		_build = build;
 	}
 
-	virtual IMoveInput*		getMoveInput()	{ return _move; }
-	virtual ITurnInput*		getTurnInput()	{ return _turn; }
-	virtual IBuildInput*	getBuildInput() { return _build; }
+	virtual IMoveInput*		getMoveInput() override { return _move; }
+	virtual ITurnInput*		getTurnInput() override { return _turn; }
+	virtual IBuildInput*	getBuildInput() override { return _build; }
 
 private:
 	IMoveInput*		_move;

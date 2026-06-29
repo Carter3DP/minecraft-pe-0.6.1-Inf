@@ -23,7 +23,7 @@ public:
 	:	super(id, 4 + 13 * 16, Material::stone)
 	{}
 
-	int getTexture(int face, int data) {
+	int getTexture(int face, int data) override {
 		if (face == Facing::UP || face == Facing::DOWN) {
 			if (data == TYPE_CHISELED)
 			{
@@ -55,7 +55,7 @@ public:
 
 protected:
 
-	int getSpawnResourcesAuxValue(int data) {
+	int getSpawnResourcesAuxValue(int data) override {
 		return data;
 	}
 

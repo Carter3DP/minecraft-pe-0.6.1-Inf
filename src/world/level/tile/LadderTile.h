@@ -19,7 +19,7 @@ public:
 	{
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         int dir = level->getData(x, y, z);
         float r = 2 / 16.0f;
 
@@ -31,7 +31,7 @@ public:
         return super::getAABB(level, x, y, z);
     }
 
-    AABB getTileAABB(Level* level, int x, int y, int z) {
+    AABB getTileAABB(Level* level, int x, int y, int z) override {
         int dir = level->getData(x, y, z);
         float r = 2 / 16.0f;
 
@@ -47,22 +47,22 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_LADDER;
     }
-	int getRenderLayer() {
+	int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 
-    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) {
+    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override {
         if (level->isSolidBlockingTile(x - 1, y, z)) {
             return true;
         } else if (level->isSolidBlockingTile(x + 1, y, z)) {
@@ -75,7 +75,7 @@ public:
         return false;
     }
 
-	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue)
+	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue) override
 	{
 		int dir = itemValue;
 
@@ -87,7 +87,7 @@ public:
 		return dir;
 	}
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         int face = level->getData(x, y, z);
         bool ok = false;
 
@@ -104,7 +104,7 @@ public:
         super::neighborChanged(level, x, y, z, type);
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 1;
     }
 };

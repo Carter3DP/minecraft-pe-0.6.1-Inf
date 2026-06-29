@@ -24,7 +24,7 @@ public:
 	void createToggle( unsigned int group, std::string label, OptionId option );
 	void createProgressSlider(Minecraft* minecraft, unsigned int group, std::string label, OptionId option, float progressMin=1.0f, float progressMax=1.0f );
 	void createStepSlider(Minecraft* minecraft, unsigned int group, std::string label, OptionId option, const std::vector<int>& stepVec );
-	void setupPositions();
+	void setupPositions() override;
 };
 
 #endif /*ITEMPANE_H__*/

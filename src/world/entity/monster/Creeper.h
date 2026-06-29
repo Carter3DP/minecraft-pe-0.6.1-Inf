@@ -15,21 +15,21 @@ public:
     Creeper(Level* level);
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
-    void tick();
+    void tick() override;
 
     float getSwelling(float a);
 
-	virtual int getEntityTypeId() const;
+	virtual int getEntityTypeId() const override;
 protected:
-    int getDeathLoot();
+    int getDeathLoot() override;
 
-	void checkCantSeeTarget(Entity* target, float d);
-	void checkHurtTarget(Entity* target, float d);
+	void checkCantSeeTarget(Entity* target, float d) override;
+	void checkHurtTarget(Entity* target, float d) override;
 
-	std::string getHurtSound();
-	std::string getDeathSound();
+	std::string getHurtSound() override;
+	std::string getDeathSound() override;
 private:
     int getSwellDir();
     void setSwellDir(int dir);

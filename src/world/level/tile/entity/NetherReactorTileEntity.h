@@ -7,18 +7,18 @@ class NetherReactorTileEntity : public  TileEntity {
 	static const int NUM_PIG_ZOMBIE_SLOTS = 3;
 public:
 	NetherReactorTileEntity();
-	bool shouldSave();
+	bool shouldSave() override;
 	void lightItUp(int x, int y, int z);
 
 	void buildDome(int x, int y, int z);
 	void clearDomeSpace( int x, int y, int z );
 
-	void tick();
+	void tick() override;
 
 	void finishReactorRun();
 
-	bool save(CompoundTag* tag);
-	void load(CompoundTag* tag);
+	bool save(CompoundTag* tag) override;
+	void load(CompoundTag* tag) override;
 	int getNumEnemiesPerLevel(int curLevel);
 	int getNumItemsPerLevel(int curLevel);
 	void spawnItems(int numItems);

@@ -7,10 +7,10 @@
 class Slider : public GuiElement {
 	typedef GuiElement super;
 public:
-	virtual void render( Minecraft* minecraft, int xm, int ym );
-	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void tick(Minecraft* minecraft);
+	virtual void render( Minecraft* minecraft, int xm, int ym ) override;
+	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum ) override;
+	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) override;
+	virtual void tick(Minecraft* minecraft) override;
 
 protected:
 	Slider(OptionId optId);

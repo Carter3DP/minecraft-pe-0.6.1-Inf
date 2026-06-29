@@ -7,7 +7,7 @@
 class ChooseLevelScreen: public Screen
 {
 public:
-	void init();
+	void init() override;
 
 protected:
 	std::string getUniqueLevelName(const std::string& level);

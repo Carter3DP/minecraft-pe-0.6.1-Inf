@@ -23,15 +23,15 @@ public:
         tex = 20;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 1;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Tile::treeTrunk->id;
     }
 
-    void onRemove(Level* level, int x, int y, int z) {
+    void onRemove(Level* level, int x, int y, int z) override {
         int r = LeafTile::REQUIRED_WOOD_RANGE;
         int r2 = r + 1;
 
@@ -50,7 +50,7 @@ public:
         }
     }
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         if (face == 1) return 21;
         if (face == 0) return 21;
         if (data == DARK_TRUNK)  return 4 + 7 * 16;
@@ -59,7 +59,7 @@ public:
     }
 
 protected:
-    int getSpawnResourcesAuxValue(int data) {
+    int getSpawnResourcesAuxValue(int data) override {
         return data;
     }
 };

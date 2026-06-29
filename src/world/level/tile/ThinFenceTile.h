@@ -19,7 +19,7 @@ public:
     }
 
     /*@Override*/
-    int getResource(int data, Random* random/*, int playerBonusLevel*/) {
+    int getResource(int data, Random* random/*, int playerBonusLevel*/) override {
         if (!dropsResources) {
             return 0;
         }
@@ -27,33 +27,33 @@ public:
     }
 
     /*@Override*/
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
     /*@Override*/
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-	int getRenderLayer() {
+	int getRenderLayer() override {
 		return Tile::RENDERLAYER_ALPHATEST;
 	}
 
     /*@Override*/
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_IRON_FENCE;
     }
 
     /*@Override*/
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) {
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override {
         int id = level->getTile(x, y, z);
         if (id == this->id) return false;
         return super::shouldRenderFace(level, x, y, z, face);
     }
 
     /*@Override*/
-    void addAABBs(Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes ) {
+    void addAABBs(Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes ) override {
         bool n = attachsTo(level->getTile(x, y, z - 1));
         bool s = attachsTo(level->getTile(x, y, z + 1));
         bool w = attachsTo(level->getTile(x - 1, y, z));
@@ -82,12 +82,12 @@ public:
     }
 
     /*@Override*/
-    void updateDefaultShape() {
+    void updateDefaultShape() override {
         setShape(0, 0, 0, 1, 1, 1);
     }
 
     /*@Override*/
-    void updateShape(LevelSource* level, int x, int y, int z) {
+    void updateShape(LevelSource* level, int x, int y, int z) override {
         float minX = 7.0f / 16.0f;
         float maxX = 9.0f / 16.0f;
         float minZ = 7.0f / 16.0f;

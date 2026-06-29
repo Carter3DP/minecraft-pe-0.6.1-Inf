@@ -31,16 +31,16 @@ public:
 	virtual void init();
 	virtual void destroy();
 
-    virtual void enable(bool status);
+    virtual void enable(bool status) override;
     
-    virtual void setListenerPos(float x, float y, float z);
-	virtual void setListenerAngle(float deg);
+    virtual void setListenerPos(float x, float y, float z) override;
+	virtual void setListenerAngle(float deg) override;
 
-    virtual void load(const std::string& name){}
-    virtual void play(const std::string& name){}
-    virtual void pause(const std::string& name){}
-    virtual void stop(const std::string& name){}
-	virtual void playAt(const SoundDesc& sound, float x, float y, float z, float volume, float pitch);
+    virtual void load(const std::string& name) override {}
+    virtual void play(const std::string& name) override {}
+    virtual void pause(const std::string& name) override {}
+    virtual void stop(const std::string& name) override {}
+	virtual void playAt(const SoundDesc& sound, float x, float y, float z, float volume, float pitch) override;
 
 private:
     class Buffer {

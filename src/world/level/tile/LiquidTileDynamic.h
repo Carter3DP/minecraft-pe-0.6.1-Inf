@@ -15,7 +15,7 @@ public:
 		maxCount(0)
 	{}
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         //printf("liquid-tick\n");
 		int depth = getDepth(level, x, y, z);
 
@@ -101,7 +101,7 @@ public:
         return current < 0 || d < current ? d : current;
     }
 
-    void onPlace(Level* level, int x, int y, int z) {
+    void onPlace(Level* level, int x, int y, int z) override {
         super::onPlace(level, x, y, z);
         if (level->getTile(x, y, z) == id) {
             level->addToTickNextTick(x, y, z, id, getTickDelay());

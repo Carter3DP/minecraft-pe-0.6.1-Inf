@@ -22,12 +22,12 @@ public:
     {
     }
 
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         return super::mayPlace(level, x, y, z);
     }
 
     /*@Override*/
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         bool n = connectsTo(level, x, y, z - 1);
         bool s = connectsTo(level, x, y, z + 1);
         bool w = connectsTo(level, x - 1, y, z);
@@ -56,7 +56,7 @@ public:
     }
 
     /*@Override*/
-    void updateShape(LevelSource* level, int x, int y, int z) {
+    void updateShape(LevelSource* level, int x, int y, int z) override {
         bool n = connectsTo(level, x, y, z - 1);
         bool s = connectsTo(level, x, y, z + 1);
         bool w = connectsTo(level, x - 1, y, z);
@@ -87,15 +87,15 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_FENCE;
     }
 

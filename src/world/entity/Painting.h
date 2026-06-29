@@ -11,15 +11,15 @@ public:
 
 	void setRandomMotive( int dir );
 
-	void addAdditonalSaveData(CompoundTag* tag);
-	void readAdditionalSaveData(CompoundTag* tag);
+	void addAdditonalSaveData(CompoundTag* tag) override;
+	void readAdditionalSaveData(CompoundTag* tag) override;
 
-	int getWidth();
-	int getHeight();
+	int getWidth() override;
+	int getHeight() override;
 
-	void dropItem();
-	int getEntityTypeId() const;
-	bool isPickable();
+	void dropItem() override;
+	int getEntityTypeId() const override;
+	bool isPickable() override;
 public:
 	const Motive* motive;
 };

@@ -8,8 +8,8 @@ class RenameMPLevelScreen: public Screen
 public:
     RenameMPLevelScreen(const std::string& levelId);
 
-    virtual void init();
-	virtual void render(int xm, int ym, float a);
+    virtual void init() override;
+	virtual void render(int xm, int ym, float a) override;
 
 private:
     std::string _levelId;

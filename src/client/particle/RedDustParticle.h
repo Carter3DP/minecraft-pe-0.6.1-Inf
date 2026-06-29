@@ -36,7 +36,7 @@ public:
         noPhysics = false;
     }
 
-    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
+    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {
         float l = ((age + a) / lifetime) * 32;
         if (l < 0) l = 0;
         if (l > 1) l = 1;
@@ -45,7 +45,7 @@ public:
         super::render(t, a, xa, ya, za, xa2, za2);
     }
 
-    void tick() {
+    void tick() override {
         xo = x;
         yo = y;
         zo = z;

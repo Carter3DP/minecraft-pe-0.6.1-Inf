@@ -17,7 +17,7 @@ public:
     {
     }
 
-    void write(RakNet::BitStream* bitStream) {
+    void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_CONTAINERSETCONTENT));
         bitStream->Write(containerId);
         bitStream->Write((short)items.size());
@@ -25,7 +25,7 @@ public:
     		PacketUtil::writeItemInstance(items[i], bitStream);
     }
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
         bitStream->Read(containerId);
         short numItems;
         bitStream->Read(numItems);
@@ -33,7 +33,7 @@ public:
             items.push_back( PacketUtil::readItemInstance(bitStream) );
     }
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (ContainerSetContentPacket*)this);
 	}
 

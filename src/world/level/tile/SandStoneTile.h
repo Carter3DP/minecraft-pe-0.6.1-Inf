@@ -19,7 +19,7 @@ public:
 	:	super(id, textures, texCount, Material::stone)
 	{}
 
-	int getTexture(int face, int data) {
+	int getTexture(int face, int data) override {
 		if (face == Facing::UP || (face == Facing::DOWN && data > 0)) {
 			return 11 * 16;//tex - 16;
 		}

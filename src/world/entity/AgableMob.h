@@ -13,12 +13,12 @@ public:
 
     int getAge();
     void setAge(int age);
-    bool isBaby();
+    bool isBaby() override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
-    void aiStep();
+    void aiStep() override;
 private:
     int age;
 

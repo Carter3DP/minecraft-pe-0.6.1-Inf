@@ -15,7 +15,7 @@ public:
 		this->tex = tex;
 	}
 
-	int getTexture(int face) {
+	int getTexture(int face) override {
 		return tex;
 	}
 };

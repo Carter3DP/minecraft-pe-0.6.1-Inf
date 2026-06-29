@@ -15,21 +15,21 @@ class ExternalFileLevelStorageSource: public LevelStorageSource
 public:
 	ExternalFileLevelStorageSource(const std::string& externalPath, const std::string& temporaryFilesPath);
 
-    std::string getName();
-	void getLevelList(LevelSummaryList& dest);
+    std::string getName() override;
+	void getLevelList(LevelSummaryList& dest) override;
 
-    LevelStorage* selectLevel(const std::string& levelId, bool createPlayerDir);
-    LevelData* getDataTagFor(const std::string& levelId);
+    LevelStorage* selectLevel(const std::string& levelId, bool createPlayerDir) override;
+    LevelData* getDataTagFor(const std::string& levelId) override;
 
-    bool isNewLevelIdAcceptable(const std::string& levelId);
+    bool isNewLevelIdAcceptable(const std::string& levelId) override;
 
-	void clearAll() {}
-    void deleteLevel(const std::string& levelId);
-    void renameLevel(const std::string& levelId, const std::string& newLevelName);
+	void clearAll() override {}
+    void deleteLevel(const std::string& levelId) override;
+    void renameLevel(const std::string& levelId, const std::string& newLevelName) override;
 
-    bool isConvertible(const std::string& levelId) { return false; }
-    bool requiresConversion(const std::string& levelId) { return false; }
-    bool convertLevel(const std::string& levelId, ProgressListener* progress) { return false; }
+    bool isConvertible(const std::string& levelId) override { return false; }
+    bool requiresConversion(const std::string& levelId) override { return false; }
+    bool convertLevel(const std::string& levelId, ProgressListener* progress) override { return false; }
 private:
 	void addLevelSummaryIfExists(LevelSummaryList& dest, const char* dirName);
 	bool hasTempDirectory() { return _hasTempDirectory; }

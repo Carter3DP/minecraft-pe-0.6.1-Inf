@@ -44,9 +44,9 @@ public:
 		setLightBlock(255);
     }
 
-	HitResult clip(Level* level, int xt, int yt, int zt, const Vec3& a, const Vec3& b);
+	HitResult clip(Level* level, int xt, int yt, int zt, const Vec3& a, const Vec3& b) override;
 
-    void updateShape(LevelSource* level, int x, int y, int z) {
+    void updateShape(LevelSource* level, int x, int y, int z) override {
 		if (isClipping) {
 			setShape(0.5f * (clipStep % 2), 0.5f * (clipStep / 2 % 2), 0.5f * (clipStep / 4 % 2), 0.5f + 0.5f * (clipStep % 2), 0.5f + 0.5f * (clipStep / 2 % 2), 0.5f + 0.5f * (clipStep / 4 % 2));
 		} else {
@@ -85,15 +85,15 @@ public:
 ////        return AABB.newTemp(x, y, z, x + 1, y + 1, z + 1);
 //    }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_STAIRS;
     }
 
@@ -101,7 +101,7 @@ public:
     //    return super::shouldRenderFace(level, x, y, z, face);
     //}
 
-	void addAABBs(Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes) {
+	void addAABBs(Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes) override {
 		setBaseShape(level, x, y, z);
 		super::addAABBs(level, x, y, z, box, boxes);
 
@@ -129,104 +129,104 @@ public:
 
     /** DELEGATES: **/
 
-    void addLights(Level* level, int x, int y, int z) {
+    void addLights(Level* level, int x, int y, int z) override {
         base->addLights(level, x, y, z);
     }
 
-    void animateTick(Level* level, int x, int y, int z, Random* random) {
+    void animateTick(Level* level, int x, int y, int z, Random* random) override {
         base->animateTick(level, x, y, z, random);
     }
 
-    void attack(Level* level, int x, int y, int z, Player* player) {
+    void attack(Level* level, int x, int y, int z, Player* player) override {
         base->attack(level, x, y, z, player);
     }
 
-    void destroy(Level* level, int x, int y, int z, int data) {
+    void destroy(Level* level, int x, int y, int z, int data) override {
         base->destroy(level, x, y, z, data);
     }
 
-    float getBrightness(LevelSource* level, int x, int y, int z) {
+    float getBrightness(LevelSource* level, int x, int y, int z) override {
         return base->getBrightness(level, x, y, z);
     }
 
-    float getExplosionResistance(Entity* source) {
+    float getExplosionResistance(Entity* source) override {
         return base->getExplosionResistance(source);
     }
 
-    int getRenderLayer() {
+    int getRenderLayer() override {
         return base->getRenderLayer();
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return base->getResourceCount(random);
     }
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         return base->getTexture(face, baseData);
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         return base->getTexture(face, baseData);
     }
 
-    int getTexture(LevelSource* level, int x, int y, int z, int face) {
+    int getTexture(LevelSource* level, int x, int y, int z, int face) override {
         return base->getTexture(face, baseData);
     }
 
-    int getTickDelay() {
+    int getTickDelay() override {
         return base->getTickDelay();
     }
 
-    AABB getTileAABB(Level* level, int x, int y, int z) {
+    AABB getTileAABB(Level* level, int x, int y, int z) override {
         return base->getTileAABB(level, x, y, z);
     }
 
-    void handleEntityInside(Level* level, int x, int y, int z, Entity* e, Vec3& current) {
+    void handleEntityInside(Level* level, int x, int y, int z, Entity* e, Vec3& current) override {
         base->handleEntityInside(level, x, y, z, e, current);
     }
 
-    bool mayPick() {
+    bool mayPick() override {
         return base->mayPick();
     }
 
-    bool mayPick(int data, bool liquid) {
+    bool mayPick(int data, bool liquid) override {
         return base->mayPick(data, liquid);
     }
 
-    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) {
+    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override {
         return base->mayPlace(level, x, y, z);
     }
 
-    void onPlace(Level* level, int x, int y, int z) {
+    void onPlace(Level* level, int x, int y, int z) override {
         neighborChanged(level, x, y, z, 0);
         base->onPlace(level, x, y, z);
     }
 
-    void onRemove(Level* level, int x, int y, int z) {
+    void onRemove(Level* level, int x, int y, int z) override {
         base->onRemove(level, x, y, z);
     }
 
-    void prepareRender(Level* level, int x, int y, int z) {
+    void prepareRender(Level* level, int x, int y, int z) override {
         base->prepareRender(level, x, y, z);
     }
 
-    void stepOn(Level* level, int x, int y, int z, Entity* entity) {
+    void stepOn(Level* level, int x, int y, int z, Entity* entity) override {
         base->stepOn(level, x, y, z, entity);
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         base->tick(level, x, y, z, random);
     }
 
-    bool use(Level* level, int x, int y, int z, Player* player) {
+    bool use(Level* level, int x, int y, int z, Player* player) override {
         return base->use(level, x, y, z, player);
     }
 
-    void wasExploded(Level* level, int x, int y, int z) {
+    void wasExploded(Level* level, int x, int y, int z) override {
         base->wasExploded(level, x, y, z);
     }
 
-    void setPlacedBy(Level* level, int x, int y, int z, Mob* by) {
+    void setPlacedBy(Level* level, int x, int y, int z, Mob* by) override {
         int dir = (Mth::floor(by->yRot * 4 / (360) + 0.5f)) & 3;
 		int usd = level->getData(x, y, z) & UPSIDEDOWN_BIT;
 
@@ -236,7 +236,7 @@ public:
         if (dir == 3) level->setData(x, y, z, 0 | usd);
     }
 
-	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue);
+	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue) override;
 
 };
 

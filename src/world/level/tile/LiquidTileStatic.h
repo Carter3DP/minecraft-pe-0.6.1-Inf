@@ -18,14 +18,14 @@ public:
         if (material == Material::lava) setTicking(true);
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         super::neighborChanged(level, x, y, z, type);
         if (level->getTile(x, y, z) == id) {
             setDynamic(level, x, y, z);
         }
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
 		//@fire
 		return;
 

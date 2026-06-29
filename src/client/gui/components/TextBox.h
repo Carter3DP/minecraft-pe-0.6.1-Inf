@@ -19,16 +19,16 @@ public:
 	TextBox(int id, int x, int y, const std::string& msg);
 	TextBox(int id, int x, int y, int w, int h, const std::string& msg);
 
-	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum);
+	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum) override;
 
 	virtual void setFocus(Minecraft* minecraft);
 	virtual bool loseFocus(Minecraft* minecraft);
 
-	virtual void render(Minecraft* minecraft, int xm, int ym);
+	virtual void render(Minecraft* minecraft, int xm, int ym) override;
 
-	virtual void keyPressed(Minecraft* minecraft, int key);
-	virtual void charPressed(Minecraft* minecraft, char c);
-	virtual void tick(Minecraft* minecraft);
+	virtual void keyPressed(Minecraft* minecraft, int key) override;
+	virtual void charPressed(Minecraft* minecraft, char c) override;
+	virtual void tick(Minecraft* minecraft) override;
 	
 public:
 	std::string hint;

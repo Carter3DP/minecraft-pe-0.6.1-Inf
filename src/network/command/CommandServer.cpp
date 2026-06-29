@@ -45,7 +45,7 @@ public:
 		followEntityId = entityId;
 	}
 
-	void tick() {
+	void tick() override {
 		if (followEntityId < 0) return;
 
 		xOld = xo = x;
@@ -59,7 +59,7 @@ public:
 		setPos(e->x, e->y + 6, e->z);
 	}
 
-	int getEntityTypeId() const { return 0; }
+	int getEntityTypeId() const override { return 0; }
 
 private:
 	int followEntityId;

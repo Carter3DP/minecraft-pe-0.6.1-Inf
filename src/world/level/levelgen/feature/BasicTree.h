@@ -407,14 +407,14 @@ public:
 		delete [] foliageCoords;
 	}
 
-	virtual void init(float heightInit, float widthInit, float foliageDensityInit){
+	virtual void init(float heightInit, float widthInit, float foliageDensityInit) override {
 
 		heightVariance = (int) (heightInit * 12);
 		if (heightInit > 0.5) foliageHeight = 5;
 		widthScale = widthInit;
 		foliageDensity = foliageDensityInit;
 	}
-	virtual bool place(Level *level, Random *random, int x, int y, int z){
+	virtual bool place(Level *level, Random *random, int x, int y, int z) override {
 
 		thisLevel = level;
 		int seed = random->nextLong();

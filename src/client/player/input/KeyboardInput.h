@@ -23,10 +23,10 @@ public:
 
     KeyboardInput(Options* options);
 
-	void tick(Player* player);
+	void tick(Player* player) override;
 
-	void setKey(int key, bool state);
-    void releaseAllKeys();
+	void setKey(int key, bool state) override;
+    void releaseAllKeys() override;
 
 protected:
 	bool keys[NumKeys];

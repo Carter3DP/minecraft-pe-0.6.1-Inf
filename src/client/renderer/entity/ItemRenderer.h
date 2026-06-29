@@ -18,7 +18,7 @@ class ItemRenderer: public EntityRenderer
 public:
     ItemRenderer();
 
-    void render(Entity* itemEntity_, double x, double y, double z, float rot, float a);
+    void render(Entity* itemEntity_, double x, double y, double z, float rot, float a) override;
     static void renderGuiItem(Font* font, Textures* textures, const ItemInstance* item, float x, float y, bool fancy);
 	static void renderGuiItem(Font* font, Textures* textures, const ItemInstance* item, float x, float y, float w, float h, bool fancy);
 	static void renderGuiItemCorrect(Font* font, Textures* textures, const ItemInstance* item, int x, int y);

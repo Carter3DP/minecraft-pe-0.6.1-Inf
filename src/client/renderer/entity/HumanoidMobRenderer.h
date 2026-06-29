@@ -15,9 +15,9 @@ public:
     HumanoidMobRenderer(HumanoidModel* humanoidModel, float shadow);
 
 	void renderHand();
-	void render(Entity* mob_, double x, double y, double z, float rot, float a);
+	void render(Entity* mob_, double x, double y, double z, float rot, float a) override;
 protected:
-    void additionalRendering(Mob* mob, float a);
+    void additionalRendering(Mob* mob, float a) override;
 
 	HumanoidModel* humanoidModel;
 

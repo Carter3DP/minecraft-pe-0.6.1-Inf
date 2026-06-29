@@ -10,7 +10,7 @@
 class NormalDayCycleDimension: public Dimension {
 public:
 
-	float getTimeOfDay(long time, float a) {
+	float getTimeOfDay(long time, float a) override {
 		int dayStep = (int) (time % Level::TICKS_PER_DAY);
 		float td = (dayStep + a) / Level::TICKS_PER_DAY - 0.25f;
 		if (td < 0) td += 1;
@@ -20,7 +20,7 @@ public:
 		return tdo + (td - tdo) / 3.0f;
 	}
 
-	Vec3 getFogColor( float td, float a ) {
+	Vec3 getFogColor( float td, float a ) override {
 		if (FogType == 1)
 		{
 			fogColor = 0xc0d8ff; // 1 returns java beta styled fog color.

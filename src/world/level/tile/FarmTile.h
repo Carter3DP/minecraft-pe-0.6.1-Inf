@@ -20,7 +20,7 @@ public:
         setLightBlock(255);
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
 		tmpBB.x0 = (float)x;
 		tmpBB.y0 = (float)y;
 		tmpBB.z0 = (float)z;
@@ -30,21 +30,21 @@ public:
 		return &tmpBB;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         if (face == 1 && data > 0) return tex - 1;
         if (face == 1) return tex;
         return 2;
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
 		if (isNearWater(level, x, y, z)) {
 			level->setData(x, y, z, 7);
 		} else {
@@ -59,13 +59,13 @@ public:
 		}
     }
 
-	void fallOn(Level* level, int x, int y, int z, Entity* entity, float fallDistance) {
+	void fallOn(Level* level, int x, int y, int z, Entity* entity, float fallDistance) override {
 		if (!level->isClientSide && level->random.nextFloat() < (fallDistance - .5f)) {
 			level->setTile(x, y, z, Tile::dirt->id);
 		}
 	}
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         Tile::neighborChanged(level, x, y, z, type);
         const Material* above = level->getMaterial(x, y + 1, z);
         if (above->isSolid()) {
@@ -77,7 +77,7 @@ public:
         return true;
     }
     
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Tile::dirt->getResource(0, random);
     }
 

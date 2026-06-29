@@ -41,7 +41,7 @@ public:
         setTicking(true); //@fire
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
@@ -49,27 +49,27 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_FIRE;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 0;
     }
 
-    int getTickDelay() {
+    int getTickDelay() override {
         return 10;
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
 		
 
         bool infiniBurn = level->getTile(x, y - 1, z) == Tile::netherrack->id;
@@ -127,11 +127,11 @@ public:
         }
     }
 
-    bool mayPick() {
+    bool mayPick() override {
         return false;
     }
 
-		    int getRenderLayer() {
+		    int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 
@@ -147,18 +147,18 @@ public:
     }
 
 
-    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) {
+    bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override {
         return level->isSolidBlockingTile(x, y - 1, z) || isValidFireLocation(level, x, y, z);
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         if (!level->isSolidBlockingTile(x, y - 1, z) && !isValidFireLocation(level, x, y, z)) {
             level->setTile(x, y, z, 0);
             return;
         }
     }
 
-    void onPlace(Level* level, int x, int y, int z) {
+    void onPlace(Level* level, int x, int y, int z) override {
         if (!level->isSolidBlockingTile(x, y - 1, z) && !isValidFireLocation(level, x, y, z)) {
             level->setTile(x, y, z, 0);
             return;
@@ -184,7 +184,7 @@ public:
         }
     }
 
-    void animateTick(Level* level, int x, int y, int z, Random* random) {
+    void animateTick(Level* level, int x, int y, int z, Random* random) override {
 
         if (random->nextInt(24) == 0) {
             level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, "fire.fire", 1 + random->nextFloat(), random->nextFloat() * 0.7f + 0.3f);

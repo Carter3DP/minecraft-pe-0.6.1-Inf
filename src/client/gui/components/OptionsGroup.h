@@ -15,11 +15,11 @@ class OptionsGroup: public GuiElementContainer {
 	typedef GuiElementContainer super;
 public:
 	OptionsGroup(std::string labelID);
-	virtual void setupPositions();
-	virtual void render(Minecraft* minecraft, int xm, int ym);
-	virtual void tick(Minecraft* minecraft);
-	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum);
-	virtual void mouseReleased(Minecraft* minecraft, int x, int y, int buttonNum);
+	virtual void setupPositions() override;
+	virtual void render(Minecraft* minecraft, int xm, int ym) override;
+	virtual void tick(Minecraft* minecraft) override;
+	virtual void mouseClicked(Minecraft* minecraft, int x, int y, int buttonNum) override;
+	virtual void mouseReleased(Minecraft* minecraft, int x, int y, int buttonNum) override;
 	OptionsGroup& addOptionItem(OptionId optId, Minecraft* minecraft);
 	void setViewportHeight(int height);
 	void scrollBy(int amount);

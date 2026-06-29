@@ -5,19 +5,19 @@ class StemTile : public Bush {
 	typedef Bush super;
 public:
 	StemTile(int id, Tile* fruit);
-	bool mayPlaceOn(int tile);
-	void tick(Level* level, int x, int y, int z, Random* random);
+	bool mayPlaceOn(int tile) override;
+	void tick(Level* level, int x, int y, int z, Random* random) override;
 	void growCropsToMax(Level* level, int x, int y, int z);
 	int getColor(int data);
-	int getColor(LevelSource* level, int x, int y, int z);
-	int getTexture(int face, int data);
-	void updateDefaultShape();
-	void updateShape(LevelSource* level, int x, int y, int z);
-	int getRenderShape();
+	int getColor(LevelSource* level, int x, int y, int z) override;
+	int getTexture(int face, int data) override;
+	void updateDefaultShape() override;
+	void updateShape(LevelSource* level, int x, int y, int z) override;
+	int getRenderShape() override;
 	int getConnectDir(LevelSource* level, int x, int y, int z);
-	void spawnResources(Level* level, int x, int y, int z, int data, float odds);
-	int getResource(int data, Random* random);
-	int getResourceCount(Random* random);
+	void spawnResources(Level* level, int x, int y, int z, int data, float odds) override;
+	int getResource(int data, Random* random) override;
+	int getResourceCount(Random* random) override;
 private:
 	float getGrowthSpeed(Level* level, int x, int y, int z);
 

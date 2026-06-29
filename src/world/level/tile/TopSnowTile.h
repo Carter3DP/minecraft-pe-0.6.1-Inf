@@ -20,7 +20,7 @@ public:
         setTicking(true);
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
@@ -28,25 +28,25 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         int t = level->getTile(x, y - 1, z);
         if (t == 0 || !Tile::tiles[t]->isSolidRender()) return false;
         return level->getMaterial(x, y - 1, z)->blocksMotion();
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         checkCanSurvive(level, x, y, z);
     }
 
-	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data) {
+	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data) override {
 		if (level->isClientSide)
 			return;
 
@@ -61,22 +61,22 @@ public:
 		level->setTile(x, y, z, 0);
 	}
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Item::snowBall->id;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 0;
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->getBrightness(LightLayer::Block, x, y, z) > 11) {
             this->spawnResources(level, x, y, z, level->getData(x, y, z));
             level->setTile(x, y, z, 0);
         }
     }
 
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) {
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override {
         const Material* m = level->getMaterial(x, y, z);
         if (face == 1) return true;
         if (m == this->material) return false;

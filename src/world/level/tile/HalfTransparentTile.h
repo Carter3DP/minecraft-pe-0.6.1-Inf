@@ -17,15 +17,15 @@ public:
         this->allowSame = allowSame;
     }
 
-	int getRenderLayer() {
+	int getRenderLayer() override {
         return Tile::RENDERLAYER_BLEND;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) {
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override {
         int id = level->getTile(x, y, z);
         if (!allowSame && id == this->id) return false;
         return Tile::shouldRenderFace(level, x, y, z, face);

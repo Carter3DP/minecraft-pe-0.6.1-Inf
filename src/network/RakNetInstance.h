@@ -65,34 +65,34 @@ public:
 	RakNetInstance();
 	virtual ~RakNetInstance();
 
-	bool host(const std::string& localName, int port, int maxConnections = 4);
-	bool connect(const char* host, int port);
-	void setIsLoggedIn(bool status);
+	bool host(const std::string& localName, int port, int maxConnections = 4) override;
+	bool connect(const char* host, int port) override;
+	void setIsLoggedIn(bool status) override;
 
-	void pingForHosts(int basePort);
-	void stopPingForHosts();
-	const ServerList& getServerList();
-	void clearServerList();
+	void pingForHosts(int basePort) override;
+	void stopPingForHosts() override;
+	const ServerList& getServerList() override;
+	void clearServerList() override;
 
-	void disconnect();
+	void disconnect() override;
 
-	void announceServer(const std::string& localName);
+	void announceServer(const std::string& localName) override;
 
-	RakNet::RakPeerInterface* getPeer();
-	bool isMyLocalGuid(const RakNet::RakNetGUID& guid);
+	RakNet::RakPeerInterface* getPeer() override;
+	bool isMyLocalGuid(const RakNet::RakNetGUID& guid) override;
 
-	void runEvents(NetEventCallback* callback);
+	void runEvents(NetEventCallback* callback) override;
 
-	void send(Packet& packet);
-	void send(const RakNet::RakNetGUID& guid, Packet& packet);
+	void send(Packet& packet) override;
+	void send(const RakNet::RakNetGUID& guid, Packet& packet) override;
 
 	// @attn: Those delete the packet
-	void send(Packet* packet);
-	void send(const RakNet::RakNetGUID& guid, Packet* packet);
+	void send(Packet* packet) override;
+	void send(const RakNet::RakNetGUID& guid, Packet* packet) override;
 
-	bool isServer() { return _isServer; }
-    bool isProbablyBroken();
-	void resetIsBroken();
+	bool isServer() override { return _isServer; }
+    bool isProbablyBroken() override;
+	void resetIsBroken() override;
 
 #ifdef _DEBUG
 	const char* getPacketName(int packetId);

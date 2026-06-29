@@ -25,7 +25,7 @@ public:
 		delete[] items;
 	}
 
-    ItemInstance* getItem(int slot) {
+    ItemInstance* getItem(int slot) override {
         if (slot >= getContainerSize()) {
             return NULL;
         }
@@ -46,7 +46,7 @@ public:
         //menu->slotsChanged(this);
     }
 
-    ItemInstance removeItem(int slot, int count) {
+    ItemInstance removeItem(int slot, int count) override {
         if (!items[slot].isNull()) {
             if (items[slot].count <= count) {
                 ItemInstance item = items[slot];
@@ -63,24 +63,24 @@ public:
         return ItemInstance();
     }
 
-    int getContainerSize() const {
+    int getContainerSize() const override {
         return size;
     }
-    int getMaxStackSize() const {
+    int getMaxStackSize() const override {
         return Container::LARGE_MAX_STACK_SIZE;
     }
-    std::string getName() const {
+    std::string getName() const override {
         return "Crafting";
     }
 
     void setContainerChanged() {}
 
-    bool stillValid(Player* player) {
+    bool stillValid(Player* player) override {
         return true;
     }
 
-    void startOpen() {}
-    void stopOpen() {}
+    void startOpen() override {}
+    void stopOpen() override {}
 
 private:
     ItemInstance* items;

@@ -15,7 +15,7 @@ class ShovelItem: public DiggerItem
 public:
     ShovelItem(int id, const Tier& tier);
 
-    bool canDestroySpecial(const Tile* tile) const;
+    bool canDestroySpecial(const Tile* tile) const override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ITEM__ShovelItem_H__*/

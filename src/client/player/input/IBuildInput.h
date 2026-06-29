@@ -37,7 +37,7 @@ class IBuildInput: public IConfigListener {
 public:
 	virtual ~IBuildInput(){}
 
-	virtual void onConfigChanged(const Config& c) {}
+	virtual void onConfigChanged(const Config& c) override {}
 	// @return true if user wants to do an action, false if not
 	virtual bool tickBuild(Player*, BuildActionIntention* bai) { return false; }
 };

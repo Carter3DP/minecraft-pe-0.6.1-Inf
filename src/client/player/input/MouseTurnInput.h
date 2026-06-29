@@ -16,12 +16,12 @@ public:
 		_centerY((float)centerY)
 	{}
 
-	void onConfigChanged(const Config& config) {
+	void onConfigChanged(const Config& config) override {
 		_centerX = ((float) config.width ) * 0.5f;
 		_centerY = ((float) config.height) * 0.5f;
 	}
 
-	TurnDelta getTurnDelta() {
+	TurnDelta getTurnDelta() override {
 		float dx = 0, dy = 0;
 		if ( MODE_DELTA == mode ) {
 			dx = (float)Mouse::getDX();

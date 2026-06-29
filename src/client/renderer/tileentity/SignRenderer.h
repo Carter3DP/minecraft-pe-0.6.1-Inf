@@ -12,8 +12,8 @@ class SignRenderer: public TileEntityRenderer
 {
 public:
     /*@Override*/
-    void render(TileEntity* te, double x, double y, double z, float a);
-    void onGraphicsReset();
+    void render(TileEntity* te, double x, double y, double z, float a) override;
+    void onGraphicsReset() override;
 private:
     SignModel signModel;
 };

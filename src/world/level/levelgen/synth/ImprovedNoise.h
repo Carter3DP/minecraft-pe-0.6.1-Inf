@@ -22,7 +22,7 @@ public:
     const double grad2(int hash, double x, double z);
     const double grad(int hash, double x, double y, double z);
 
-    double getValue(double x, double y);
+    double getValue(double x, double y) override;
     double getValue(double x, double y, double z);
 
     void add(double* buffer, double _x, double _y, double _z, int xSize, int ySize, int zSize, double xs, double ys, double zs, double pow);

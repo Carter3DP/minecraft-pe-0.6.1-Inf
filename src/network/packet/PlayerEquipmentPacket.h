@@ -21,7 +21,7 @@ public:
 	{
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_PLAYEREQUIPMENT));
 
@@ -30,14 +30,14 @@ public:
 		bitStream->Write(itemAuxValue);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(entityId);
 		bitStream->Read(itemId);
 		bitStream->Read(itemAuxValue);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (PlayerEquipmentPacket*)this);
 	}

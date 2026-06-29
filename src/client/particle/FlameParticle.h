@@ -32,13 +32,13 @@ public:
         tex = 48;
     }
     
-    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
+    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {
         float s = (age + a) / (float) lifetime;
         size = oSize * (1 - s*s*0.5f);
         super::render(t, a, xa, ya, za, xa2, za2);
     }    
 
-    float getBrightness(float a) {
+    float getBrightness(float a) override {
 		return 1.0f;
 /*
         float l = (age+a)/lifetime;
@@ -50,7 +50,7 @@ public:
 */
     }
 
-    void tick()
+    void tick() override
     {
         xo = x;
         yo = y;

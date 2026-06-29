@@ -19,16 +19,16 @@ public:
 	SignTileEntity();
 
     /*@Override*/
-    bool save(CompoundTag* tag);
+    bool save(CompoundTag* tag) override;
     /*@Override*/
-    void load(CompoundTag* tag);
-    bool shouldSave();
+    void load(CompoundTag* tag) override;
+    bool shouldSave() override;
 
     bool isEditable();
     void setEditable(bool isEditable);
-	void setLevelAndPos(Level* level, int x, int y, int z);
+	void setLevelAndPos(Level* level, int x, int y, int z) override;
 
-	Packet* getUpdatePacket();
+	Packet* getUpdatePacket() override;
 
     std::string messages[NUM_LINES];
     int selectedLine;

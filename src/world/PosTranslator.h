@@ -27,12 +27,12 @@ public:
 		yo(yo),
 		zo(zo)
 	{}
-	void to  (float& x, float& y, float& z) { x += xo; y += yo; z += zo; }
-	void to  (double& x, double& y, double& z) { x += xo; y += yo; z += zo; }
-	void to  (int& x, int& y, int& z)       { x += (int)xo; y += (int)yo; z += (int)zo; }
-	void from(float& x, float& y, float& z) { x -= xo; y -= yo; z -= zo; }
-	void from(double& x, double& y, double& z) { x -= xo; y -= yo; z -= zo; }
-	void from(int& x, int& y, int& z)       { x -= (int)xo; y -= (int)yo; z -= (int)zo; }
+	void to  (float& x, float& y, float& z) override { x += xo; y += yo; z += zo; }
+	void to  (double& x, double& y, double& z) override { x += xo; y += yo; z += zo; }
+	void to  (int& x, int& y, int& z) override { x += (int)xo; y += (int)yo; z += (int)zo; }
+	void from(float& x, float& y, float& z) override { x -= xo; y -= yo; z -= zo; }
+	void from(double& x, double& y, double& z) override { x -= xo; y -= yo; z -= zo; }
+	void from(int& x, int& y, int& z) override { x -= (int)xo; y -= (int)yo; z -= (int)zo; }
 
 	double xo, yo, zo;
 };

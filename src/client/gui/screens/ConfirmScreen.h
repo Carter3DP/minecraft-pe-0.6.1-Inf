@@ -14,13 +14,13 @@ public:
     ConfirmScreen(Screen* parent_, const std::string& title1_, const std::string& title2_, const std::string& yesButton, const std::string& noButton, int id_);
 	~ConfirmScreen();
 
-    void init();
-	void setupPositions();
+    void init() override;
+	void setupPositions() override;
 
-	bool handleBackEvent(bool isDown);
-	void render(int xm, int ym, float a);
+	bool handleBackEvent(bool isDown) override;
+	void render(int xm, int ym, float a) override;
 protected:
-    void buttonClicked(Button* button);
+    void buttonClicked(Button* button) override;
 
 	virtual void postResult(bool isOk);
 

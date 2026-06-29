@@ -20,27 +20,27 @@ public:
         this->setTicking(true);
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_TORCH;
     }
 
-    int getRenderLayer() {
+    int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
     
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         if (level->isSolidBlockingTile(x - 1, y, z)) {
             return true;
         } else if (level->isSolidBlockingTile(x + 1, y, z)) {
@@ -55,7 +55,7 @@ public:
         return false;
     }
 
-	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue)
+	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue) override
 	{
 		int dir = itemValue;
 
@@ -68,12 +68,12 @@ public:
 		return dir;
 	}
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         super::tick(level, x, y, z, random);
         if (level->getData(x, y, z) == 0) onPlace(level, x, y, z);
     }
 
-    void onPlace(Level* level, int x, int y, int z) {
+    void onPlace(Level* level, int x, int y, int z) override {
         if (level->isSolidBlockingTile(x - 1, y, z)) {
             level->setData(x, y, z, 1);
         } else if (level->isSolidBlockingTile(x + 1, y, z)) {
@@ -88,7 +88,7 @@ public:
         checkCanSurvive(level, x, y, z);
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         if (checkCanSurvive(level, x, y, z)) {
             int dir = level->getData(x, y, z);
             bool replace = false;
@@ -106,7 +106,7 @@ public:
         }
     }
 
-    HitResult clip(Level* level, int x, int y, int z, const Vec3& a, const Vec3& b) {
+    HitResult clip(Level* level, int x, int y, int z, const Vec3& a, const Vec3& b) override {
         int dir = level->getData(x, y, z) & 7;
 
         float r = 0.15f;
@@ -126,7 +126,7 @@ public:
         return super::clip(level, x, y, z, a, b);
     }
 
-    void animateTick(Level* level, int xt, int yt, int zt, Random* random) {
+    void animateTick(Level* level, int xt, int yt, int zt, Random* random) override {
         int dir = level->getData(xt, yt, zt);
         float x = xt + 0.5f;
         float y = yt + 0.7f;

@@ -14,16 +14,16 @@ public:
 
 	virtual ~SimpleChooseLevelScreen();
 
-	void init();
-	void setupPositions();
-	void tick();
+	void init() override;
+	void setupPositions() override;
+	void tick() override;
 
-	void render(int xm, int ym, float a);
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button);
-	bool handleBackEvent(bool isDown);
-	virtual void keyPressed(int eventKey);
-	virtual void mouseClicked(int x, int y, int buttonNum);
+	void buttonClicked(Button* button) override;
+	bool handleBackEvent(bool isDown) override;
+	virtual void keyPressed(int eventKey) override;
+	virtual void mouseClicked(int x, int y, int buttonNum) override;
 
 private:
 	Touch::THeader* bHeader;

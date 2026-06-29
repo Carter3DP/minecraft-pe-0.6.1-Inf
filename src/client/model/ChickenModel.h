@@ -15,9 +15,9 @@ public:
     ChickenModel();
 
     /*@Override*/
-    void render(Entity* entity, float time, float r, float bob, float yRot, float xRot, float scale);
+    void render(Entity* entity, float time, float r, float bob, float yRot, float xRot, float scale) override;
 
-    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale);
+    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) override;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_MODEL__ChickenModel_H__*/

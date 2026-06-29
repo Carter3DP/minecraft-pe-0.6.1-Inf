@@ -22,17 +22,17 @@ public:
     }
 
     /*@Override*/
-    int getIcon(int itemAuxValue) {
+    int getIcon(int itemAuxValue) override {
         return Tile::stoneSlabHalf->getTexture(2, itemAuxValue);
     }
 
     /*@Override*/
-    int getLevelDataForAuxValue(int auxValue) {
+    int getLevelDataForAuxValue(int auxValue) override {
         return auxValue;
     }
 
     /*@Override*/
-    std::string getDescriptionId(const ItemInstance* instance) const {
+    std::string getDescriptionId(const ItemInstance* instance) const override {
 		int auxValue = instance->getAuxValue();
         if (auxValue < 0 || auxValue >= StoneSlabTile::SLAB_NAMES_COUNT)
             auxValue = 0;
@@ -40,7 +40,7 @@ public:
     }
 
     /*@Override*/
-    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override {
         if (instance->count == 0) return false;
         //if (!player->mayBuild(x, y, z)) return false;
 

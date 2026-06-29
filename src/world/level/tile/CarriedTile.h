@@ -19,16 +19,16 @@ public:
 	{
     }
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         if (face == 1) return texTop;
         return texDefault;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return 0;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 0;
     }
 

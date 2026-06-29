@@ -14,11 +14,11 @@ class FlyingMob: public Mob
 public:
     FlyingMob(Level* level);
 
-    void travel(double xa, double ya);
+    void travel(double xa, double ya) override;
 
-    bool onLadder();
+    bool onLadder() override;
 protected:
-    void causeFallDamage(float distance);
+    void causeFallDamage(float distance) override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ENTITY__FlyingMob_H__*/

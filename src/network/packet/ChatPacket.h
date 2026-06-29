@@ -19,18 +19,18 @@ public:
 		this->isSystem = isSystem;
 	}
 
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_CHAT));
 		bitStream->Write(message.c_str());
 	}
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
 		char buff[MAX_LENGTH + 30];
 		bitStream->Read(buff);
 		message = buff;
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (ChatPacket*)this);
 	}
 

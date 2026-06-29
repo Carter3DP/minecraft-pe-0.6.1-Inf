@@ -21,8 +21,8 @@ public:
 	~InventoryPane();
 
 	void tick();
-	void renderBatch( std::vector<GridItem>& item, float alpha );
-	bool onSelect( int gridId, bool selected );
+	void renderBatch( std::vector<GridItem>& item, float alpha ) override;
+	bool onSelect( int gridId, bool selected ) override;
 	void drawScrollBar( ScrollBar& hScroll );
 
 	void setRenderDecorations(bool value);

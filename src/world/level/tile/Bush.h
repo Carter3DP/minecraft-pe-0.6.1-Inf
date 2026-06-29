@@ -25,43 +25,43 @@ public:
 		this->setShape(0.5f - ss, 0, 0.5f - ss, 0.5f + ss, ss * 3, 0.5f + ss);
 	}
 
-	bool mayPlace(Level* level, int x, int y, int z, unsigned char face) {
+	bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override {
         return mayPlaceOn(level->getTile(x, y - 1, z));
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         Tile::neighborChanged(level, x, y, z, type);
         checkAlive(level, x, y, z);
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         checkAlive(level, x, y, z);
     }
 
-    bool canSurvive(Level* level, int x, int y, int z) {
+    bool canSurvive(Level* level, int x, int y, int z) override {
         return (level->getRawBrightness(x, y, z)>=8 || level->canSeeSky(x, y, z)) && mayPlaceOn(level->getTile(x, y - 1, z));
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
     bool blocksLight() {
         return false;
     }
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_CROSS_TEXTURE;
     }
 
-	int getRenderLayer() {
+	int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 

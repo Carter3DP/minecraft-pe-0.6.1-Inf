@@ -24,17 +24,17 @@ public:
     void shoot(const Vec3& v, float pow, float uncertainty);
     void shoot(double xd, double yd, double zd, float pow, float uncertainty);
 
-	void tick();
-    void lerpMotion(double xd, double yd, double zd);
+	void tick() override;
+    void lerpMotion(double xd, double yd, double zd) override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
-	bool shouldRenderAtSqrDistance(double distance);
+	bool shouldRenderAtSqrDistance(double distance) override;
 
-	float getShadowHeightOffs();
+	float getShadowHeightOffs() override;
 
-    int getAuxData();
+    int getAuxData() override;
 protected:
 	virtual float getThrowPower();
 	virtual float getThrowUpAngleOffset();

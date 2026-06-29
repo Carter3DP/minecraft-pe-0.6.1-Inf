@@ -30,13 +30,13 @@ public:
     TouchscreenInput_TestFps(Minecraft* mc, Options* options);
 	~TouchscreenInput_TestFps();
 
-	void onConfigChanged(const Config& c);
+	void onConfigChanged(const Config& c) override;
 
-	void tick(Player* player);
-	void render(float a);
+	void tick(Player* player) override;
+	void render(float a) override;
 
-	void setKey(int key, bool state);
-    void releaseAllKeys();
+	void setKey(int key, bool state) override;
+    void releaseAllKeys() override;
 
 	const RectangleArea& getRectangleArea();
     const RectangleArea& getPauseRectangleArea();

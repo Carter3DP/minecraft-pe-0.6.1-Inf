@@ -18,27 +18,27 @@ public:
 	{
     }
 
-	int getRenderLayer(){
+	int getRenderLayer() override {
 		return RENDERLAYER_ALPHATEST;
 	}
 
     /*@Override*/
-    void entityInside(Level* level, int x, int y, int z, Entity* entity) {
+    void entityInside(Level* level, int x, int y, int z, Entity* entity) override {
         entity->makeStuckInWeb();
     }
 
     /*@Override*/
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
     /*@Override*/
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
     /*@Override*/
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_CROSS_TEXTURE;
     }
 
@@ -46,12 +46,12 @@ public:
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
     /*@Override*/
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Item::string->id;
     }
 };

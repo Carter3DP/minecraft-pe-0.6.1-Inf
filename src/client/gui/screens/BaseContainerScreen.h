@@ -19,18 +19,18 @@ public:
     {
     }
 
-	virtual void init() {
+	virtual void init() override {
         super::init();
         minecraft->player->containerMenu = menu;
     }
 
-	virtual void tick() {
+	virtual void tick() override {
 		super::tick();
 		if (!minecraft->player->isAlive() || minecraft->player->removed)
 			minecraft->player->closeContainer();
 	}
 
-	virtual void keyPressed( int eventKey )
+	virtual void keyPressed( int eventKey ) override
 	{
 		if (eventKey == Keyboard::KEY_ESCAPE) {
 			minecraft->player->closeContainer();
@@ -39,7 +39,7 @@ public:
 		}
 	}
 
-	virtual bool closeOnPlayerHurt() {
+	virtual bool closeOnPlayerHurt() override {
 		return true;
 	}
 

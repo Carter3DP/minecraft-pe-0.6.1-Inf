@@ -17,7 +17,7 @@ public:
 		wasSneakTouched(false)
 	{}
 
-	void tick(Player* player) {
+	void tick(Player* player) override {
 		bool _sneaking = sneaking;
 		super::tick(player);
 		sneaking = _sneaking;

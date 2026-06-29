@@ -15,7 +15,7 @@ public:
     PerlinNoise(Random* random, int levels);
 	~PerlinNoise();
 
-    double getValue(double x, double y);
+    double getValue(double x, double y) override;
     double getValue(double x, double y, double z);
 
 	//double[] getRegion(double[] buffer, double x, double y, double z, int xSize, int ySize, int zSize, double xScale, double yScale, double zScale) {

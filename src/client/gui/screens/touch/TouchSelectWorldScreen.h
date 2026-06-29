@@ -22,24 +22,24 @@ class TouchWorldSelectionList : public RolledSelectionListH
 {
 public:
 	TouchWorldSelectionList(Minecraft* _minecraft, int _width, int _height);
-	virtual void tick();
+	virtual void tick() override;
 	void stepLeft();
 	void stepRight();
 
 	void commit();
 protected:
-	virtual int getNumberOfItems();
-	virtual void selectItem(int item, bool doubleClick);
-	virtual bool isSelectedItem(int item);
+	virtual int getNumberOfItems() override;
+	virtual void selectItem(int item, bool doubleClick) override;
+	virtual bool isSelectedItem(int item) override;
 
-	virtual void renderBackground() {}
-	virtual void renderItem(int i, int x, int y, int h, Tesselator& t);
-	virtual float getPos(float alpha);
-	virtual void touched() { mode = 0; }
-	virtual bool capXPosition();
+	virtual void renderBackground() override {}
+	virtual void renderItem(int i, int x, int y, int h, Tesselator& t) override;
+	virtual float getPos(float alpha) override;
+	virtual void touched() override { mode = 0; }
+	virtual bool capXPosition() override;
 
-	virtual void selectStart(int item, int localX, int localY);
-	virtual void selectCancel();
+	virtual void selectStart(int item, int localX, int localY) override;
+	virtual void selectCancel() override;
 private:
 	TweenData td;
 	void tweenInited();
@@ -71,7 +71,7 @@ class TouchDeleteWorldScreen: public ConfirmScreen
 public:
 	TouchDeleteWorldScreen(const LevelSummary& levelId);
 protected:
-	virtual void postResult(bool isOk);
+	virtual void postResult(bool isOk) override;
 private:
 	LevelSummary _level;
 };

@@ -12,7 +12,7 @@
 class CactusFeature: public Feature
 {
 public:
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
         for (int i = 0; i < 10; i++) {
             int x2 = x + random->nextInt(8) - random->nextInt(8);
             int y2 = y + random->nextInt(4) - random->nextInt(4);

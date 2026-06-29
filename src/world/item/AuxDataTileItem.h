@@ -19,12 +19,12 @@ public:
     }
 
     /*@Override*/
-    int getIcon(int itemAuxValue) {
+    int getIcon(int itemAuxValue) override {
         return parentTile->getTexture(2, itemAuxValue);
     }
 
     /*@Override*/
-    int getLevelDataForAuxValue(int auxValue) {
+    int getLevelDataForAuxValue(int auxValue) override {
         return auxValue;
     }
 private:

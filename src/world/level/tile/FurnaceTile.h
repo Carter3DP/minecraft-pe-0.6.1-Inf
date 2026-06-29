@@ -17,22 +17,22 @@ class FurnaceTile: public EntityTile
 public:
     FurnaceTile(int id, bool lit);
 
-	int getTexture(int face);
-    int getTexture(LevelSource* level, int x, int y, int z, int face);
+	int getTexture(int face) override;
+    int getTexture(LevelSource* level, int x, int y, int z, int face) override;
 
-    void animateTick(Level* level, int xt, int yt, int zt, Random* random);
+    void animateTick(Level* level, int xt, int yt, int zt, Random* random) override;
 
-    bool use(Level* level, int x, int y, int z, Player* player);
-	int getResource(int data, Random* random/*, int playerBonusLevel*/);
+    bool use(Level* level, int x, int y, int z, Player* player) override;
+	int getResource(int data, Random* random/*, int playerBonusLevel*/) override;
 
     static void setLit(bool lit, Level* level, int x, int y, int z);
 
-    TileEntity* newTileEntity();
+    TileEntity* newTileEntity() override;
 
-    void setPlacedBy(Level* level, int x, int y, int z, Mob* by);
+    void setPlacedBy(Level* level, int x, int y, int z, Mob* by) override;
 
-	void onPlace(Level* level, int x, int y, int z);
-    void onRemove(Level* level, int x, int y, int z);
+	void onPlace(Level* level, int x, int y, int z) override;
+    void onRemove(Level* level, int x, int y, int z) override;
 private:
     void recalcLockDir(Level* level, int x, int y, int z);
 

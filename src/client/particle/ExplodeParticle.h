@@ -25,7 +25,7 @@ public:
 //        noPhysics = true;
     }
 
-    void tick()
+    void tick() override
     {
         xo = x;
         yo = y;

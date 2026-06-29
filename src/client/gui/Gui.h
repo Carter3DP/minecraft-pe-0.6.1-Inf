@@ -50,7 +50,7 @@ public:
 
 	// draw a string containing simple [color]...[/color] tags; color names are matched
 	// case-insensitively and default to white. alpha is applied to each segment.
-	// draw tagged string (ignores simple [color]…[/color] tags)
+	// draw tagged string (ignores simple [color]Ã¢â‚¬Â¦[/color] tags)
 	static void drawColoredString(Font* font, const std::string& text, float x, float y, int alpha);
 	static float getColoredWidth(Font* font, const std::string& text);
 
@@ -77,7 +77,7 @@ public:
 	void renderSlotText(const ItemInstance* item, float x, float y, bool hasFinite, bool shadow);
 	void texturesLoaded( Textures* textures );
 
-	void onConfigChanged(const Config& config);
+	void onConfigChanged(const Config& config) override;
 	void onLevelGenerated();
 
 	void setScissorRect(const IntRectangle& rect);

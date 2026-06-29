@@ -11,7 +11,7 @@ public:
 	~StonecutterScreen();
 
 private:
-	bool filterRecipe(const Recipe& r);
+	bool filterRecipe(const Recipe& r) override;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_GUI_SCREENS_CRAFT_StonecutterScreen_H__*/

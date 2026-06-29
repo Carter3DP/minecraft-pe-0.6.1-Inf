@@ -17,7 +17,7 @@ public:
     HatchetItem(int id, const Tier& tier);
 
     //@Override
-    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile);
+    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ITEM__HatchetItem_H__*/

@@ -11,7 +11,7 @@
 class TaigaBiome: public Biome
 {
 public:
-    Feature* getTreeFeature(Random* random) {
+    Feature* getTreeFeature(Random* random) override {
         if (random->nextInt(3) == 0) {
             return new PineFeature();
         }

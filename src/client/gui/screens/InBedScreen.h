@@ -11,13 +11,13 @@ public:
 
 	virtual ~InBedScreen();
 
-	void init();
+	void init() override;
 
-	void setupPositions();
+	void setupPositions() override;
 
-	void render(int xm, int ym, float a);
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button);
+	void buttonClicked(Button* button) override;
 
 private:
 	Button* bWakeUp;

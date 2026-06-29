@@ -11,7 +11,7 @@
 class ForestBiome: public Biome
 {
 public:
-    Feature* getTreeFeature(Random* random) {
+    Feature* getTreeFeature(Random* random) override {
         if (random->nextInt(5) == 0) {
             return new BirchFeature();
         }

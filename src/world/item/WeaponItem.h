@@ -25,7 +25,7 @@ public:
     }
 
     /*@Override*/
-    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) {
+    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) override {
         //@todo
         if (tile->id == Tile::web->id) {
             // swords can quickly cut web
@@ -34,21 +34,21 @@ public:
         return 1.5f;
     }
 
-    void hurtEnemy(ItemInstance* itemInstance, Mob* mob/*, Mob* attacker*/) {
+    void hurtEnemy(ItemInstance* itemInstance, Mob* mob/*, Mob* attacker*/) override {
         itemInstance->hurt(1);// attacker);
         //return true;
     }
 
-    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) {
+    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) override {
         itemInstance->hurt(2);//, owner);
         return true;
     }
 
-    int getAttackDamage(Entity* entity) {
+    int getAttackDamage(Entity* entity) override {
         return damage;
     }
 
-    bool isHandEquipped() const {
+    bool isHandEquipped() const override {
         return true;
     }
 
@@ -56,17 +56,17 @@ public:
     //    return UseAnim.block;
     //}
 
-    int getUseDuration(ItemInstance* itemInstance) {
+    int getUseDuration(ItemInstance* itemInstance) override {
         return 20 * 60 * 60; // Block for a maximum of one hour!
     }
 
-    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
+    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) override {
         //player->startUsingItem(instance, getUseDuration(instance)); //@todo
         return instance;
     }
 
     // /*@Override*/
-    bool canDestroySpecial(const Tile* tile) const {
+    bool canDestroySpecial(const Tile* tile) const override {
         return tile->id == Tile::web->id;
     }
 

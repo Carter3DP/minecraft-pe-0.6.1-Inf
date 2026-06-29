@@ -8,17 +8,17 @@ class CropTile : public Bush
 	typedef Bush super;
 public:
 	CropTile(int id, int tex);
-	bool mayPlaceOn(int tile);
-	void tick(Level* level, int x, int y, int z, Random* random);
+	bool mayPlaceOn(int tile) override;
+	void tick(Level* level, int x, int y, int z, Random* random) override;
 
-	int getTexture(LevelSource* level, int x, int y, int z, int face);
-	int getTexture( int face, int data );
+	int getTexture(LevelSource* level, int x, int y, int z, int face) override;
+	int getTexture( int face, int data ) override;
 
-	int getRenderShape();
+	int getRenderShape() override;
 
-	void spawnResources(Level* level, int x, int y, int z, int data, float odds);
-	int getResource(int data, Random* random);
-	int getResourceCount(Random* random);
+	void spawnResources(Level* level, int x, int y, int z, int data, float odds) override;
+	int getResource(int data, Random* random) override;
+	int getResourceCount(Random* random) override;
 
 	void growCropsToMax(Level* level, int x, int y, int z);
 private:

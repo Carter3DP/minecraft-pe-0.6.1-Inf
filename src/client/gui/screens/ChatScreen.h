@@ -10,12 +10,12 @@ public:
 	ChatScreen() {}
 	virtual ~ChatScreen() {}
 
-	void init();
-	void removed();
+	void init() override;
+	void removed() override;
 
-	void render(int xm, int ym, float a);
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button) {};
+	void buttonClicked(Button* button) override {};
 
 private:
 #ifdef __APPLE__

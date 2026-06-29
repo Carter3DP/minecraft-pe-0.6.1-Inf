@@ -19,7 +19,7 @@ public:
 
 	bool isTouched() { return Controller::isTouched(cid); }
 
-	TurnDelta getTurnDelta() {
+	TurnDelta getTurnDelta() override {
 		float dx = 0, dy = 0;
 		bool isActive = Controller::isTouched(cid);
 

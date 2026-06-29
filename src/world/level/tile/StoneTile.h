@@ -16,7 +16,7 @@ public:
 	{
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Tile::stoneBrick->id;
     }
 };

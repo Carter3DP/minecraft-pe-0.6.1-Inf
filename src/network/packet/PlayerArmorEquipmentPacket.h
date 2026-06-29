@@ -28,7 +28,7 @@ public:
 		get(feet,  player->getArmor(ArmorItem::SLOT_FEET));
 	}
 
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_PLAYERARMOREQUIPMENT));
 
 		bitStream->Write(entityId);
@@ -38,7 +38,7 @@ public:
 		bitStream->Write(feet);
 	}
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
 		bitStream->Read(entityId);
 		bitStream->Read(head);
 		bitStream->Read(torso);
@@ -46,7 +46,7 @@ public:
 		bitStream->Read(feet);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (PlayerArmorEquipmentPacket*)this);
 	}
 

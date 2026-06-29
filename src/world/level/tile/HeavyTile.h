@@ -15,10 +15,10 @@ public:
     HeavyTile(int id, int tex);
     HeavyTile(int id, int tex, const Material* material);
 
-    void onPlace(Level* level, int x, int y, int z);
-    void neighborChanged(Level* level, int x, int y, int z, int type);
+    void onPlace(Level* level, int x, int y, int z) override;
+    void neighborChanged(Level* level, int x, int y, int z, int type) override;
 
-    void tick(Level* level, int x, int y, int z, Random* random);
+    void tick(Level* level, int x, int y, int z, Random* random) override;
     int getTickDelay(Level* level);
 
     static bool isFree(Level* level, int x, int y, int z);

@@ -15,11 +15,11 @@ public:
     :	super(id, tex, material, allowSame)
 	{}
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 0;
     }
 
-    int getRenderLayer() {
+    int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 };

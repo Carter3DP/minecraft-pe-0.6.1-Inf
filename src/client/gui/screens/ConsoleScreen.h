@@ -11,17 +11,17 @@ public:
     ConsoleScreen();
     virtual ~ConsoleScreen() {}
 
-    void init();
-    void render(int xm, int ym, float a);
-    void tick();
+    void init() override;
+    void render(int xm, int ym, float a) override;
+    void tick() override;
 
-    virtual bool renderGameBehind() { return true; }
-    virtual bool isInGameScreen()   { return true; }
-    virtual bool isPauseScreen()    { return false; }
+    virtual bool renderGameBehind() override { return true; }
+    virtual bool isInGameScreen() override { return true; }
+    virtual bool isPauseScreen() override { return false; }
 
-    virtual void keyPressed(int eventKey);
-    virtual void charPressed(char inputChar);
-    virtual bool handleBackEvent(bool isDown);
+    virtual void keyPressed(int eventKey) override;
+    virtual void charPressed(char inputChar) override;
+    virtual bool handleBackEvent(bool isDown) override;
 
 private:
     void execute();

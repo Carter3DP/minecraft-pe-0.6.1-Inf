@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	virtual int getRenderShape()
+	virtual int getRenderShape() override
 	{
 		return SHAPE_INVISIBLE;
 	}

@@ -30,16 +30,16 @@ public:
 
 protected:
 
-	virtual int getNumberOfItems() { return (int)copiedServerList.size(); }
+	virtual int getNumberOfItems() override { return (int)copiedServerList.size(); }
 
-	virtual void selectCancel();
-	virtual void selectStart(int item);
-	virtual void selectItem(int item, bool doubleClick);
+	virtual void selectCancel() override;
+	virtual void selectStart(int item) override;
+	virtual void selectItem(int item, bool doubleClick) override;
 
-	virtual bool isSelectedItem(int item) { return item == selectedItem; }
+	virtual bool isSelectedItem(int item) override { return item == selectedItem; }
 
-	virtual void renderBackground() {}
-	virtual void renderItem(int i, int x, int y, int h, Tesselator& t);
+	virtual void renderBackground() override {}
+	virtual void renderItem(int i, int x, int y, int h, Tesselator& t) override;
 };
 
 class JoinGameScreen: public Screen
@@ -48,19 +48,19 @@ public:
 	JoinGameScreen();
 	virtual ~JoinGameScreen();
 
-	void init();
-	void setupPositions();
+	void init() override;
+	void setupPositions() override;
 
-	virtual bool handleBackEvent(bool isDown);
+	virtual bool handleBackEvent(bool isDown) override;
 
 	virtual bool isIndexValid(int index);
 
-	virtual void tick();
-	void render(int xm, int ym, float a);
+	virtual void tick() override;
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button);
+	void buttonClicked(Button* button) override;
 
-	bool isInGameScreen();
+	bool isInGameScreen() override;
 private:
 	Button bJoin;
 	TButton bBack;

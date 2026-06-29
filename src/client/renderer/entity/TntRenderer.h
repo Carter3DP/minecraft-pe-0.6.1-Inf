@@ -10,7 +10,7 @@ class TntRenderer: public EntityRenderer
 {
 public:
     TntRenderer();
-	void render(Entity* tnt_, double x, double y, double z, float rot, float a);
+	void render(Entity* tnt_, double x, double y, double z, float rot, float a) override;
 
 	TileRenderer tileRenderer;
 };

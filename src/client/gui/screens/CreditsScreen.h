@@ -14,12 +14,12 @@ public:
     typedef Screen super;
     CreditsScreen();
     virtual ~CreditsScreen();
-    void init();
-    void setupPositions();
-    virtual void tick();
-    void render(int xm, int ym, float a);
-    void buttonClicked(Button* button);
-    virtual void mouseClicked(int x, int y, int buttonNum);
+    void init() override;
+    void setupPositions() override;
+    virtual void tick() override;
+    void render(int xm, int ym, float a) override;
+    void buttonClicked(Button* button) override;
+    virtual void mouseClicked(int x, int y, int buttonNum) override;
 private:
     Touch::THeader* bHeader;
     ImageButton* btnBack;

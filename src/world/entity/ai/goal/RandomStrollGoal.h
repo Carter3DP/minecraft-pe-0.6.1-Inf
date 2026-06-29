@@ -23,7 +23,7 @@ public:
     }
 
     /*@Override*/
-    bool canUse() {
+    bool canUse() override {
         if (mob->getNoActionTime() >= SharedConstants::TicksPerSecond * 5) return false;
         if (mob->random.nextInt(120) != 0) return false;
 
@@ -36,12 +36,12 @@ public:
     }
 
     /*@Override*/
-    bool canContinueToUse() {
+    bool canContinueToUse() override {
         return !mob->getNavigation()->isDone();
     }
 
     /*@Override*/
-    void start() {
+    void start() override {
         mob->getNavigation()->moveTo(wantedX, wantedY, wantedZ, speed);
     }
 

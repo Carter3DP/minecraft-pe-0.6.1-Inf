@@ -21,34 +21,34 @@ public:
 	~FurnaceTileEntity();
 
 	// Container
-    ItemInstance* getItem(int slot);
-	void setItem(int slot, ItemInstance* item);
-    ItemInstance removeItem(int slot, int count);
+    ItemInstance* getItem(int slot) override;
+	void setItem(int slot, ItemInstance* item) override;
+    ItemInstance removeItem(int slot, int count) override;
 
-	std::string getName() const;
-	int getMaxStackSize() const;
-	int getContainerSize() const;
+	std::string getName() const override;
+	int getMaxStackSize() const override;
+	int getContainerSize() const override;
 
-    bool stillValid(Player* player);
+    bool stillValid(Player* player) override;
 
-    void startOpen();
-    void stopOpen();
+    void startOpen() override;
+    void stopOpen() override;
 
 	void setContainerChanged();
 
 	// Furnace
-    void load(CompoundTag* base);
-    bool save(CompoundTag* base);
-	bool shouldSave();
+    void load(CompoundTag* base) override;
+    bool save(CompoundTag* base) override;
+	bool shouldSave() override;
 
 	int getBurnProgress(int max);
     int getLitProgress(int max);
 
 	bool isLit();
-	bool isFinished();
+	bool isFinished() override;
 	bool isSlotEmpty( int slot );
 
-	void tick();
+	void tick() override;
 
     void burn();
 

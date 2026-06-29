@@ -20,18 +20,18 @@ public:
 	ItemEntity(Level* level, double x, double y, double z, const ItemInstance& item);
 	~ItemEntity();
 
-    void tick();
-    bool isInWater();
-    bool hurt(Entity* source, int damage);
-    void playerTouch(Player* player);
-	bool isItemEntity();
-	int getEntityTypeId() const;
+    void tick() override;
+    bool isInWater() override;
+    bool hurt(Entity* source, int damage) override;
+    void playerTouch(Player* player) override;
+	bool isItemEntity() override;
+	int getEntityTypeId() const override;
 	int getLifeTime() const;
 protected:
-	void burn(int dmg);
+	void burn(int dmg) override;
 
-	void addAdditonalSaveData(CompoundTag* entityTag);
-	void readAdditionalSaveData(CompoundTag* tag);
+	void addAdditonalSaveData(CompoundTag* entityTag) override;
+	void readAdditionalSaveData(CompoundTag* tag) override;
 private:
     bool checkInTile(double x, double y, double z);
 

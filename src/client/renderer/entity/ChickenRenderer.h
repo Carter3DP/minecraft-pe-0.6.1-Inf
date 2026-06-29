@@ -13,10 +13,10 @@ class ChickenRenderer: public MobRenderer
 public:
     ChickenRenderer(Model* model, float shadow);
 
-    void render(Entity* mob, double x, double y, double z, float rot, float a);
+    void render(Entity* mob, double x, double y, double z, float rot, float a) override;
 
 protected:
-    float getBob(Mob* mob_, float a);
+    float getBob(Mob* mob_, float a) override;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__ChickenRenderer_H__*/

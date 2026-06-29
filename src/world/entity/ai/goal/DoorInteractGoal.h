@@ -17,7 +17,7 @@ public:
     :   mob(mob)
     {}
 
-    bool canUse() {
+    bool canUse() override {
         if (!mob->horizontalCollision) return false;
         PathNavigation* pathNav = mob->getNavigation();
         Path* path = pathNav->getPath();
@@ -42,17 +42,17 @@ public:
         return doorTile != NULL;
     }
 
-    bool canContinueToUse() {
+    bool canContinueToUse() override {
         return !passed;
     }
 
-    void start() {
+    void start() override {
         passed = false;
         doorOpenDirX = doorX + 0.5f - mob->x;
         doorOpenDirZ = doorZ + 0.5f - mob->z;
     }
 
-    void tick() {
+    void tick() override {
         float newDoorDirX = doorX + 0.5f - mob->x;
         float newDoorDirZ = doorZ + 0.5f - mob->z;
         float dot = doorOpenDirX * newDoorDirX + doorOpenDirZ * newDoorDirZ;

@@ -14,11 +14,11 @@ public:
 		: Tile(id, tex, Material::clay)
 	{}
     
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Item::clay->id;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 4;
     }
 };

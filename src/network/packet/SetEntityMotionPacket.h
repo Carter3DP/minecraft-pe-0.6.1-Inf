@@ -19,7 +19,7 @@ public:
 		init(id, xd, yd, zd);
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		const double M = 3.9;
 		short xa = (short)(8000.0f * Mth::clamp(xd, -M, M));
@@ -33,7 +33,7 @@ public:
 		bitStream->Write(za);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		short xa, ya, za;
 		bitStream->Read(id);
@@ -46,7 +46,7 @@ public:
 		zd = za / 8000.0f;
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (SetEntityMotionPacket*)this);
 	}

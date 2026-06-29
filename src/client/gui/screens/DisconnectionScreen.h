@@ -20,7 +20,7 @@ public:
 		delete _back;
 	}
 
-	void init() {
+	void init() override {
 		if (/* minecraft->useTouchscreen() */ true)
 			_back = new Touch::TButton(1, "Ok");
 		else
@@ -34,7 +34,7 @@ public:
 		_back->y = height / 2;
 	}
 
-	void render( int xm, int ym, float a ) {
+	void render( int xm, int ym, float a ) override {
 		renderBackground();
 		super::render(xm, ym, a);
 
@@ -42,12 +42,12 @@ public:
 		minecraft->font->drawShadow(_msg, (float)center, (float)(height / 2 - 32), 0xffffffff);
 	}
 
-	void buttonClicked(Button* button) {
+	void buttonClicked(Button* button) override {
 		if (button->id == _back->id) {
 			minecraft->leaveGame();
 		}
 	}
-	bool isInGameScreen() { return false; }
+	bool isInGameScreen() override { return false; }
 
 private:
 	std::string _msg;

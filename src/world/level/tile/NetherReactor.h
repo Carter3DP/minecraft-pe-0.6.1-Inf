@@ -7,11 +7,11 @@ class Material;
 class NetherReactor : public EntityTile {
 	typedef EntityTile super;
 public:
-	int getTexture(int face, int data);
+	int getTexture(int face, int data) override;
 	NetherReactor(int id, int tex, const Material* material);
-	bool use(Level* level, int x, int y, int z, Player* player);
+	bool use(Level* level, int x, int y, int z, Player* player) override;
 	static void setPhase(Level* level, int x, int y, int z, int phase);
-	TileEntity* newTileEntity();
+	TileEntity* newTileEntity() override;
 	bool canSpawnStartNetherReactor( Level* level, int x, int y, int z, Player* player );
 	bool allPlayersCloseToReactor( Level* level, int x, int y, int z );
 };

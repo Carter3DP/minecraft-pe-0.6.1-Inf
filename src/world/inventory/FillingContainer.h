@@ -32,7 +32,7 @@ public:
 	void			dropSlot(int slot, bool onlyClearContainer, bool randomly=false);
 	void			dropAll(bool onlyClearContainer);
 	// @itodo: keep return by value?
-	ItemInstance	removeItem(int slot, int count);
+	ItemInstance	removeItem(int slot, int count) override;
 
 	void			clearSlot( int slot );
 	void			clearInventory();
@@ -43,20 +43,20 @@ public:
 	void			replace( std::vector<ItemInstance> newItems, int count = -1 );
 	void			replaceSlot(int slotId, ItemInstance* ins);
 
-	void			setItem(int slot, ItemInstance* item);
-	ItemInstance*	getItem(int slot);
+	void			setItem(int slot, ItemInstance* item) override;
+	ItemInstance*	getItem(int slot) override;
 
-	std::string		getName() const;
-	int				getContainerSize() const;
-	int				getMaxStackSize() const;
+	std::string		getName() const override;
+	int				getContainerSize() const override;
+	int				getMaxStackSize() const override;
 
 	void			setContainerChanged();
 
-	bool stillValid(Player* player);
+	bool stillValid(Player* player) override;
 	bool contains(ItemInstance* itemInstance) const;
 
-	void startOpen() {}
-	void stopOpen() {}
+	void startOpen() override {}
+	void stopOpen() override {}
 
 	virtual void doDrop(ItemInstance* item, bool randomly);
 

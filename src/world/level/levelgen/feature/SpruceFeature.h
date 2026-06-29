@@ -18,7 +18,7 @@ public:
 	{
 	}
 
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
 
         // pines can be quite tall
         int treeHeight = random->nextInt(4) + 6;

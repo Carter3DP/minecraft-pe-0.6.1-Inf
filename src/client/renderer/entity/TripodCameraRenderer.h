@@ -16,7 +16,7 @@ class TripodCameraRenderer: public EntityRenderer
 public:
     TripodCameraRenderer();
 
-	void render(Entity* cam_, double x, double y, double z, float rot, float a);
+	void render(Entity* cam_, double x, double y, double z, float rot, float a) override;
 	//void render( Tesselator &t );
 
 	static float getFlashTime(const TripodCamera* c, float a);

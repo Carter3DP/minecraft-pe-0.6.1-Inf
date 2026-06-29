@@ -12,10 +12,10 @@ public:
 	SheepModel();
 
     /*@Override*/
-    void prepareMobModel(Mob* mob, float time, float r, float a);
+    void prepareMobModel(Mob* mob, float time, float r, float a) override;
 
     /*@Override*/
-    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale);
+    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) override;
 private:
     float headXRot;
 };

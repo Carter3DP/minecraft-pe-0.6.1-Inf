@@ -14,29 +14,29 @@ class DiggerItem: public Item
 protected:
 	typedef std::vector<Tile*> TileList;
 public:
-    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) {
+    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) override {
 		if (hasTile(tile))
 			return speed;
         return 1;
     }
 
     //@Override
-    void hurtEnemy(ItemInstance* itemInstance, Mob* mob/*, Mob* attacker*/) {
+    void hurtEnemy(ItemInstance* itemInstance, Mob* mob/*, Mob* attacker*/) override {
         itemInstance->hurt(2);//, attacker); //@todo
         //return true;
     }
 
     //@Override
-    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) {
+    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) override {
         itemInstance->hurt(1);//, owner);
         return true;
     }
 
-    int getAttackDamage(Entity* entity) {
+    int getAttackDamage(Entity* entity) override {
         return attackDamage;
     }
 
-    bool isHandEquipped() const {
+    bool isHandEquipped() const override {
         return true;
     }
 

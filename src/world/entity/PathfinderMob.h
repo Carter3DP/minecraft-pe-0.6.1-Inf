@@ -26,7 +26,7 @@ public:
     PathfinderMob(Level* level);
 	~PathfinderMob();
 
-    bool canSpawn();
+    bool canSpawn() override;
 
     bool isPathFinding();
     void setPath(Path& path);
@@ -44,11 +44,11 @@ protected:
     virtual void checkHurtTarget(Entity* target, float d);
     virtual void checkCantSeeTarget(Entity* target, float d);
 
-    virtual float getWalkingSpeedModifier();
+    virtual float getWalkingSpeedModifier() override;
 
 	virtual bool shouldHoldGround();
 
-	void updateAi();
+	void updateAi() override;
 
 	virtual void findRandomStrollLocation();
 	int attackTargetId;

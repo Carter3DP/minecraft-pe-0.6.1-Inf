@@ -17,7 +17,7 @@ public:
         b1(b1)
     {}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_TILEEVENT));
 		bitStream->Write(x);
@@ -27,7 +27,7 @@ public:
 		bitStream->Write(b1);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(x);
 		bitStream->Read(y);
@@ -36,7 +36,7 @@ public:
 		bitStream->Read(b1);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (TileEventPacket*)this);
 	}

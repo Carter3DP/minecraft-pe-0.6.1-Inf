@@ -23,13 +23,13 @@ public:
     {
     }
 
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         if (!level->getMaterial(x, y - 1, z)->isSolid()) return false;
         return super::mayPlace(level, x, y, z);
     }
 
     /*@Override*/
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         int data = level->getData(x, y, z);
         if (isOpen(data)) {
             return NULL;
@@ -50,26 +50,26 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_FENCE_GATE;
     }
 
     /*@Override*/
-    void setPlacedBy(Level* level, int x, int y, int z, Mob* by) {
+    void setPlacedBy(Level* level, int x, int y, int z, Mob* by) override {
         int dir = (((Mth::floor(by->yRot * 4 / (360) + 0.5f)) & 3)) % 4;
         level->setData(x, y, z, dir);
     }
 
     /*@Override*/
-    bool use(Level* level, int x, int y, int z, Player* player) {
+    bool use(Level* level, int x, int y, int z, Player* player) override {
         int data = level->getData(x, y, z);
         if (isOpen(data)) {
             level->setData(x, y, z, data & ~OPEN_BIT);

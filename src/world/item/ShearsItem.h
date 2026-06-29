@@ -21,7 +21,7 @@ public:
     }
 
     /*@Override*/
-    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) {
+    bool mineBlock(ItemInstance* itemInstance, int tile, int x, int y, int z/*, Mob* owner*/) override {
         if (tile == ((Tile*)Tile::leaves)->id || tile == Tile::web->id || tile == Tile::tallgrass->id /*|| tile == Tile::vine->id*/) {
             itemInstance->hurt(1);//, owner);
             return true;
@@ -30,12 +30,12 @@ public:
     }
 
     /*@Override*/
-    bool canDestroySpecial(const Tile* tile) const {
+    bool canDestroySpecial(const Tile* tile) const override {
         return tile->id == Tile::web->id;
     }
 
     /*@Override*/
-    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) {
+    float getDestroySpeed(ItemInstance* itemInstance, Tile* tile) override {
         if (tile->id == Tile::web->id || tile->id == ((Tile*)Tile::leaves)->id) {
             return 15;
         }

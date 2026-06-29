@@ -11,15 +11,15 @@ public:
 	JoinByIPScreen();
 	virtual ~JoinByIPScreen();
 
-	void init();
-	void setupPositions();
+	void init() override;
+	void setupPositions() override;
 
-	virtual void tick();
-    void render(int xm, int ym, float a);
+	virtual void tick() override;
+    void render(int xm, int ym, float a) override;
 
-	virtual void keyPressed(int eventKey);
-	void buttonClicked(Button* button);
-    virtual bool handleBackEvent(bool isDown);
+	virtual void keyPressed(int eventKey) override;
+	void buttonClicked(Button* button) override;
+    virtual bool handleBackEvent(bool isDown) override;
 private:
     TextBox tIP;
     Touch::THeader bHeader;

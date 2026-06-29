@@ -16,10 +16,10 @@ class EntityTile: public Tile
 public:
     virtual TileEntity* newTileEntity() = 0;
 
-    void onPlace(Level* level, int x, int y, int z);
-    void onRemove(Level* level, int x, int y, int z);
+    void onPlace(Level* level, int x, int y, int z) override;
+    void onRemove(Level* level, int x, int y, int z) override;
 
-    void triggerEvent(Level* level, int x, int y, int z, int b0, int b1);
+    void triggerEvent(Level* level, int x, int y, int z, int b0, int b1) override;
 protected:
     EntityTile(int id, const Material* material);
     EntityTile(int id, int tex, const Material* material);

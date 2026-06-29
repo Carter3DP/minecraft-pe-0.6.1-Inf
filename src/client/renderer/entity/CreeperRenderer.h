@@ -20,7 +20,7 @@ public:
     }
 
 protected:
-    void scale(Mob* mob, float a) {
+    void scale(Mob* mob, float a) override {
         Creeper* creeper = (Creeper*) mob;
 
         float g = creeper->getSwelling(a);
@@ -35,7 +35,7 @@ protected:
         glScalef(s, hs, s);
     }
 
-    int getOverlayColor(Mob* mob, float br, float a) {
+    int getOverlayColor(Mob* mob, float br, float a) override {
         Creeper* creeper = (Creeper*) mob;
 
         float step = creeper->getSwelling(a);

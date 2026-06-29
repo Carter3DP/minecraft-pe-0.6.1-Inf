@@ -40,7 +40,7 @@ class EntityBoat: public Entity{
         virtual void updateRiderPosition() override;
         virtual float getShadowHeightOffs() override;
         virtual bool interact(Player* player) override;
-        virtual int getEntityTypeId() const {
+        virtual int getEntityTypeId() const override {
             return EntityTypes::boatEntity;
         };
         virtual void addAdditonalSaveData( CompoundTag* entityTag ) override;

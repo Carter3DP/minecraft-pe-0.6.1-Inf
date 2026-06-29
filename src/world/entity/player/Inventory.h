@@ -38,9 +38,9 @@ public:
 
 	bool			removeItem(const ItemInstance* samePtr);
 
-	void			doDrop(ItemInstance* item, bool randomly);
-	bool			stillValid(Player* player);
-	bool			add(ItemInstance* item);
+	void			doDrop(ItemInstance* item, bool randomly) override;
+	bool			stillValid(Player* player) override;
+	bool			add(ItemInstance* item) override;
 
 	int				getAttackDamage(Entity* entity);
 	float			getDestroySpeed(Tile* tile);

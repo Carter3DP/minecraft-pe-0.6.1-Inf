@@ -34,7 +34,7 @@ public:
     WaterTexture();
 	~WaterTexture();
 
-    void tick();
+    void tick() override;
 };
 
 class WaterSideTexture: public DynamicTexture
@@ -53,7 +53,7 @@ public:
 	WaterSideTexture();
 	~WaterSideTexture();
 
-	void tick();
+	void tick() override;
 };
 
 class LavaTexture: public DynamicTexture
@@ -71,7 +71,7 @@ public:
     LavaTexture();
 	~LavaTexture();
 
-    void tick();
+    void tick() override;
 };
 
 class LavaSideTexture: public DynamicTexture
@@ -90,7 +90,7 @@ public:
 	LavaSideTexture();
 	~LavaSideTexture();
 
-	void tick();
+	void tick() override;
 };
 
 
@@ -109,6 +109,6 @@ public:
     FireTexture(int id);
 	~FireTexture();
 
-    void tick();
+    void tick() override;
 };
 #endif /*NET_MINECRAFT_CLIENT_RENDERER_PTEXTURE__DynamicTexture_H__*/

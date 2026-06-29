@@ -16,16 +16,16 @@ class Monster: public PathfinderMob//implements Enemy
 public:
     Monster(Level* level);
 
-	void aiStep();
-    void tick();
+	void aiStep() override;
+    void tick() override;
 
     //bool hurt(DamageSource* source, int dmg) {
-	bool hurt(Entity* sourceEntity, int dmg);
+	bool hurt(Entity* sourceEntity, int dmg) override;
 
     /*@Override*/
-    bool canSpawn();
+    bool canSpawn() override;
 
-	int getCreatureBaseType() const;
+	int getCreatureBaseType() const override;
 
 	bool doHurtTarget(Entity* target);
 	void setTarget(Mob* mob);
@@ -35,7 +35,7 @@ public:
 	void setLastHurtByMob(Mob* mob);
 	virtual int getAttackDamage(Entity* target);
 protected:
-	Entity* findAttackTarget();
+	Entity* findAttackTarget() override;
 
 	bool isDarkEnoughToSpawn();
     /**
@@ -44,9 +44,9 @@ protected:
      * @param target
      * @return
      */
-    void checkHurtTarget(Entity* target, float distance);
+    void checkHurtTarget(Entity* target, float distance) override;
 
-    float getWalkTargetValue(int x, int y, int z);
+    float getWalkTargetValue(int x, int y, int z) override;
 	virtual int getAttackTime();
 	int attackDamage;
 	int targetId;

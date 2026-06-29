@@ -19,15 +19,15 @@ public:
         setTicking(true);
     }
 
-	int getResource(int data, Random* random) {
+	int getResource(int data, Random* random) override {
         return Item::snowBall->id;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 4;
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->getBrightness(LightLayer::Block, x, y, z) > 11) {
             this->spawnResources(level, x, y, z, level->getData(x, y, z), 0);
             level->setTile(x, y, z, 0);

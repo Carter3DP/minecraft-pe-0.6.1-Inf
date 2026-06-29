@@ -17,11 +17,11 @@ public:
         setStackedByData(true);
     }
 
-    int getLevelDataForAuxValue(int auxValue) {
+    int getLevelDataForAuxValue(int auxValue) override {
         return auxValue;
     }
 
-    int getIcon(int itemAuxValue) {
+    int getIcon(int itemAuxValue) override {
         return Tile::sapling->getTexture(0, itemAuxValue);
     }
 };

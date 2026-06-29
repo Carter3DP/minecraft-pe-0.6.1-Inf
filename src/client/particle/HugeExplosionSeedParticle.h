@@ -16,9 +16,9 @@ public:
 	{
 	}
 
-	void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {}
+	void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {}
 
-    void tick() {
+    void tick() override {
 		for (int i = 0; i < 6; i++) {
 			float xx = x + (sharedRandom.nextFloat() - sharedRandom.nextFloat()) * 4;
 			float yy = y + (sharedRandom.nextFloat() - sharedRandom.nextFloat()) * 4;
@@ -29,7 +29,7 @@ public:
 		if (life == lifeTime) remove();
 	}
 
-	int getParticleTexture() {
+	int getParticleTexture() override {
 		return ParticleEngine::TERRAIN_TEXTURE;
 	}
 private:

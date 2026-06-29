@@ -14,7 +14,7 @@ public:
     SheepRenderer(Model* model, Model* armor, float shadow);
 	~SheepRenderer();
 protected:
-	int prepareArmor(Mob* sheep, int layer, float a);
+	int prepareArmor(Mob* sheep, int layer, float a) override;
 };
 
 #endif /*NET_MINECRAFT_CLIENT_RENDERER_ENTITY__SheepRenderer_H__*/

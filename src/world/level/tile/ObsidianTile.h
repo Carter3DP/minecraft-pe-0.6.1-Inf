@@ -14,14 +14,14 @@ public:
 	:	StoneTile(id, tex), isGlowing(isGlowing)
 	{
     }
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 1;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Tile::obsidian->id;
     }
-	void animateTick(Level* level, int x, int y, int z, Random* random) {
+	void animateTick(Level* level, int x, int y, int z, Random* random) override {
 		if(isGlowing) {
 			poofParticles(level, x, y, z);
 		}

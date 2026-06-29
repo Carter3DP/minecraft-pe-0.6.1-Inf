@@ -17,21 +17,21 @@ public:
         frustum = Frustum::getFrustum();
     }
 
-	void prepare(double xOff, double yOff, double zOff) {
+	void prepare(double xOff, double yOff, double zOff) override {
         this->xOff = xOff;
         this->yOff = yOff;
         this->zOff = zOff;
     }
 
-    bool cubeFullyInFrustum(double x0, double y0, double z0, double x1, double y1, double z1) {
+    bool cubeFullyInFrustum(double x0, double y0, double z0, double x1, double y1, double z1) override {
         return frustum.cubeFullyInFrustum(x0 - xOff, y0 - yOff, z0 - zOff, x1 - xOff, y1 - yOff, z1 - zOff);
     }
 
-    bool cubeInFrustum(double x0, double y0, double z0, double x1, double y1, double z1) {
+    bool cubeInFrustum(double x0, double y0, double z0, double x1, double y1, double z1) override {
         return frustum.cubeInFrustum(x0 - xOff, y0 - yOff, z0 - zOff, x1 - xOff, y1 - yOff, z1 - zOff);
     }
 
-    bool isVisible(const AABB& bb) {
+    bool isVisible(const AABB& bb) override {
         return cubeInFrustum(bb.x0, bb.y0, bb.z0, bb.x1, bb.y1, bb.z1);
     }
 };

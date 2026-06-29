@@ -22,14 +22,14 @@ public:
 		delete _storage;
 	}
 
-    LevelData* prepareLevel(Level* level) {
+    LevelData* prepareLevel(Level* level) override {
         return NULL;
     }
 
     void checkSession() //throws LevelConflictException
 	{}
 
-    ChunkStorage* createChunkStorage(Dimension* dimension) {
+    ChunkStorage* createChunkStorage(Dimension* dimension) override {
 		if (_storage) {
 			LOGW(">WARNING< Creating a MemoryChunkStorage over another (#%p). A memory leak will occur.\n", _storage);
 		}
@@ -37,9 +37,9 @@ public:
 		return _storage = new MemoryChunkStorage();
     }
 
-    void saveLevelData(LevelData& levelData, std::vector<Player*>* players) {}
+    void saveLevelData(LevelData& levelData, std::vector<Player*>* players) override {}
 
-    void closeAll() {}
+    void closeAll() override {}
 
     void save(Player* player) {}
     void load(Player* player) {}

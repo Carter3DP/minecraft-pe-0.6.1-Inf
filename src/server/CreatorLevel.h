@@ -9,7 +9,7 @@ class CreatorLevel: public Level
 public:
 	CreatorLevel(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int generatorVersion, Dimension* fixedDimension = NULL);
 
-	void tick();
+	void tick() override;
 };
 
 #endif /* NET_MINECRAFT_WORLD_LEVEL__CreatorLevel_H__ */

@@ -36,7 +36,7 @@ public:
 			delete unpack[i];
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_ADDPLAYER));
 
@@ -54,7 +54,7 @@ public:
 		_entityData->packAll(&dos);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(owner);
 		bitStream->Read(name);
@@ -73,7 +73,7 @@ public:
 		xRot = PacketUtil::Rot_charToDegrees(rx);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (AddPlayerPacket*)this);
 	}

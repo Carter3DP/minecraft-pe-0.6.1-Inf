@@ -18,15 +18,15 @@ public:
     NinecraftApp();
 	~NinecraftApp();
 
-	void init();
+	void init() override;
 	void teardown();
 
-	void update();
+	void update() override;
 
-	virtual bool handleBack(bool isDown);
+	virtual bool handleBack(bool isDown) override;
 
 protected:
-	void onGraphicsReset();
+	void onGraphicsReset() override;
 
 private:
 	void initGLStates();

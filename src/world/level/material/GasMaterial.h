@@ -11,15 +11,15 @@ public:
 		replaceable();
 	}
 
-	bool isSolid() const {
+	bool isSolid() const override {
         return false;
     }
 
-    bool blocksLight() const {
+    bool blocksLight() const override {
         return false;
     }
     
-    bool blocksMotion() const {
+    bool blocksMotion() const override {
         return false;
     }
 };

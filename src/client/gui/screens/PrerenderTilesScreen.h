@@ -18,7 +18,7 @@
 class PrerenderTilesScreen: public Screen
 {
 public:
-	void init() {
+	void init() override {
 		Player p(minecraft->level, true);
 		Inventory _inventory(&p, true);
 		Inventory* inventory = &_inventory;
@@ -71,7 +71,7 @@ public:
 		}
 	}
 
-	void render( int xm, int ym, float a ) {
+	void render( int xm, int ym, float a ) override {
 		static Stopwatch w;
 		w.start();
 
@@ -132,7 +132,7 @@ public:
 		w.stop();
 		w.printEvery(100, "render-blocksel");
 	}
-	void removed(){}
+	void removed() override {}
 
 	void addItem(ItemInstance* item) {
 		if(item == NULL)

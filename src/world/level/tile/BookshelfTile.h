@@ -15,17 +15,17 @@ public:
     {
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         if (face <= 1) return 4;
         return tex;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 3;
     }
 
     //@Override
-    int getResource(int data, Random* random/*, int playerBonusLevel*/) {
+    int getResource(int data, Random* random/*, int playerBonusLevel*/) override {
         return Item::book->id;
     }
 };

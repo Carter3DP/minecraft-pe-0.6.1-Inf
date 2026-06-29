@@ -12,7 +12,7 @@ public:
 		buildHoldTicks(0)
 	{}
 
-	virtual bool tickBuild(Player* p, BuildActionIntention* bai) {
+	virtual bool tickBuild(Player* p, BuildActionIntention* bai) override {
 		if (Mouse::getButtonState(MouseAction::ACTION_LEFT) != 0) {
 			*bai = BuildActionIntention(BuildActionIntention::BAI_REMOVE | BuildActionIntention::BAI_ATTACK);
 			return true;

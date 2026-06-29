@@ -27,7 +27,7 @@ public:
         }
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_SENDINVENTORY));
 		bitStream->Write(entityId);
@@ -41,7 +41,7 @@ public:
             PacketUtil::writeItemInstance(items[i + numItems], bitStream);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(entityId);
 		bitStream->Read(extra);
@@ -52,7 +52,7 @@ public:
 			items.push_back(PacketUtil::readItemInstance(bitStream));
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (SendInventoryPacket*)this);
 	}

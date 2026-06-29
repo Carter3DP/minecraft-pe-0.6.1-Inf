@@ -13,12 +13,12 @@ public:
 
 
 	TallGrass(int id, int tex);
-	int getTexture(int face, int data);
+	int getTexture(int face, int data) override;
 	int getColor();
 	int getColor(int auxData);
-	int getColor(LevelSource* level, int x, int y, int z);
-	int getResource(int data, Random* random);
-	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data);
+	int getColor(LevelSource* level, int x, int y, int z) override;
+	int getResource(int data, Random* random) override;
+	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data) override;
 };
 
 #endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__TallGrass_H__ */

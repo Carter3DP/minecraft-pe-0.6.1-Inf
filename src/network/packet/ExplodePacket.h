@@ -23,7 +23,7 @@ public:
 		toBlow(tiles.begin(), tiles.end())
 	{}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_EXPLODE));
 		bitStream->Write(x);
@@ -44,7 +44,7 @@ public:
 		}
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(x);
 		bitStream->Read(y);
@@ -67,7 +67,7 @@ public:
 		}
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (ExplodePacket*)this);
 	}

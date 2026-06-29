@@ -90,11 +90,11 @@ public:
 	int getTopTileY(int x, int z);
     int getTopSolidBlock(int x, int z);
 
-	bool isEmptyTile(int x, int y, int z);
-	bool isSolidRenderTile(int x, int y, int z);
-	bool isSolidBlockingTile(int x, int y, int z);
+	bool isEmptyTile(int x, int y, int z) override;
+	bool isSolidRenderTile(int x, int y, int z) override;
+	bool isSolidBlockingTile(int x, int y, int z) override;
 
-	int getTile(int x, int y, int z);
+	int getTile(int x, int y, int z) override;
     bool setTile(int x, int y, int z, int tile);
 
 	bool hasChunkAt(int x, int y, int z);
@@ -107,7 +107,7 @@ public:
 	bool setTileAndDataNoUpdate(int x, int y, int z, int tile, int data);
     bool setTileNoUpdate(int x, int y, int z, int tile);
 
-    int getData(int x, int y, int z);
+    int getData(int x, int y, int z) override;
 	void setData(int x, int y, int z, int data);
     bool setDataNoUpdate(int x, int y, int z, int data);
     bool setTileAndData(int x, int y, int z, int tile, int data);
@@ -118,7 +118,7 @@ public:
     void setTileDirty(int x, int y, int z);
     void setTilesDirty(int x0, int y0, int z0, int x1, int y1, int z1);
 
-    const Material* getMaterial(int x, int y, int z);
+    const Material* getMaterial(int x, int y, int z) override;
 
 	void loadPlayer(Player* player, bool doAddPlayer);
 
@@ -127,12 +127,12 @@ public:
     void updateNeighborsAt(int x, int y, int z, int tile);
 
     int getHeightmap(int x, int z);
-	BiomeSource* getBiomeSource();
-	Biome* getBiome(int x, int z);
+	BiomeSource* getBiomeSource() override;
+	Biome* getBiome(int x, int z) override;
 
 	int getRawBrightness(int x, int y, int z);
 	int getRawBrightness(int x, int y, int z, bool propagate);
-    float getBrightness(int x, int y, int z);
+    float getBrightness(int x, int y, int z) override;
     int getBrightness(const LightLayer& layer, int x, int y, int z);
     void setBrightness(const LightLayer& layer, int x, int y, int z, int brightness);
     void updateLightIfOtherThan(const LightLayer& layer, int x, int y, int z, int expected);

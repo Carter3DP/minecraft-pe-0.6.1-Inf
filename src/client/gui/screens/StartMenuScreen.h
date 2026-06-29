@@ -11,16 +11,16 @@ public:
 	StartMenuScreen();
 	virtual ~StartMenuScreen();
 
-	void init();
-	void setupPositions();
+	void init() override;
+	void setupPositions() override;
 
-	void tick();
-	void render(int xm, int ym, float a);
+	void tick() override;
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button);
-	virtual void mouseClicked(int x, int y, int buttonNum);
-	bool handleBackEvent(bool isDown);
-	bool isInGameScreen();
+	void buttonClicked(Button* button) override;
+	virtual void mouseClicked(int x, int y, int buttonNum) override;
+	bool handleBackEvent(bool isDown) override;
+	bool isInGameScreen() override;
 private:
 
 	Button* bHost;

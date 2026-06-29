@@ -37,7 +37,7 @@ public:
 	~LevelRenderer();
 
 	void setLevel(Level* level);
-	void allChanged();
+	void allChanged() override;
 
     int  render(Mob* player, int layer, float alpha);
 	void renderDebug(const AABB& b, float a) const;
@@ -51,22 +51,22 @@ public:
 	void renderHit(Player* player, const HitResult& h, int mode, /*ItemInstance*/void* inventoryItem, float a);
     void renderHitOutline(Player* player, const HitResult& h, int mode, /*ItemInstance*/void* inventoryItem, float a);
 	void renderHitSelect(Player* player, const HitResult& h, int mode, /*ItemInstance*/void* inventoryItem, float a);
-	void entityAdded(Entity* entity);
+	void entityAdded(Entity* entity) override;
 
 	void tick();
 	bool updateDirtyChunks(Mob* player, bool force);
 	void setDirty(int x0, int y0, int z0, int x1, int y1, int z1);
-    void tileChanged(int x, int y, int z);
-    void setTilesDirty(int x0, int y0, int z0, int x1, int y1, int z1);
+    void tileChanged(int x, int y, int z) override;
+    void setTilesDirty(int x0, int y0, int z0, int x1, int y1, int z1) override;
 	void cull(Culler* culler, float a);
-    void skyColorChanged();
+    void skyColorChanged() override;
 
-	void addParticle(const std::string& name, double x, double y, double z, double xa, double ya, double za, int data);
-	void addParticle(ParticleType::Id name, double x, double y, double z, double xa, double ya, double za, int data);
-	void playSound(const std::string& name, double x, double y, double z, float volume, float pitch);
-	void takePicture(TripodCamera* cam, Entity* entity);
+	void addParticle(const std::string& name, double x, double y, double z, double xa, double ya, double za, int data) override;
+	void addParticle(ParticleType::Id name, double x, double y, double z, double xa, double ya, double za, int data) override;
+	void playSound(const std::string& name, double x, double y, double z, float volume, float pitch) override;
+	void takePicture(TripodCamera* cam, Entity* entity) override;
 
-	void levelEvent(Player* source, int type, int x, int y, int z, int data);
+	void levelEvent(Player* source, int type, int x, int y, int z, int data) override;
 
 	std::string gatherStats1();
 	std::string gatherStats2();

@@ -11,7 +11,7 @@ public:
         notAlwaysDestroyable();
     }
 
-    bool blocksMotion() const {
+    bool blocksMotion() const override {
         return false;
     }
 };

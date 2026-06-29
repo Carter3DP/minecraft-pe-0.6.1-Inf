@@ -20,7 +20,7 @@ public:
         this->count = count;
     }
 
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
 
         float dir = random->nextFloat() * Mth::PI;
 

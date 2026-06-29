@@ -52,8 +52,8 @@ public:
     float getMin() { return m_min; }
     float getMax() { return m_max; }
 
-    virtual bool parse(const std::string& value);
-    virtual std::string serialize() { return serialize_value(m_value); }
+    virtual bool parse(const std::string& value) override;
+    virtual std::string serialize() override { return serialize_value(m_value); }
 
 private:
     float m_value, m_min, m_max;
@@ -70,8 +70,8 @@ public:
     int getMin() { return m_min; }
     int getMax() { return m_max; }
 
-    virtual bool parse(const std::string& value);
-    virtual std::string serialize() { return serialize_value(m_value); }
+    virtual bool parse(const std::string& value) override;
+    virtual std::string serialize() override { return serialize_value(m_value); }
 
 private:
     int m_value, m_min, m_max;
@@ -85,8 +85,8 @@ public:
     void set(int value) { m_value = value; }
     void toggle() { m_value = !m_value; }
 
-    virtual bool parse(const std::string& value);
-    virtual std::string serialize() { return serialize_value(m_value); }
+    virtual bool parse(const std::string& value) override;
+    virtual std::string serialize() override { return serialize_value(m_value); }
 
 private:
     bool m_value;
@@ -99,8 +99,8 @@ public:
     const std::string& get() { return m_value; }
     void set(const std::string& value) { m_value = value; }
 
-    virtual bool parse(const std::string& value) { m_value = value; return true; }
-    virtual std::string serialize() { return m_key + ":" + m_value; }
+    virtual bool parse(const std::string& value) override { m_value = value; return true; }
+    virtual std::string serialize() override { return m_key + ":" + m_value; }
 
 private:
     std::string m_value;

@@ -27,7 +27,7 @@ public:
 	{
     }
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(id);
 		bitStream->Read(itemId);
@@ -41,7 +41,7 @@ public:
 		bitStream->Read(_za);
     }
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_ADDITEMENTITY));
         bitStream->Write(id);
@@ -56,7 +56,7 @@ public:
         bitStream->Write(_za);
     }
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (AddItemEntityPacket*)this);
 	}

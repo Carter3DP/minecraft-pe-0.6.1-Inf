@@ -21,7 +21,7 @@ public:
         this->count = count;
     }
 
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
         if (level->getMaterial(x, y, z) != Material::water) return false;
 
         float dir = random->nextFloat() * Mth::PI;

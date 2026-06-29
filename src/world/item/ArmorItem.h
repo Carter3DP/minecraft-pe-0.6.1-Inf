@@ -47,7 +47,7 @@ public:
 
     ArmorItem(int id, const ArmorMaterial& armorType, int icon, int slot);
 
-	bool isArmor() const;
+	bool isArmor() const override;
 /*
     int getEnchantmentValue() const {
         return armorType.getEnchantmentValue();

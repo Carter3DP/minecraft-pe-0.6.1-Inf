@@ -20,7 +20,7 @@ public:
 	{
     }
 
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
         x -= 8;
         z -= 8;
         while (y > 0 && level->isEmptyTile(x, y, z))

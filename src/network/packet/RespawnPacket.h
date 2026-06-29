@@ -16,7 +16,7 @@ public:
 	{
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_RESPAWN));
 		bitStream->Write(entityId);
@@ -25,7 +25,7 @@ public:
 		bitStream->Write(z);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(entityId);
 		bitStream->Read(x);
@@ -33,7 +33,7 @@ public:
 		bitStream->Read(z);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (RespawnPacket*)this);
 	}

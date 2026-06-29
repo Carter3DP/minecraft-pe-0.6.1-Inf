@@ -16,7 +16,7 @@ public:
 	{
 	}
 
-    virtual int getTexture(int face, int data) {
+    virtual int getTexture(int face, int data) override {
 		if (data >= 0 && data < _textureCount)
 		{
 			return _textures[data];
@@ -28,7 +28,7 @@ public:
 		return (auxValue & 0xf);
 	}
 protected:
-    int getSpawnResourcesAuxValue(int data) {
+    int getSpawnResourcesAuxValue(int data) override {
         return data;
     }
 	static int getItemAuxValueForTileData(int data) {

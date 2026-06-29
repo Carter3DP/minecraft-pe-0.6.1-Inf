@@ -9,18 +9,18 @@ class TripodCamera: public Mob
 public:
     TripodCamera(Level* level, Player* owner_, double x, double y, double z);
 
-	void tick();
+	void tick() override;
 
-	bool isPickable();
-	bool isPushable();
+	bool isPickable() override;
+	bool isPushable() override;
 
 	// id == 0 -> not possible to create via serialization (yet)
-	int getEntityTypeId() const { return 0; }
+	int getEntityTypeId() const override { return 0; }
 
-	bool interact(Player* player);
-	bool interactPreventDefault();
+	bool interact(Player* player) override;
+	bool interactPreventDefault() override;
 
-    float getShadowHeightOffs();
+    float getShadowHeightOffs() override;
 public:
 	int life;
 protected:

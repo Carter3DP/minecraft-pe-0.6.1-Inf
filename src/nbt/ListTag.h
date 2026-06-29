@@ -24,7 +24,7 @@ public:
 	{
     }
 
-    void write(IDataOutput* dos) /*throws IOException*/ {
+    void write(IDataOutput* dos) /*throws IOException*/ override {
         if (list.size() > 0) type = list.front()->getId();
         else type = TAG_Byte;
 
@@ -37,7 +37,7 @@ public:
     }
 
     //@SuppressWarnings("unchecked")
-    void load(IDataInput* dis) /*throws IOException*/ {
+    void load(IDataInput* dis) /*throws IOException*/ override {
         type = dis->readByte();
         int size = dis->readInt();
 
@@ -49,17 +49,17 @@ public:
         }
     }
 
-    char getId() const {
+    char getId() const override {
         return TAG_List;
     }
 
-    std::string toString() const {
+    std::string toString() const override {
         std::stringstream ss;
         ss << list.size() << " entries of type " << Tag::getTagName(type);
         return ss.str();
     }
 
-    void print(const std::string& prefix_, PrintStream& out) const {
+    void print(const std::string& prefix_, PrintStream& out) const override {
 		super::print(prefix_, out);
 
         std::string prefix = prefix_;
@@ -113,7 +113,7 @@ public:
     }
 
     //@Override
-    Tag* copy() const {
+    Tag* copy() const override {
         ListTag* res = new ListTag(getName());
         res->type = type;
 
@@ -126,7 +126,7 @@ public:
 
     //@SuppressWarnings("rawtypes")
     //@Override
-    bool equals(const Tag& rhs) const {
+    bool equals(const Tag& rhs) const override {
         if (super::equals(rhs)) {
             ListTag& o = (ListTag&) rhs;
             if (type == o.type && list.size() == o.list.size()) {
@@ -140,7 +140,7 @@ public:
         return false;
     }
 
-	void deleteChildren() {
+	void deleteChildren() override {
 		for (List::iterator it = list.begin(); it != list.end(); ++it) {
 			if (*it) {
 				(*it)->deleteChildren();

@@ -12,8 +12,8 @@ class RemotePlayer: public Player
 	typedef Player super;
 public:
 	RemotePlayer(Level* level, bool isCreative);
-	void aiStep();
-	void tick();
+	void aiStep() override;
+	void tick() override;
 private:
 	bool hasStartedUsingItem;
 };

@@ -53,8 +53,8 @@ protected:
 public:
 	virtual ~Minecraft();
 
-	void init();
-	void setSize(int width, int height);
+	void init() override;
+	void setSize(int width, int height) override;
 	void reloadOptions();
 
 	bool supportNonTouchScreen();
@@ -86,7 +86,7 @@ public:
 	void resetPlayer(Player* player);
 	void doActuallyRespawnPlayer();
 
-	void update();
+	void update() override;
 
 	 std::string  gatherStats1();
 
@@ -114,14 +114,14 @@ public:
 	ICreator* getCreator();
 
 	// void onGraphicsLost() {}
-	void onGraphicsReset();
+	void onGraphicsReset() override;
 
 	bool isLevelGenerated();
 
 	void handleMouseDown(int button, bool down);
 	
-    void audioEngineOn();
-    void audioEngineOff();
+    void audioEngineOn() override;
+    void audioEngineOff() override;
     
 	bool isPowerVR() { return _powerVr; }
 	bool isKindleFire(int kindleVersion);

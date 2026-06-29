@@ -25,18 +25,18 @@ public:
     }
 
     /*@Override*/
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
     /*@Override*/
-    AABB getTileAABB(Level* level, int x, int y, int z) {
+    AABB getTileAABB(Level* level, int x, int y, int z) override {
         updateShape(level, x, y, z);
         return super::getTileAABB(level, x, y, z);
     }
 
     /*@Override*/
-    void updateShape(LevelSource* level, int x, int y, int z) {
+    void updateShape(LevelSource* level, int x, int y, int z) override {
         if (onGround) return;
 
         int face = level->getData(x, y, z);
@@ -56,12 +56,12 @@ public:
     }
 
     /*@Override*/
-	int getRenderShape() {
+	int getRenderShape() override {
         return Tile::SHAPE_INVISIBLE;
     }
 
     /*@Override*/
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
@@ -71,22 +71,22 @@ public:
     }
 
     /*@Override*/
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
     /*@Override*/
-    TileEntity* newTileEntity() {
+    TileEntity* newTileEntity() override {
         return TileEntityFactory::createTileEntity(tileEntityClassId);
     }
 
     /*@Override*/
-    int getResource(int data, Random* random/*, int playerBonusLevel*/) {
+    int getResource(int data, Random* random/*, int playerBonusLevel*/) override {
         return Item::sign->id;
     }
 
     /*@Override*/
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         bool remove = false;
 
         if (onGround) {

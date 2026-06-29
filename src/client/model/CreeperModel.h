@@ -56,7 +56,7 @@ public:
     }
 
     /*@Override*/
-    void render(Entity* entity, float time, float r, float bob, float yRot, float xRot, float scale) {
+    void render(Entity* entity, float time, float r, float bob, float yRot, float xRot, float scale) override {
         setupAnim(time, r, bob, yRot, xRot, scale);
 
         head.render(scale);
@@ -67,7 +67,7 @@ public:
         leg3.render(scale);
     }
 
-    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) {
+    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) override {
         head.yRot = yRot / (float) (180 / Mth::PI);
         head.xRot = xRot / (float) (180 / Mth::PI);
 

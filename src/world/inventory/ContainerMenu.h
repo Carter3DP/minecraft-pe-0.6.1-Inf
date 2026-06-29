@@ -17,10 +17,10 @@ public:
 
     virtual ~ContainerMenu() {}
 
-    virtual void setSlot(int slot, ItemInstance* item);
-	virtual std::vector<ItemInstance> getItems();
+    virtual void setSlot(int slot, ItemInstance* item) override;
+	virtual std::vector<ItemInstance> getItems() override;
 
-	virtual bool tileEntityDestroyedIsInvalid( int tileEntityId );
+	virtual bool tileEntityDestroyedIsInvalid( int tileEntityId ) override;
 
 	Container* container;
 protected:

@@ -19,7 +19,7 @@ public:
 	{
 	}
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         if (data == 0) {
             // un-colored cloth
             return tex;
@@ -34,7 +34,7 @@ public:
 		return (~auxValue & 0xf);
 	}
 protected:
-    int getSpawnResourcesAuxValue(int data) {
+    int getSpawnResourcesAuxValue(int data) override {
         return data;
     }
 	static int getItemAuxValueForTileData(int data) {

@@ -23,7 +23,7 @@ public:
         setTicking(true);
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->isEmptyTile(x, y + 1, z)) {
             int height = 1;
             while (level->getTile(x, y - height, z) == id) {
@@ -42,7 +42,7 @@ public:
         }
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         float r = 1 / 16.0f;
         tmpBB.x0 = (double)x + (double)r;
         tmpBB.y0 = (double)y;
@@ -53,40 +53,40 @@ public:
         return &tmpBB;
     }
 
-    AABB getTileAABB(Level* level, int x, int y, int z) {
+    AABB getTileAABB(Level* level, int x, int y, int z) override {
         float r = 1 / 16.0f;
         return AABB((double)x + (double)r, (double)y, (double)z + (double)r, (double)x + 1.0 - (double)r, (double)y + 1.0, (double)z + 1.0 - (double)r);
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         if (face == 1) return tex - 1;
         if (face == 0) return tex + 1;
         else return tex;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_CACTUS;
     }
     
-    int getRenderLayer() {
+    int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         if (!super::mayPlace(level, x, y, z)) return false;
 
         return canSurvive(level, x, y, z);
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         if (!canSurvive(level, x, y, z)) {
 			// Should always spawn a cactus when this happens
             this->spawnResources(level, x, y, z, level->getData(x, y, z), 1);
@@ -94,7 +94,7 @@ public:
         }
     }
 
-    bool canSurvive(Level* level, int x, int y, int z) {
+    bool canSurvive(Level* level, int x, int y, int z) override {
         if (level->getMaterial(x - 1, y, z)->isSolid()) return false;
         if (level->getMaterial(x + 1, y, z)->isSolid()) return false;
         if (level->getMaterial(x, y, z - 1)->isSolid()) return false;
@@ -103,7 +103,7 @@ public:
         return below == Tile::cactus->id || below == Tile::sand->id;
     }
 
-    void entityInside(Level* level, int x, int y, int z, Entity* entity) {
+    void entityInside(Level* level, int x, int y, int z, Entity* entity) override {
         entity->hurt(NULL/*DamageSource.cactus*/, 1);
     }
 };

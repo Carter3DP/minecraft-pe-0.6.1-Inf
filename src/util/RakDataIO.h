@@ -14,7 +14,7 @@ public:
 	:	_bitStream(bitstream)
 	{}
 
-	virtual void writeBytes(const void* data, int bytes) {
+	virtual void writeBytes(const void* data, int bytes) override {
 		_bitStream.WriteBits((const unsigned char*)data, bytes * 8);
 	}
 
@@ -34,7 +34,7 @@ public:
 		:	_bitStream(bitstream)
 	{}
 
-	virtual void readBytes(void* data, int bytes) {
+	virtual void readBytes(void* data, int bytes) override {
 		_bitStream.ReadBits((unsigned char*) data, bytes * 8);
 	}
 

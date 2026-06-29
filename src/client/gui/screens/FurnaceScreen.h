@@ -21,18 +21,18 @@ public:
     FurnaceScreen(Player* player, FurnaceTileEntity* furnace);
 	~FurnaceScreen();
 
-    void init();
-	void setupPositions();
+    void init() override;
+	void setupPositions() override;
 
-	void tick();
-	void render(int xm, int ym, float a);
-	bool renderGameBehind();
-	void buttonClicked(Button* button);
+	void tick() override;
+	void render(int xm, int ym, float a) override;
+	bool renderGameBehind() override;
+	void buttonClicked(Button* button) override;
 
 	// IInventoryPaneCallback
-	bool addItem(const Touch::InventoryPane* pane, int itemId);
-	bool isAllowed( int slot );
-	std::vector<const ItemInstance*> getItems( const Touch::InventoryPane* forPane );
+	bool addItem(const Touch::InventoryPane* pane, int itemId) override;
+	bool isAllowed( int slot ) override;
+	std::vector<const ItemInstance*> getItems( const Touch::InventoryPane* forPane ) override;
 private:
 	//void addItem(Recipe* recipe);
 	void recheckRecipes();

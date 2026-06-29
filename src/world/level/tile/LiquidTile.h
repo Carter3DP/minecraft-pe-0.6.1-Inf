@@ -20,7 +20,7 @@ public:
         return h;
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         if (face == 0 || face == 1) {
             return tex;
         } else {
@@ -28,19 +28,19 @@ public:
         }
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool mayPick(int data, bool liquid) {
+    bool mayPick(int data, bool liquid) override {
         return liquid && data == 0;
     }
 
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) {
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override {
         const Material* m = level->getMaterial(x, y, z);
         if (m == this->material) return false;
         if (m == Material::ice) return false;
@@ -48,54 +48,54 @@ public:
         return Tile::shouldRenderFace(level, x, y, z, face);
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_WATER;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return 0;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 0;
     }
 
-	int getColor(LevelSource* level, int x, int y, int z) {
+	int getColor(LevelSource* level, int x, int y, int z) override {
         return 0x999999ff;
     }
 
-	void handleEntityInside(Level* level, int x, int y, int z, Entity* e, Vec3& current) {
+	void handleEntityInside(Level* level, int x, int y, int z, Entity* e, Vec3& current) override {
         Vec3 flow = getFlow(level, x, y, z);
         current.x += flow.x * .5f;
         current.y += flow.y * .5f;
         current.z += flow.z * .5f;
     }
 
-    int getTickDelay() {
+    int getTickDelay() override {
         if (material == Material::water) return 5;
         if (material == Material::lava) return 30;
         return 0;
     }
 
-    float getBrightness(LevelSource* level, int x, int y, int z) {
+    float getBrightness(LevelSource* level, int x, int y, int z) override {
         float a = level->getBrightness(x, y, z);
         float b = level->getBrightness(x, y + 1, z);
         return a > b ? a : b;
     }
 
-    virtual void tick(Level* level, int x, int y, int z, Random* random) {
+    virtual void tick(Level* level, int x, int y, int z, Random* random) override {
         Tile::tick(level, x, y, z, random);
     }
 
-    int getRenderLayer() {
+    int getRenderLayer() override {
         return (material == Material::water)? Tile::RENDERLAYER_BLEND : Tile::RENDERLAYER_OPAQUE;
     }
 
-    void animateTick(Level* level, int x, int y, int z, Random* random) {
+    void animateTick(Level* level, int x, int y, int z, Random* random) override {
         if (material == Material::water && random->nextInt(64) == 0) {
             int d = level->getData(x, y, z);
             if (d > 0 && d < 8) {
@@ -122,11 +122,11 @@ public:
         return atan2(flow.z, flow.x) - Mth::PI * 0.5f;
     }
 
-    virtual void onPlace(Level* level, int x, int y, int z) {
+    virtual void onPlace(Level* level, int x, int y, int z) override {
         updateLiquid(level, x, y, z);
     }
 
-    virtual void neighborChanged(Level* level, int x, int y, int z, int type) {
+    virtual void neighborChanged(Level* level, int x, int y, int z, int type) override {
         updateLiquid(level, x, y, z);
     }
 

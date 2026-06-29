@@ -12,7 +12,7 @@ public:
 		targetLand(targetLand)
 	{}
 
-	bool useOn(ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+	bool useOn(ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override {
 		if(face != 1) return false;
 		//if (!player.mayBuild(x, y, z) || !player.mayBuild(x, y + 1, z)) return false;
 		int targetType = level->getTile(x, y, z);

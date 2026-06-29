@@ -7,15 +7,15 @@
 class DecorationMaterial: public Material
 {
 public:
-    bool isSolid() const {
+    bool isSolid() const override {
         return false;
     }
 
-    bool blocksLight() const {
+    bool blocksLight() const override {
         return false;
     }
 
-    bool blocksMotion() const {
+    bool blocksMotion() const override {
         return false;
     }
 };

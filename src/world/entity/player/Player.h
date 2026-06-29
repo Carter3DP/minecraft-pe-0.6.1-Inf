@@ -50,28 +50,28 @@ public:
 	virtual ~Player();
 
 	void _init();
-	virtual void reset();
+	virtual void reset() override;
 
     static bool isPlayer(Entity* e);
     static Player* asPlayer(Entity* e);
 
-	virtual void tick();
-    void aiStep();
-	void travel(double xa, double ya);
+	virtual void tick() override;
+    void aiStep() override;
+	void travel(double xa, double ya) override;
 
-	virtual float getWalkingSpeedModifier();
+	virtual float getWalkingSpeedModifier() override;
 
-    void die(Entity* source);
-    void remove();
+    void die(Entity* source) override;
+    void remove() override;
     void respawn();
-    void resetPos(bool clearMore);
+    void resetPos(bool clearMore) override;
     Pos getRespawnPosition();
     void setRespawnPosition(const Pos& respawnPosition);
     
-    bool isShootable();
-    bool isCreativeModeAllowed();
-	bool isPlayer();
-    bool isInWall();
+    bool isShootable() override;
+    bool isCreativeModeAllowed() override;
+	bool isPlayer() override;
+    bool isInWall() override;
 
 	virtual bool hasResource( int id );
 
@@ -83,12 +83,12 @@ public:
 	void releaseUsingItem();
 	virtual void completeUsingItem();
 
-	int getUseItemDuration();
+	int getUseItemDuration() override;
 	int getTicksUsingItem();
 
     int getScore();
-    void awardKillScore(Entity* victim, int score);
-	void handleEntityEvent(char id);
+    void awardKillScore(Entity* victim, int score) override;
+	void handleEntityEvent(char id) override;
 
 	virtual void take(Entity* e, int orgCount);
 	//void drop();
@@ -99,18 +99,18 @@ public:
     bool canDestroy(Tile* tile);
 	float getDestroySpeed(Tile* tile);
 
-	int getMaxHealth();
+	int getMaxHealth() override;
 	bool isHurt();
 
-	bool hurt(Entity* source, int dmg);
-	void hurtArmor(int dmg);
+	bool hurt(Entity* source, int dmg) override;
+	void hurtArmor(int dmg) override;
 	void setArmor(int slot, const ItemInstance* item);
 	ItemInstance* getArmor(int slot);
 	int getArmorTypeHash();
 
     void interact(Entity* entity);
     void attack(Entity* entity);
-	virtual ItemInstance* getCarriedItem();
+	virtual ItemInstance* getCarriedItem() override;
 	bool canUseCarriedItemWhileMoving();
 
 	virtual void startCrafting(int x, int y, int z, int tableSize);
@@ -122,13 +122,13 @@ public:
 
 	virtual void displayClientMessage(const std::string& messageId);
 	virtual void animateRespawn();
-	float getHeadHeight();
+	float getHeadHeight() override;
 
 	// id == 0 -> not possible to create via serialization (yet)
-	int getEntityTypeId() const { return 0; }
+	int getEntityTypeId() const override { return 0; }
 
-	int getItemInHandIcon(ItemInstance* item, int layer);
-	bool isSleeping();
+	int getItemInHandIcon(ItemInstance* item, int layer) override;
+	bool isSleeping() override;
 	virtual int startSleepInBed(int x, int y, int z);
 	virtual void stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint);
 	virtual int getSleepTimer();
@@ -141,18 +141,18 @@ public:
 	virtual void openTextEdit( TileEntity* tileEntity );
     //AbstractContainerMenu inventoryMenu;
     //AbstractContainerMenu containerMenu;
-    int getArmorValue();
+    int getArmorValue() override;
 
 	virtual void updateRidden() override;
 
 protected:
-	bool isImmobile();
-	void updateAi();
+	bool isImmobile() override;
+	void updateAi() override;
 	virtual void closeContainer();
 	void setDefaultHeadHeight();
 
-	void readAdditionalSaveData(CompoundTag* entityTag);
-	void addAdditonalSaveData(CompoundTag* entityTag);
+	void readAdditionalSaveData(CompoundTag* entityTag) override;
+	void addAdditonalSaveData(CompoundTag* entityTag) override;
 	
 	void setBedOffset(int bedDirection);
 	bool checkBed();

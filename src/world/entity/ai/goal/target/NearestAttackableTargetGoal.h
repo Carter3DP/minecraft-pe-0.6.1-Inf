@@ -20,7 +20,7 @@ public:
         setRequiredControlFlags(TargetGoal::TargetFlag);
     }
 
-    bool canUse() {
+    bool canUse() override {
         if (randomInterval > 0 && mob->random.nextInt(randomInterval) != 0) return false;
         Mob* potentialTarget = NULL;
         if (targetType == 1) potentialTarget = mob->level->getNearestPlayer(mob, within); //@todo: targetType
@@ -30,7 +30,7 @@ public:
         return true;
     }
 
-    void start() {
+    void start() override {
         mob->setTarget(target);
     }
 private:

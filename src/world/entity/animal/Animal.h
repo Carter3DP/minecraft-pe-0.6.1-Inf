@@ -19,19 +19,19 @@ public:
     Animal(Level* level);
 
 	//@Override
-	bool hurt(Entity* source, int dmg);
+	bool hurt(Entity* source, int dmg) override;
 
-    bool canSpawn();
+    bool canSpawn() override;
 
-    int getAmbientSoundInterval();
+    int getAmbientSoundInterval() override;
 
-	int getCreatureBaseType() const;
+	int getCreatureBaseType() const override;
 
-	bool removeWhenFarAway();
+	bool removeWhenFarAway() override;
 
 protected:
-	float getWalkTargetValue(int x, int y, int z);
-	Entity* findAttackTarget();
+	float getWalkTargetValue(int x, int y, int z) override;
+	Entity* findAttackTarget() override;
 private:
 	int inLove;
 };

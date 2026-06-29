@@ -30,7 +30,7 @@ public:
 		e.item.count = 1;
 	}
 
-    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
+    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {
         float time = (life + a) / lifeTime;
         time = time*time;
 
@@ -60,12 +60,12 @@ public:
         EntityRenderDispatcher::getInstance()->render(&e, xx, yy, zz, e.yRot, a);
     }
 
-    void tick() {
+    void tick() override {
         life++;
         if (life == lifeTime) remove();
     }
 
-    int getParticleTexture() {
+    int getParticleTexture() override {
         return ParticleEngine::ENTITY_PARTICLE_TEXTURE;
     }
 

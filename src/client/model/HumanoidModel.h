@@ -11,12 +11,12 @@ class HumanoidModel: public Model
 public:
 HumanoidModel(float g = 0, float yOffset = 0, int texW = 64, int texH = 32);
 
-	void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale);
+	void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) override;
 
 	void render(HumanoidModel* model, float scale);
-    void render(Entity* e, float time, float r, float bob, float yRot, float xRot, float scale);
-	void renderHorrible(float time, float r, float bob, float yRot, float xRot, float scale);
-	void onGraphicsReset();
+    void render(Entity* e, float time, float r, float bob, float yRot, float xRot, float scale) override;
+	void renderHorrible(float time, float r, float bob, float yRot, float xRot, float scale) override;
+	void onGraphicsReset() override;
 
 	ModelPart head, hair, body, arm0, arm1, leg0, leg1;//, ear;
 	bool holdingLeftHand;

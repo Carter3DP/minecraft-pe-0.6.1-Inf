@@ -20,7 +20,7 @@ public:
 class ITurnInput: public IConfigListener {
 public:
 	virtual ~ITurnInput() {}
-	virtual void onConfigChanged(const Config& c) {}
+	virtual void onConfigChanged(const Config& c) override {}
 
 	virtual TurnDelta getTurnDelta() = 0;
 protected:

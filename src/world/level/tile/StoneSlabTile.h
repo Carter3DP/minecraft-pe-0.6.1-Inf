@@ -28,27 +28,27 @@ public:
 
     StoneSlabTile(int id, bool fullSize);
 
-	int getTexture(int face, int data);
-    int getTexture(int face);
+	int getTexture(int face, int data) override;
+    int getTexture(int face) override;
 
-    bool isSolidRender();
-    bool isCubeShaped();
+    bool isSolidRender() override;
+    bool isCubeShaped() override;
 
-	void updateShape(LevelSource* level, int x, int y, int z);
-	void updateDefaultShape();
+	void updateShape(LevelSource* level, int x, int y, int z) override;
+	void updateDefaultShape() override;
 
-	void addAABBs( Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes );
+	void addAABBs( Level* level, int x, int y, int z, const AABB* box, std::vector<AABB>& boxes ) override;
 
 	//void onPlace(Level* level, int x, int y, int z);
-	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue);
+	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue) override;
 
-	int getResource(int data, Random* random);
-    int getResourceCount(Random* random);
+	int getResource(int data, Random* random) override;
+    int getResourceCount(Random* random) override;
 
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face);
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override;
 
 protected:
-    int getSpawnResourcesAuxValue(int data);
+    int getSpawnResourcesAuxValue(int data) override;
 private:
 	bool fullSize;
 };

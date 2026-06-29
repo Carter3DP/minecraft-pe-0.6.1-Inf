@@ -25,7 +25,7 @@ public:
 		blockData = (unsigned char)(_blockData & 0xff);
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_UPDATEBLOCK));
 
@@ -36,7 +36,7 @@ public:
 		bitStream->Write(blockData);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(x);
 		bitStream->Read(z);
@@ -46,7 +46,7 @@ public:
 
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (UpdateBlockPacket*)this);
 	}

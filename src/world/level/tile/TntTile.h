@@ -19,13 +19,13 @@ public:
 	{
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         if (face == 0) return tex + 2;
         if (face == 1) return tex + 1;
         return tex;
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         if (type > 0 && Tile::tiles[type]->isSignalSource()) {
             if (level->hasNeighborSignal(x, y, z)) {
                 destroy(level, x, y, z, EXPLODE_BIT);
@@ -34,17 +34,17 @@ public:
         }
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 1;
     }
 
-    void wasExploded(Level* level, int x, int y, int z) {
+    void wasExploded(Level* level, int x, int y, int z) override {
         PrimedTnt* primed = new PrimedTnt(level, x + 0.5f, y + 0.5f, z + 0.5f);
         primed->life = level->random.nextInt(primed->life / 4) + primed->life / 8;
         level->addEntity(primed);
     }
 
-    void destroy(Level* level, int x, int y, int z, int data) {
+    void destroy(Level* level, int x, int y, int z, int data) override {
         if (level->isClientSide) return;
 
 		if ((data & EXPLODE_BIT) == 1) {
@@ -54,7 +54,7 @@ public:
 		}
     }
 	
-	bool use(Level* level, int x, int y, int z, Player* player) {
+	bool use(Level* level, int x, int y, int z, Player* player) override {
 		ItemInstance* carried = player->getSelectedItem();
 		if (carried && carried->id == Item::flintAndSteel->id) {
 			carried->hurt(1);

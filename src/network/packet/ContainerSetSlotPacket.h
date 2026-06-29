@@ -38,20 +38,20 @@ public:
 	{
 	}
 
-    void write(RakNet::BitStream* bitStream) {
+    void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_CONTAINERSETSLOT));
         bitStream->Write(containerId);
         bitStream->Write(slot);
 		PacketUtil::writeItemInstance(item, bitStream);
     }
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
         bitStream->Read(containerId);
         bitStream->Read(slot);
 		item = PacketUtil::readItemInstance(bitStream);
     }
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (ContainerSetSlotPacket*)this);
 	}
 

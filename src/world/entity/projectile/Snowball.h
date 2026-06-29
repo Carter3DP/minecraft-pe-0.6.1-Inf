@@ -30,12 +30,12 @@ public:
 		entityRendererId = ER_SNOWBALL_RENDERER;
     }
 
-	virtual int getEntityTypeId() const {
+	virtual int getEntityTypeId() const override {
 		return EntityTypes::IdSnowball;
 	}
 
     /*@Override*/
-	void onHit(const HitResult& res) {
+	void onHit(const HitResult& res) override {
         if (res.type == ENTITY)
             res.entity->hurt(this, 0);
 

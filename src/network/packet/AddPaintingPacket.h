@@ -15,7 +15,7 @@ public:
 		dir = painting->dir;
 		motive = painting->motive->name;
 	}
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_ADDPAINTING));
 		bitStream->Write(entityId);
 		bitStream->Write(xTile);
@@ -25,7 +25,7 @@ public:
 		RakNet::RakString rakMotive(motive.c_str());
 		bitStream->Write(rakMotive);
 	}
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
 		bitStream->Read(entityId);
 		bitStream->Read(xTile);
 		bitStream->Read(yTile);
@@ -35,7 +35,7 @@ public:
 		bitStream->Read(rakMotive);
 		motive = std::string(rakMotive.C_String());
 	}
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (AddPaintingPacket*)this);
 	}
 public:

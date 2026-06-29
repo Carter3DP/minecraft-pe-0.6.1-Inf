@@ -10,10 +10,10 @@ public:
 	LargeImageButton(int id, const std::string& msg);
 	LargeImageButton(int id, const std::string& msg, ImageDef& imageDef);
 
-	void render(Minecraft* minecraft, int xm, int ym);
+	void render(Minecraft* minecraft, int xm, int ym) override;
 
 private:
-	void setupDefault();
+	void setupDefault() override;
 
 	float _buttonScale;
 };

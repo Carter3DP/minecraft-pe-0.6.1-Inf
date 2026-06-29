@@ -35,14 +35,14 @@ public:
 	{
     }
 
-    void write(IDataOutput* dos) /*throws IOException*/ {
+    void write(IDataOutput* dos) /*throws IOException*/ override {
 		for (TagMap::iterator it = tags.begin(); it != tags.end(); ++it) {
             Tag::writeNamedTag(it->second, dos);
         }
         dos->writeByte(Tag::TAG_End);
     }
 
-    void load(IDataInput* dis) /*throws IOException*/ {
+    void load(IDataInput* dis) /*throws IOException*/ override {
         tags.clear();
         Tag* tag = NULL;
 
@@ -60,7 +60,7 @@ public:
 		}
     }
 
-    char getId() const {
+    char getId() const override {
         return TAG_Compound;
     }
 
@@ -177,13 +177,13 @@ public:
         return getByte(string) != 0;
     }
 
-    std::string toString() const {
+    std::string toString() const override {
         std::stringstream ss;
         ss << tags.size() << " entries";
         return ss.str();
     }
 
-    void print(const std::string& prefix_, PrintStream& out) const {
+    void print(const std::string& prefix_, PrintStream& out) const override {
         super::print(prefix_, out);
 		std::string prefix = prefix_;
 		out.print(prefix); out.println("{");
@@ -199,7 +199,7 @@ public:
 		return tags.empty();
     }
 
-    Tag* copy() const {
+    Tag* copy() const override {
         CompoundTag* tag = new CompoundTag(getName());
         for (TagMap::const_iterator it = tags.begin(); it != tags.end(); ++it) {
 			//tag->put(it->first, get(it->first)->copy());
@@ -209,7 +209,7 @@ public:
     }
 
     //@Override
-    bool equals(const Tag& obj) const {
+    bool equals(const Tag& obj) const override {
         if (super::equals(obj)) {
             CompoundTag& o = (CompoundTag&) obj;
 
@@ -226,7 +226,7 @@ public:
         return false;
     }
 
-	void deleteChildren() {
+	void deleteChildren() override {
 		TagMap::iterator it = tags.begin();
 		for (; it != tags.end(); ++it) {
 			if (!it->second)

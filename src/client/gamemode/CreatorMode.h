@@ -105,18 +105,18 @@ public:
     CreatorMode(Minecraft* minecraft);
 	~CreatorMode();
 
-    void startDestroyBlock(int x, int y, int z, int face);
-    void continueDestroyBlock(int x, int y, int z, int face);
-    void stopDestroyBlock();
+    void startDestroyBlock(int x, int y, int z, int face) override;
+    void continueDestroyBlock(int x, int y, int z, int face) override;
+    void stopDestroyBlock() override;
 
-	bool useItemOn(Player* player, Level* level, ItemInstance* item, int x, int y, int z, int face, const Vec3& hit);
+	bool useItemOn(Player* player, Level* level, ItemInstance* item, int x, int y, int z, int face, const Vec3& hit) override;
 
-	void tick();
+	void tick() override;
 	ICreator* getCreator();
 
-	bool isCreativeType();
+	bool isCreativeType() override;
 
-	void initAbilities(Abilities& abilities);
+	void initAbilities(Abilities& abilities) override;
 
 private:
 	void CreatorDestroyBlock(int x, int y, int z, int face);

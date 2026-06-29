@@ -24,26 +24,26 @@ public:
     {
 	}
 
-	bool isFood() const {
+	bool isFood() const override {
 		return true;
 	}
 
-	ItemInstance useTimeDepleted(ItemInstance* instance, Level* level, Player* player) {
+	ItemInstance useTimeDepleted(ItemInstance* instance, Level* level, Player* player) override {
 		instance->count--;
 		player->foodData.eat(this);
 		level->playSound(player, "random.burp", 0.5f, level->random.nextFloat() * 0.1f + 0.9f);
 		return *instance;
 	}
 
-    int getUseDuration(ItemInstance* itemInstance) {
+    int getUseDuration(ItemInstance* itemInstance) override {
         return EAT_DURATION;
     }
 
-    UseAnim::UseAnimation getUseAnimation() {
+    UseAnim::UseAnimation getUseAnimation() override {
         return UseAnim::eat;
     }
 
-	ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
+	ItemInstance* use(ItemInstance* instance, Level* level, Player* player) override {
 		if (!player->abilities.invulnerable && player->isHurt()) {
 			player->startUsingItem(*instance, getUseDuration(instance));
 		}

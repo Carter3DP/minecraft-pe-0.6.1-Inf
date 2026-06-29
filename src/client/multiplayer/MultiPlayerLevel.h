@@ -48,7 +48,7 @@ public:
 
 	//@todo: destructor (to <delete> Entities)
 
-    void tick() {
+    void tick() override {
         if (adventureSettings.doTickTime) {
             setTime(getTime() + 1);
         }
@@ -201,7 +201,7 @@ protected:
     void tickTiles() {
     }
     /*@Override*/
-    ChunkSource* createChunkSource() {
+    ChunkSource* createChunkSource() override {
         //chunkCache = /*new*/ MultiPlayerChunkCache(this);
         //return chunkCache;
 		return NULL;

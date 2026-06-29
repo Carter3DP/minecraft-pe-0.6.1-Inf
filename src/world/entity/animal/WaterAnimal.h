@@ -26,18 +26,18 @@ public:
     WaterAnimal(Level* level);
 
     /*@Override*/
-    bool isWaterMob();
+    bool isWaterMob() override;
 
-    void addAdditonalSaveData(CompoundTag* entityTag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* entityTag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
-    bool canSpawn();
+    bool canSpawn() override;
 
-    int getAmbientSoundInterval();
-	int getCreatureBaseType() const;
+    int getAmbientSoundInterval() override;
+	int getCreatureBaseType() const override;
 
 protected:
-    bool removeWhenFarAway();
+    bool removeWhenFarAway() override;
 
     /*@Override*/
     int getExperienceReward(Player* killedBy);

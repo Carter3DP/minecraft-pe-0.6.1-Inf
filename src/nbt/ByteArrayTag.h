@@ -34,18 +34,18 @@ public:
 	{
     }
 
-    char getId() const {
+    char getId() const override {
         return TAG_Byte_Array;
     }
 
-    std::string toString() const {
+    std::string toString() const override {
         std::stringstream ss;
         ss << "[" << data.len << " bytes]";
         return ss.str();
     }
 
     //@Override
-    bool equals(const Tag& rhs) const {
+    bool equals(const Tag& rhs) const override {
         if (super::equals(rhs)) {
 			ByteArrayTag& o = (ByteArrayTag&) rhs;
 			if (data.len != o.data.len)
@@ -57,19 +57,19 @@ public:
     }
 
     //@Override
-    Tag* copy() const {
+    Tag* copy() const override {
 		TagMemoryChunk chunk;
         chunk.data = new char[data.len];
 		memcpy(chunk.data, data.data, data.len);
         return new ByteArrayTag(getName(), chunk);
     }
 
-    void write(IDataOutput* dos) /*throws IOException*/ {
+    void write(IDataOutput* dos) /*throws IOException*/ override {
         dos->writeInt(data.len);
         dos->writeBytes(data.data, data.len);
     }
 
-    void load(IDataInput* dis) /*throws IOException*/ {
+    void load(IDataInput* dis) /*throws IOException*/ override {
         int length = dis->readInt();
         data.data = new char[length];
         dis->readBytes(data.data, length);

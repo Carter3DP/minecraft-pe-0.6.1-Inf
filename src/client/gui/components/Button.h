@@ -17,7 +17,7 @@ public:
     Button(int id, int x, int y, const std::string& msg);
     Button(int id, int x, int y, int w, int h, const std::string& msg);
 	virtual ~Button() {}
-    virtual void render(Minecraft* minecraft, int xm, int ym);
+    virtual void render(Minecraft* minecraft, int xm, int ym) override;
 
 	virtual bool clicked(Minecraft* minecraft, int mx, int my);
     virtual void released(int mx, int my);
@@ -59,7 +59,7 @@ public:
 	TButton(int id, int x, int y, const std::string& msg);
 	TButton(int id, int x, int y, int w, int h, const std::string& msg);
 protected:
-	virtual void renderBg(Minecraft* minecraft, int xm, int ym);
+	virtual void renderBg(Minecraft* minecraft, int xm, int ym) override;
 };
 
 // "Header" in Touchscreen mode
@@ -70,8 +70,8 @@ public:
 	THeader(int id, int x, int y, const std::string& msg);
 	THeader(int id, int x, int y, int w, int h, const std::string& msg);
 protected:
-	virtual void renderBg(Minecraft* minecraft, int xm, int ym);
-	void render( Minecraft* minecraft, int xm, int ym );
+	virtual void renderBg(Minecraft* minecraft, int xm, int ym) override;
+	void render( Minecraft* minecraft, int xm, int ym ) override;
 public:
 	int xText;
 };

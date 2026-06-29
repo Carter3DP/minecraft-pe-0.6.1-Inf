@@ -16,16 +16,16 @@ public:
     PrimedTnt(Level* level);
     PrimedTnt(Level* level, double x, double y, double z);
 
-	void tick();
+	void tick() override;
 	
-	bool isPickable();
+	bool isPickable() override;
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
-	float getShadowHeightOffs();
+	float getShadowHeightOffs() override;
 protected:
-    void addAdditonalSaveData(CompoundTag* entityTag);
-	void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* entityTag) override;
+	void readAdditionalSaveData(CompoundTag* tag) override;
 private:
     void explode();
 

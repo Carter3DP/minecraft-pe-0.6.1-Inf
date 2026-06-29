@@ -4,7 +4,7 @@
 class Painting;
 class PaintingRenderer : public EntityRenderer {
 public:
-	void render(Entity* entity, double x, double y, double z, float rot, float a);
+	void render(Entity* entity, double x, double y, double z, float rot, float a) override;
 private:
 	void renderPainting(Painting* painting, int w, int h, int uo, int vo, float a);
 };

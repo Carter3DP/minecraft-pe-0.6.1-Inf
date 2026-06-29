@@ -8,12 +8,12 @@ class ProgressScreen: public Screen
 public:
 	ProgressScreen();
 
-	void render(int xm, int ym, float a);
-	bool isInGameScreen();
+	void render(int xm, int ym, float a) override;
+	bool isInGameScreen() override;
 
-	virtual void keyPressed(int eventKey) {}
+	virtual void keyPressed(int eventKey) override {}
 
-	void tick();
+	void tick() override;
 private:
 	int ticks;
 };

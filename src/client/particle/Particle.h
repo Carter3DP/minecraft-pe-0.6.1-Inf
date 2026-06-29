@@ -23,15 +23,15 @@ public:
     Particle* setPower(float power);
     Particle* scale(float scale);
 
-    virtual void tick();
+    virtual void tick() override;
     virtual void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2);
 
     virtual int getParticleTexture();
 
-    virtual void addAdditonalSaveData(CompoundTag* entityTag) {}
-    virtual void readAdditionalSaveData(CompoundTag* tag) {}
+    virtual void addAdditonalSaveData(CompoundTag* entityTag) override {}
+    virtual void readAdditionalSaveData(CompoundTag* tag) override {}
 
-	virtual int getEntityTypeId() const { return 0; }
+	virtual int getEntityTypeId() const override { return 0; }
 
 protected:
     int tex;

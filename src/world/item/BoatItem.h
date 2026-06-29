@@ -6,7 +6,7 @@ class BoatItem : public Item{
 	typedef Item super;
 public:
 	BoatItem(int id) : super(id) {maxStackSize = 1;}
-	virtual ItemInstance* use(ItemInstance* itemInstance, Level* level, Player* player);
+	virtual ItemInstance* use(ItemInstance* itemInstance, Level* level, Player* player) override;
 };
 
 #endif /* NET_MINECRAFT_WORLD_ITEM__BoatItem_H__ */

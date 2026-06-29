@@ -19,7 +19,7 @@ public:
     {
     }
 
-    void write(RakNet::BitStream* bitStream) {
+    void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_CONTAINEROPEN));
         bitStream->Write(containerId);
         bitStream->Write(type);
@@ -27,14 +27,14 @@ public:
         bitStream->Write(title);
     }
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
         bitStream->Read(containerId);
         bitStream->Read(type);
         bitStream->Read(size);
         bitStream->Read(title);
     }
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (ContainerOpenPacket*)this);
 	}
 

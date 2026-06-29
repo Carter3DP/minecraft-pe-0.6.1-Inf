@@ -15,7 +15,7 @@ class Pig: public Animal
 public:
     Pig(Level* level);
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
     //void addAdditonalSaveData(CompoundTag* tag) {
     //    super::addAdditonalSaveData(tag);
@@ -27,19 +27,19 @@ public:
     //    setSaddle(tag->getBoolean("Saddle"));
     //}
 
-    bool interact(Player* player);
+    bool interact(Player* player) override;
 
-	int getMaxHealth();
+	int getMaxHealth() override;
 
     bool hasSaddle();
     void setSaddle(bool value);
 
 protected:
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
-	int getDeathLoot();
+	int getDeathLoot() override;
 
     //@Override
     Animal* getBreedOffspring(Animal* target);

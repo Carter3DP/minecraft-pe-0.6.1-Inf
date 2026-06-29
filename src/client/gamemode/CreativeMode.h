@@ -11,13 +11,13 @@ class CreativeMode: public GameMode
 public:
     CreativeMode(Minecraft* minecraft);
 
-    void startDestroyBlock(int x, int y, int z, int face);
-    void continueDestroyBlock(int x, int y, int z, int face);
-    void stopDestroyBlock();
+    void startDestroyBlock(int x, int y, int z, int face) override;
+    void continueDestroyBlock(int x, int y, int z, int face) override;
+    void stopDestroyBlock() override;
 
-	bool isCreativeType();
+	bool isCreativeType() override;
 
-	void initAbilities(Abilities& abilities);
+	void initAbilities(Abilities& abilities) override;
 
 private:
 	void creativeDestroyBlock(int x, int y, int z, int face);

@@ -54,26 +54,26 @@ class BytesDataOutput: public IDataOutput {
 public:
 	//virtual void writePStr(const char* v, int len = -1);
 	//virtual void writeCStr(const char* v, int len = -1);
-	virtual void writeString(const std::string& v);
-	virtual void writeFloat(float v) {
+	virtual void writeString(const std::string& v) override;
+	virtual void writeFloat(float v) override {
 		writeBytes(&v, 4);
 	}
-	virtual void writeDouble(double v) {
+	virtual void writeDouble(double v) override {
 		writeBytes(&v, 8);
 	}
-	virtual void writeByte(char v) {
+	virtual void writeByte(char v) override {
 		writeBytes(&v, 1);
 	}
-	virtual void writeShort(short v) {
+	virtual void writeShort(short v) override {
 		writeBytes(&v, 2);
 	}
-	virtual void writeInt(int v) {
+	virtual void writeInt(int v) override {
 		writeBytes(&v, 4);
 	}
-	virtual void writeLongLong(long long v) {
+	virtual void writeLongLong(long long v) override {
 		writeBytes(&v, 8);
 	}
-	virtual void writeBytes(const void* data, int bytes) = 0;
+	virtual void writeBytes(const void* data, int bytes) override = 0;
 };
 
 /**
@@ -83,38 +83,38 @@ class BytesDataInput: public IDataInput {
 public:
 	//virtual void readPStr(char** s);
 	//virtual void readCStr(char* s, int len = -1);
-	virtual std::string readString();
-	virtual float readFloat()	{
+	virtual std::string readString() override;
+	virtual float readFloat() override {
 		float o;
 		readBytes(&o, 4);
 		return o;
 	}
-	virtual double readDouble() {
+	virtual double readDouble() override {
 		double o;
 		readBytes(&o, 8);
 		return o;
 	}
-	virtual char readByte()	{
+	virtual char readByte() override {
 		char o;
 		readBytes(&o, 1);
 		return o;
 	}
-	virtual short readShort()	{
+	virtual short readShort() override {
 		short o;
 		readBytes(&o, 2);
 		return o;
 	}
-	virtual int readInt()	{
+	virtual int readInt() override {
 		int o;
 		readBytes(&o, 4);
 		return o;
 	}
-	virtual long long readLongLong() {
+	virtual long long readLongLong() override {
 		long long o;
 		readBytes(&o, 8);
 		return o;
 	}
-	virtual void readBytes(void* data, int bytes) = 0;
+	virtual void readBytes(void* data, int bytes) override = 0;
 
 private:
 	static const int MAX_STRING_LENGTH = SHRT_MAX;

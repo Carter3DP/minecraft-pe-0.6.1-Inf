@@ -31,7 +31,7 @@ public:
         return tileId;
     }
 
-    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override {
 		if (level->adventureSettings.immutableWorld) {
 			const Tile* tile = Tile::tiles[tileId];
 			if (tileId != ((Tile*)Tile::leaves)->id
@@ -74,11 +74,11 @@ public:
         return false;
     }
 
-    std::string getDescriptionId(const ItemInstance* instance) const {
+    std::string getDescriptionId(const ItemInstance* instance) const override {
         return Tile::tiles[tileId]->getDescriptionId();
     }
 
-    std::string getDescriptionId() const {
+    std::string getDescriptionId() const override {
         return Tile::tiles[tileId]->getDescriptionId();
     }
 };

@@ -12,7 +12,7 @@
 class ReedsFeature: public Feature
 {
 public:
-	bool place(Level* level, Random* random, int x, int y, int z) {
+	bool place(Level* level, Random* random, int x, int y, int z) override {
         for (int i = 0; i < 20; i++) {
             int x2 = x + random->nextInt(4) - random->nextInt(4);
             int y2 = y;

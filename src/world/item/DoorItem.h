@@ -25,7 +25,7 @@ public:
         maxStackSize = 1;
     }
 
-    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override {
 		if (face != Facing::UP) return false;
 		y++;
 

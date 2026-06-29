@@ -47,7 +47,7 @@ public:
         return true;
     }
 
-    bool hasChunk(int x, int z) {
+    bool hasChunk(int x, int z) override {
         if (x == xLast && z == zLast && last != NULL) {
             return true;
         }
@@ -55,11 +55,11 @@ public:
         return it != chunks.end() && it->second != NULL && it->second->isAt(x, z);
     }
 
-    LevelChunk* create(int x, int z) {
+    LevelChunk* create(int x, int z) override {
         return getChunk(x, z);
     }
 
-    LevelChunk* getChunk(int x, int z) {
+    LevelChunk* getChunk(int x, int z) override {
 		//static Stopwatch sw;
 		//sw.start();
 
@@ -114,11 +114,11 @@ public:
         return chunks[pos];
     }
 
-	Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z) {
+	Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z) override {
 		return source->getMobsAt(mobCategory, x, y, z);
 	}
 
-    void postProcess(ChunkSource* parent, int x, int z) {
+    void postProcess(ChunkSource* parent, int x, int z) override {
         LevelChunk* chunk = getChunk(x, z);
         if (!chunk->terrainPopulated) {
             MCPE_CRASH_TRACE("[IW] ChunkCache::postProcess begin (%d,%d)\n", x, z);
@@ -171,7 +171,7 @@ public:
     //    return true;
     //}
 
-    bool tick() {
+    bool tick() override {
         if (storage != NULL) storage->tick();
 		int saves = 0;
 		for (ChunkMap::iterator it = chunks.begin(); it != chunks.end(); ++it) {
@@ -186,18 +186,18 @@ public:
         return source->tick();
     }
 
-    bool shouldSave() {
+    bool shouldSave() override {
         return true;
     }
 
-    std::string gatherStats() {
+    std::string gatherStats() override {
    //     return "ChunkCache: 1024";
 		std::stringstream ss;
 		ss << "ChunkCache: " << chunks.size();
 		return ss.str();
     }
 	
-	void saveAll(bool onlyUnsaved) {
+	void saveAll(bool onlyUnsaved) override {
 		if (storage != NULL) {
 			std::vector<LevelChunk*> chunksToSave;
 			for (ChunkMap::iterator it = chunks.begin(); it != chunks.end(); ++it) {

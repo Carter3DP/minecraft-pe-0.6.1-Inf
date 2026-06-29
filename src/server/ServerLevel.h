@@ -9,10 +9,10 @@ class ServerLevel: public Level
 public:
 	ServerLevel(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int generatorVersion, Dimension* fixedDimension = NULL);
 
-	void updateSleepingPlayerList();
+	void updateSleepingPlayerList() override;
 	void awakenAllPlayers();
 	bool allPlayersSleeping();
-	void tick();
+	void tick() override;
 protected:
 	bool allPlayersAreSleeping;
 };

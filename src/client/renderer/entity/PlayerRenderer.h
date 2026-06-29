@@ -10,15 +10,15 @@ public:
 	PlayerRenderer(HumanoidModel* humanoidModel, float shadow);
 	~PlayerRenderer();
 
-	virtual int prepareArmor(Mob* mob, int layer, float a);
+	virtual int prepareArmor(Mob* mob, int layer, float a) override;
 	bool isModernPlayerSkin(Mob* mob);
-	virtual void render(Entity* mob, double x, double y, double z, float rot, float a);
+	virtual void render(Entity* mob, double x, double y, double z, float rot, float a) override;
 
-	virtual void setupPosition(Entity* mob, double x, double y, double z);
-	virtual void setupRotations(Entity* mob, float bob, float bodyRot, float a);
+	virtual void setupPosition(Entity* mob, double x, double y, double z) override;
+	virtual void setupRotations(Entity* mob, float bob, float bodyRot, float a) override;
 
-	virtual void renderName(Mob* mob, double x, double y, double z);
-	virtual void onGraphicsReset();
+	virtual void renderName(Mob* mob, double x, double y, double z) override;
+	virtual void onGraphicsReset() override;
 private:
 	HumanoidModel* playerModel32;
 	HumanoidModel* playerModel64;

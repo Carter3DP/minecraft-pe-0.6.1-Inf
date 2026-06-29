@@ -20,17 +20,17 @@ public:
 				myItems.add( ItemPack::getIdForItemInstance(&ingredients[i]) );
     }
 
-    ItemInstance getResultItem() const {
+    ItemInstance getResultItem() const override {
         return result;
     }
 
-	int getMaxCraftCount(ItemPack& fromItems) {
+	int getMaxCraftCount(ItemPack& fromItems) override {
 		int count = fromItems.getMaxMultipliesOf(myItems);
 		return count;
 		//return (int)(Mth::random() * Mth::random() * 5);
 	}
 
-    bool matches(CraftingContainer* craftSlots) {
+    bool matches(CraftingContainer* craftSlots) override {
 
         Ingredients tempList = ingredients;
 
@@ -62,15 +62,15 @@ public:
         return tempList.empty();
     }
 
-    ItemInstance assemble(CraftingContainer* craftSlots) {
+    ItemInstance assemble(CraftingContainer* craftSlots) override {
         return result;
     }
 
-    int size() {
+    int size() override {
         return (int)ingredients.size();
     }
 
-	int getCraftingSize() {
+	int getCraftingSize() override {
 		return (ingredients.size() > 4)? SIZE_3X3 : SIZE_2X2;
 	}
 

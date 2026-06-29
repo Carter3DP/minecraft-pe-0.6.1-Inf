@@ -14,7 +14,7 @@ public:
     FallingTileRenderer();
     ~FallingTileRenderer();
 
-    void render(Entity* e, double x, double y, double z, float rot, float a);
+    void render(Entity* e, double x, double y, double z, float rot, float a) override;
 private:
     TileRenderer* tileRenderer;
 };

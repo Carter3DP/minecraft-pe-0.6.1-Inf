@@ -20,31 +20,31 @@ class ChestTileEntity:	public TileEntity,
 public:
 	ChestTileEntity();
 
-    int getContainerSize() const;
-	int getMaxStackSize() const;
-	std::string getName() const;
+    int getContainerSize() const override;
+	int getMaxStackSize() const override;
+	std::string getName() const override;
 
-    ItemInstance* getItem(int slot);
+    ItemInstance* getItem(int slot) override;
 	//void setItem(int slot, ItemInstance* item);
     //ItemInstance removeItem(int slot, int count);
     //ItemInstance removeItemNoUpdate(int slot);
 
-	bool shouldSave();
-    void load(CompoundTag* base);
-    bool save(CompoundTag* base);
+	bool shouldSave() override;
+    void load(CompoundTag* base) override;
+    bool save(CompoundTag* base) override;
 
-    bool stillValid(Player* player);
+    bool stillValid(Player* player) override;
 
-    void clearCache();
+    void clearCache() override;
     void checkNeighbors();
 
     /*@Override*/
-    void tick();
+    void tick() override;
 
-    void triggerEvent(int b0, int b1);
+    void triggerEvent(int b0, int b1) override;
 
-    void startOpen();
-    void stopOpen();
+    void startOpen() override;
+    void stopOpen() override;
 
     /*@Override*/
     void setRemoved();

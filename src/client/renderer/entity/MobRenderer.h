@@ -34,12 +34,12 @@ public:
 
     virtual void scale(Mob* mob, float a);
 
-	virtual void render(Entity* mob_, double x, double y, double z, float rot, float a);
+	virtual void render(Entity* mob_, double x, double y, double z, float rot, float a) override;
 	virtual void renderName(Mob* mob, double x, double y, double z);
 	virtual void renderNameTag(Mob* mob, const std::string& name, double x, double y, double z, int maxDist);
 	virtual void additionalRendering(Mob* mob, float a);
 
-	virtual void onGraphicsReset();
+	virtual void onGraphicsReset() override;
 protected:
 	void setArmor(Model* armor);
 	Model* getArmor();

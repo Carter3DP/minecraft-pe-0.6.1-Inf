@@ -15,21 +15,21 @@ public:
 
 	BedTile(int id);
 
-	bool use(Level* level, int x, int y, int z, Player* player);
+	bool use(Level* level, int x, int y, int z, Player* player) override;
 
-	int getTexture(int face, int data);
-	int getRenderShape();
-	int getRenderLayer();
-	bool isCubeShaped();
-	bool isSolidRender();
+	int getTexture(int face, int data) override;
+	int getRenderShape() override;
+	int getRenderLayer() override;
+	bool isCubeShaped() override;
+	bool isSolidRender() override;
 
-	void updateShape(LevelSource* level, int x, int y, int z);
+	void updateShape(LevelSource* level, int x, int y, int z) override;
 	void setShape();
 
-	void neighborChanged(Level* level, int x, int y, int z, int type);
+	void neighborChanged(Level* level, int x, int y, int z, int type) override;
 
-	int getResource(int data, Random* random);
-	void spawnResources(Level* level, int x, int y, int z, int data, float odds);
+	int getResource(int data, Random* random) override;
+	void spawnResources(Level* level, int x, int y, int z, int data, float odds) override;
 
 	static bool isHeadPiece( int data );
 	static bool isOccupied(int data);

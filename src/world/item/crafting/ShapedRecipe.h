@@ -27,7 +27,7 @@ public:
 		delete[] recipeItems;
 	}
 
-	int getMaxCraftCount(ItemPack& fromItems) {
+	int getMaxCraftCount(ItemPack& fromItems) override {
 
 		int count = fromItems.getMaxMultipliesOf(myItems);
 		return count;
@@ -36,11 +36,11 @@ public:
 		//return (int)(Mth::random() * Mth::random() * 5);
 	}
 
-    ItemInstance getResultItem() const {
+    ItemInstance getResultItem() const override {
         return result;
     }
 
-    bool matches(CraftingContainer* craftSlots) {
+    bool matches(CraftingContainer* craftSlots) override {
         for (int xOffs = 0; xOffs <= (3 - width); xOffs++) {
             for (int yOffs = 0; yOffs <= (3 - height); yOffs++) {
                 if (matches(craftSlots, xOffs, yOffs, true)) return true;
@@ -50,11 +50,11 @@ public:
         return false;
     }
 
-	ItemInstance assemble(CraftingContainer* craftSlots) {
+	ItemInstance assemble(CraftingContainer* craftSlots) override {
 		return ItemInstance(result.id, result.count, result.getAuxValue());
 	}
 
-	int size() {
+	int size() override {
 		return width * height;
 	}
 
@@ -88,7 +88,7 @@ private:
         return true;
     }
 
-	int getCraftingSize() {
+	int getCraftingSize() override {
 		return (width <= 2 && height <= 2)? SIZE_2X2 : SIZE_3X3;
 	}
 

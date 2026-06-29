@@ -22,7 +22,7 @@ public:
         maxStackSize = 1;
         this->setMaxDamage(384);
     }
-    void releaseUsing( ItemInstance* itemInstance, Level* level, Player* player, int durationLeft ) {
+    void releaseUsing( ItemInstance* itemInstance, Level* level, Player* player, int durationLeft ) override {
 		int timeHeld = getUseDuration(itemInstance) - durationLeft;
 		float pow = timeHeld / (float) MAX_DRAW_DURATION;
 		pow = ((pow * pow) + pow * 2) / 3;
@@ -41,17 +41,17 @@ public:
 		}
     }
 
-    int getUseDuration(ItemInstance* itemInstance) {
+    int getUseDuration(ItemInstance* itemInstance) override {
         return 20 * 60 * 60;
     }
 
-    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
+    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) override {
 		if(player->abilities.instabuild || player->hasResource(Item::arrow->id)) {
 			player->startUsingItem(*instance, getUseDuration(instance));
 		}
         return instance;
     }
-	UseAnim::UseAnimation getUseAnimation() {return UseAnim::bow;}
+	UseAnim::UseAnimation getUseAnimation() override {return UseAnim::bow;}
 
     // /*public*/ ItemInstance use(ItemInstance instance, Level* level, Player* player) {
 //            level->playSound(player, "random.bow", 1.0f, 1 / (random.nextFloat() * 0.4f + 0.8f));

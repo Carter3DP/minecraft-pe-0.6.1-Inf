@@ -11,15 +11,15 @@ public:
 		replaceable();
 	}
 
-	bool isLiquid() const {
+	bool isLiquid() const override {
         return true;
     }
     
-    bool blocksMotion() const {
+    bool blocksMotion() const override {
         return false;
     }    
     
-    bool isSolid() const {
+    bool isSolid() const override {
         return false;
     }
 };

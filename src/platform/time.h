@@ -96,9 +96,9 @@ public:
 	StopwatchNLast(int numMeasurements);
 	~StopwatchNLast();
 
-	float stop();
+	float stop() override;
 
-	virtual void print(const std::string& prepend = "");
+	virtual void print(const std::string& prepend = "") override;
 private:
 	int n;
 	int k;

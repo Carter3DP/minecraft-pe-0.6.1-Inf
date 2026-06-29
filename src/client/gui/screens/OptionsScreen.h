@@ -12,27 +12,27 @@ class OptionsScreen: public Screen
 {
 	typedef Screen super;
 
-	void init();
+	void init() override;
 	void generateOptionScreens();
 
 public:
 	OptionsScreen();
 	~OptionsScreen();
 
-	void setupPositions();
-	void buttonClicked(Button* button);
-	void render(int xm, int ym, float a);
-	void removed();
+	void setupPositions() override;
+	void buttonClicked(Button* button) override;
+	void render(int xm, int ym, float a) override;
+	void removed() override;
 	void selectCategory(int index);
 
-	virtual void mouseClicked(int x, int y, int buttonNum);
-	virtual void mouseReleased(int x, int y, int buttonNum);
-	virtual void mouseEvent();
-	virtual void keyPressed(int eventKey);
-	virtual void charPressed(char inputChar);
-	virtual void mouseWheel(int dx, int dy, int xm, int ym);
+	virtual void mouseClicked(int x, int y, int buttonNum) override;
+	virtual void mouseReleased(int x, int y, int buttonNum) override;
+	virtual void mouseEvent() override;
+	virtual void keyPressed(int eventKey) override;
+	virtual void charPressed(char inputChar) override;
+	virtual void mouseWheel(int dx, int dy, int xm, int ym) override;
 	
-	virtual void tick();
+	virtual void tick() override;
 
 private:
 	void updateCategoryScrollBounds();

@@ -24,20 +24,20 @@ public:
 
     void shoot(double xd, double yd, double zd, float pow, float uncertainty);
     
-	void lerpMotion(double xd, double yd, double zd);
+	void lerpMotion(double xd, double yd, double zd) override;
 
-	void tick();
+	void tick() override;
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
-    void playerTouch(Player* player);
+    void playerTouch(Player* player) override;
 
-    float getShadowHeightOffs();
+    float getShadowHeightOffs() override;
 
-	int getAuxData();
+	int getAuxData() override;
 public:
     bool playerArrow;
     int shakeTime;

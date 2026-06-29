@@ -19,7 +19,7 @@ public:
         maxStackSize = 16;
     }
 
-    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
+    ItemInstance* use(ItemInstance* instance, Level* level, Player* player) override {
         if (!player->abilities.instabuild)
             instance->count--;
 

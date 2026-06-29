@@ -13,27 +13,27 @@ public:
 	{
     }
 
-    void load(IDataInput* dis) /*throws IOException*/ {
+    void load(IDataInput* dis) /*throws IOException*/ override {
     }
 
-    void write(IDataOutput* dos) /*throws IOException*/ {
+    void write(IDataOutput* dos) /*throws IOException*/ override {
     }
 
-    char getId() const {
+    char getId() const override {
         return TAG_End;
     }
 
-    std::string toString() const {
+    std::string toString() const override {
         return "END";
     }
 
     //@Override
-    Tag* copy() const {
+    Tag* copy() const override {
         return new EndTag();
     }
 
     //@Override
-    bool equals(const Tag& rhs) const {
+    bool equals(const Tag& rhs) const override {
         return super::equals(rhs);
     }
 };

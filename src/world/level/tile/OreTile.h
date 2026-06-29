@@ -17,21 +17,21 @@ public:
 	{
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         if (id == Tile::coalOre->id) return Item::coal->id;
         if (id == Tile::emeraldOre->id) return Item::emerald->id;
         if (id == Tile::lapisOre->id) return Item::dye_powder->id;
         return id;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         if (id == Tile::lapisOre->id) return 4 + random->nextInt(5);
         return 1;
     }
 
 protected:
     //@Override
-    int getSpawnResourcesAuxValue(int data) {
+    int getSpawnResourcesAuxValue(int data) override {
         // lapis spawns blue dye
         if (id == Tile::lapisOre->id) return DyePowderItem::BLUE;
         return 0;

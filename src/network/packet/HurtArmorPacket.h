@@ -12,17 +12,17 @@ public:
     :   dmg(dmg)
     {}
 
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_HURTARMOR));
 
 		bitStream->Write(dmg);
 	}
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
 		bitStream->Read(dmg);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) {
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override {
 		callback->handle(source, (HurtArmorPacket*)this);
 	}
 

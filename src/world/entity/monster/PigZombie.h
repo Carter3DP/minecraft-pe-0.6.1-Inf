@@ -7,24 +7,24 @@ class PigZombie : public Zombie {
 	typedef Zombie super;
 public:
 	PigZombie(Level* level);
-	bool useNewAi();
-	void tick();
-	std::string getTexture();
-	bool canSpawn();
-	void addAdditonalSaveData(CompoundTag* entityTag);
-	void readAdditionalSaveData(CompoundTag* tag);
-	bool hurt(Entity* sourceEntity, int dmg);
-	bool interact(Player* player);
-	int getEntityTypeId() const;
-	virtual int getAttackTime();
-	ItemInstance* getCarriedItem();
+	bool useNewAi() override;
+	void tick() override;
+	std::string getTexture() override;
+	bool canSpawn() override;
+	void addAdditonalSaveData(CompoundTag* entityTag) override;
+	void readAdditionalSaveData(CompoundTag* tag) override;
+	bool hurt(Entity* sourceEntity, int dmg) override;
+	bool interact(Player* player) override;
+	int getEntityTypeId() const override;
+	virtual int getAttackTime() override;
+	ItemInstance* getCarriedItem() override;
 protected:
-	Entity* findAttackTarget();
-	const char* getAmbientSound();
-	std::string getHurtSound();
-	std::string getDeathSound();
-	void dropDeathLoot();
-	int getDeathLoot();
+	Entity* findAttackTarget() override;
+	const char* getAmbientSound() override;
+	std::string getHurtSound() override;
+	std::string getDeathSound() override;
+	void dropDeathLoot() override;
+	int getDeathLoot() override;
 private:
 	void alert(Entity* target);
 	

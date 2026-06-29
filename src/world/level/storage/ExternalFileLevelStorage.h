@@ -38,18 +38,18 @@ public:
     ExternalFileLevelStorage(const std::string& levelId, const std::string& fullPath);
 	virtual ~ExternalFileLevelStorage();
 
-    LevelData* prepareLevel(Level* level);
+    LevelData* prepareLevel(Level* level) override;
 
 	//throws LevelConflictException
     void checkSession() {}
 
-    ChunkStorage* createChunkStorage(Dimension* dimension) { return this; }
+    ChunkStorage* createChunkStorage(Dimension* dimension) override { return this; }
 
-    void saveLevelData(LevelData& levelData, std::vector<Player*>* players);
+    void saveLevelData(LevelData& levelData, std::vector<Player*>* players) override;
     // PlayerIO getPlayerIO() { return this; }
 	// CompoundTag loadPlayerDataTag(std::string playerName) { return NULL; }
 
-    void closeAll() {}
+    void closeAll() override {}
 
 	static bool readLevelData(const std::string& directory, LevelData& dest);
 	static bool readPlayerData(const std::string& filename, LevelData& dest);
@@ -61,16 +61,16 @@ public:
 	//
 	// ChunkStorage methods
 	//
-	virtual LevelChunk* load(Level* level, int x, int z);
-	void save(Level* level, LevelChunk* levelChunk);
+	virtual LevelChunk* load(Level* level, int x, int z) override;
+	void save(Level* level, LevelChunk* levelChunk) override;
 	// @note, loadEntities and saveEntities dont use second parameter
-	void loadEntities(Level* level, LevelChunk* levelChunk);
-	void saveEntities(Level* level, LevelChunk* levelChunk);
-	void saveGame(Level* level);
-    void saveAll(Level* level, std::vector<LevelChunk*>& levelChunks);
+	void loadEntities(Level* level, LevelChunk* levelChunk) override;
+	void saveEntities(Level* level, LevelChunk* levelChunk) override;
+	void saveGame(Level* level) override;
+    void saveAll(Level* level, std::vector<LevelChunk*>& levelChunks) override;
 
-	virtual void tick();
-	virtual void flush() {}
+	virtual void tick() override;
+	virtual void flush() override {}
 private:
 	RegionFile* getRegionFile(int chunkX, int chunkZ, bool create);
 	RegionFile* getLegacyRegionFile();

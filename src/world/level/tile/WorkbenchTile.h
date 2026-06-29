@@ -18,14 +18,14 @@ public:
         tex = 11 + 16 * 3;
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
         if (face == 1) return tex - 16;
         if (face == 0) return Tile::wood->getTexture(0);
         if (face == 2 || face == 4) return tex + 1;
         return tex;
     }
 
-	bool use(Level* level, int x, int y, int z, Player* player) {
+	bool use(Level* level, int x, int y, int z, Player* player) override {
 		player->startCrafting(x, y, z, Recipe::SIZE_3X3);
         return true;
     }

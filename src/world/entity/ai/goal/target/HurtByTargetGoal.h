@@ -17,11 +17,11 @@ public:
         setRequiredControlFlags(TargetGoal::TargetFlag);
     }
 
-    bool canUse() {
+    bool canUse() override {
         return canAttack(mob->getLastHurtByMob(), true);
     }
 
-    void start() {
+    void start() override {
         mob->setTarget(mob->getLastHurtByMob());
 
 //         if (alertSameType) {

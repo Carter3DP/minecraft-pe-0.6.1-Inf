@@ -16,19 +16,19 @@ public:
 
     void init();
 
-    bool isPickable();
+    bool isPickable() override;
 
-    void tick();
+    void tick() override;
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
-	float getShadowHeightOffs();
+	float getShadowHeightOffs() override;
 
     Level* getLevel();
 
 protected:
-	void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+	void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
 public:
 	int tile;

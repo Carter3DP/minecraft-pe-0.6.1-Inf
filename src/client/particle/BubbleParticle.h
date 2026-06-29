@@ -31,7 +31,7 @@ public:
         lifetime = (int) (8 / (Mth::random() * 0.8 + 0.2));
     }
 
-    void tick() {
+    void tick() override {
         xo = x;
         yo = y;
         zo = z;

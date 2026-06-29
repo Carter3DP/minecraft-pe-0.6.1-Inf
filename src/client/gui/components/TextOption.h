@@ -6,5 +6,5 @@ class TextOption : public TextBox {
 public:
     TextOption(Minecraft* minecraft, OptionId optId);
 
-    virtual bool loseFocus(Minecraft* minecraft);
+    virtual bool loseFocus(Minecraft* minecraft) override;
 };

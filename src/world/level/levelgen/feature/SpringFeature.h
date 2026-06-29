@@ -18,7 +18,7 @@ public:
         this->tile = tile;
     }
 
-    bool place(Level* level, Random* random, int x, int y, int z) {
+    bool place(Level* level, Random* random, int x, int y, int z) override {
         if (level->getTile(x, y + 1, z) != Tile::rock->id) return false;
         if (level->getTile(x, y - 1, z) != Tile::rock->id) return false;
 

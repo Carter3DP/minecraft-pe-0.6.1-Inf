@@ -14,26 +14,26 @@ class Chicken: public Animal
 public:
     Chicken(Level* level);
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
-    void aiStep();
+    void aiStep() override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 protected:
-    void causeFallDamage(float distance);
+    void causeFallDamage(float distance) override;
 
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
     //int getDeathLoot();
 
     //@Override
-    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/);
+    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/) override;
 
     //@Override
     Animal* getBreedOffspring(Animal* target);

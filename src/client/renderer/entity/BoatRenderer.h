@@ -15,7 +15,7 @@ class BoatRenderer: public EntityRenderer
 public:
     BoatRenderer(Model* model);
 
-    void render(Entity* boat, double x, double y, double z, float rot, float a);
+    void render(Entity* boat, double x, double y, double z, float rot, float a) override;
     void renderboat(EntityBoat* boat, double x, double y, double z, float rot, float a);
 
 protected:

@@ -14,20 +14,20 @@ public:
         eventId(eventId)
     {}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_ENTITYEVENT));
 		bitStream->Write(entityId);
 		bitStream->Write(eventId);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(entityId);
 		bitStream->Read(eventId);
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (EntityEventPacket*)this);
 	}

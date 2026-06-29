@@ -33,7 +33,7 @@ public:
 	}
 
     /*@Override*/
-    bool canUse() {
+    bool canUse() override {
         Mob* bestTarget = mob->getTarget();
         if (bestTarget == NULL) return false;
         if (attackType != 0 && !mob->isPlayer()) return false; //!attackType.isAssignableFrom(bestTarget.getClass())) return false;
@@ -46,7 +46,7 @@ public:
         return path != NULL;
     }
 
-    bool canContinueToUse() {
+    bool canContinueToUse() override {
         Mob* bestTarget = mob->getTarget();
         if (bestTarget == NULL) return false;
         if (attackType != 0 && !mob->isPlayer()) return false;//!attackType.isAssignableFrom(bestTarget.getClass())) return false;
@@ -55,16 +55,16 @@ public:
         return true;
     }
 
-    void start() {
+    void start() override {
         mob->getNavigation()->moveTo(path, speed, false);
     }
 
-    void stop() {
+    void stop() override {
         target = NULL;
         mob->getNavigation()->stop();
     }
 
-    void tick() {
+    void tick() override {
         //mob->getLookControl().setLookAt(target, 30, 30);
         if (trackTarget || mob->sensing->canSee(target)) {
 			//LOGI("target: %p @ %f, %f, %f\n", target, target->x, target->y, target->z);

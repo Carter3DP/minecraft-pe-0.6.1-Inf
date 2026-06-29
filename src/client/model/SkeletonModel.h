@@ -37,7 +37,7 @@ public:
         leg1.setPos(2, 12, 0);
     }
 
-    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) {
+    void setupAnim(float time, float r, float bob, float yRot, float xRot, float scale) override {
         bowAndArrow = true;
         super::setupAnim(time, r, bob, yRot, xRot, scale);
     }

@@ -20,7 +20,7 @@ public:
     }
 
     
-    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) {
+    bool useOn(ItemInstance* instance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override {
         if (face == 0) y--;
         if (face == 1) y++;
         if (face == 2) z--;

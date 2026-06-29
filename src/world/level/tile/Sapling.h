@@ -24,7 +24,7 @@ public:
         setShape(0.5f - ss, 0, 0.5f - ss, 0.5f + ss, ss * 2, 0.5f + ss);
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->isClientSide) return;
 
         super::tick(level, x, y, z, random);
@@ -43,7 +43,7 @@ public:
     }
 
     /*@Override*/
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         data = data & LeafTile::LEAF_TYPE_MASK;
         if (data == LeafTile::EVERGREEN_LEAF) {
             return 15 + 16 * 3;
@@ -125,7 +125,7 @@ public:
     }
 
 protected:
-    int getSpawnResourcesAuxValue(int data) {
+    int getSpawnResourcesAuxValue(int data) override {
         return data & TYPE_MASK;
     }
 };

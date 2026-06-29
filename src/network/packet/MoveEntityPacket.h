@@ -11,13 +11,13 @@ public:
 	{}
 
 	// PACKET_MOVEENTITY is unknown and undefined (and not used)
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_MOVEENTITY));
 	}
 
-	void read(RakNet::BitStream* bitStream) {};
+	void read(RakNet::BitStream* bitStream) override {};
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (MoveEntityPacket*)this);
 	}
@@ -54,7 +54,7 @@ public:
 		this->yRot = yRot;
 	}
 
-	void write(RakNet::BitStream* bitStream) {
+	void write(RakNet::BitStream* bitStream) override {
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_MOVEENTITY_POSROT));
 
 		bitStream->Write(entityId);
@@ -65,7 +65,7 @@ public:
 		bitStream->Write(xRot);
 	}
 
-	void read(RakNet::BitStream* bitStream) {
+	void read(RakNet::BitStream* bitStream) override {
 		bitStream->Read(entityId);
 		bitStream->Read(x);
 		bitStream->Read(y);

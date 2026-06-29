@@ -21,7 +21,7 @@ public:
         rCol = gCol = bCol = sharedRandom.nextFloat() * 0.6f + 0.4f;
     }
 
-    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
+    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {
         int tex = (int) ((life + a) * 15 / lifeTime);
         if (tex > 15) return;
 		textures->loadAndBindTexture("misc/explosion.png");
@@ -51,7 +51,7 @@ public:
         //glPolygonOffset(0, 0.0f);
     }
 
-    void tick() {
+    void tick() override {
         xo = x;
         yo = y;
         zo = z;
@@ -59,7 +59,7 @@ public:
         if (life == lifeTime) remove();
     }
 
-    int getParticleTexture() {
+    int getParticleTexture() override {
         return ParticleEngine::ENTITY_PARTICLE_TEXTURE;
     }
 private:

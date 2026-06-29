@@ -18,43 +18,43 @@ public:
     Spider(Level* level);
 
     /*@Override*/
-    void aiStep();
+    void aiStep() override;
     /*@Override*/
-    void tick();
+    void tick() override;
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
     /**
      * The the spiders act as if they're always on a ladder, which enables them
      * to climb walls.
      */
     /*@Override*/ //@todo
-    bool onLadder();
+    bool onLadder() override;
 
     /*@Override*/
-    void makeStuckInWeb();
+    void makeStuckInWeb() override;
 
     float getModelScale();
 
 	bool isClimbing();
 	void setClimbing(bool value);
 
-	virtual int getEntityTypeId() const;
+	virtual int getEntityTypeId() const override;
 
 protected:
     /*@Override*/
     bool makeStepSound();
 
-    Entity* findAttackTarget();
+    Entity* findAttackTarget() override;
 
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
-    void checkHurtTarget(Entity* target, float d);
+    void checkHurtTarget(Entity* target, float d) override;
 	int fireCheckTick;
-    int getDeathLoot();
+    int getDeathLoot() override;
     /*@Override*/
     //void dropDeathLoot();
 };

@@ -8,27 +8,27 @@ class TrapDoorTile : public Tile {
 public:
 	TrapDoorTile(int id, const Material* material);
 	bool blocksLight();
-	bool isSolidRender();
-	bool isCubeShaped();
-	int getRenderLayer();
+	bool isSolidRender() override;
+	bool isCubeShaped() override;
+	int getRenderLayer() override;
 	//@Override
 	//	public boolean isPathfindable(LevelSource level, int x, int y, int z) {
 	//		return !isOpen(level.getData(x, y, z));
 	//}
-	int getRenderShape();
-	AABB getTileAABB(Level* level, int x, int y, int z);
-	AABB* getAABB(Level* level, int x, int y, int z);
-	void updateShape(LevelSource* level, int x, int y, int z);
-	void updateDefaultShape();
+	int getRenderShape() override;
+	AABB getTileAABB(Level* level, int x, int y, int z) override;
+	AABB* getAABB(Level* level, int x, int y, int z) override;
+	void updateShape(LevelSource* level, int x, int y, int z) override;
+	void updateDefaultShape() override;
 	void setShape(int data);
-	void attack(Level* level, int x, int y, int z, Player* player);
-	bool use(Level* level, int x, int y, int z, Player* player);
+	void attack(Level* level, int x, int y, int z, Player* player) override;
+	bool use(Level* level, int x, int y, int z, Player* player) override;
 	void setOpen(Level* level, int x, int y, int z, bool shouldOpen);
-	void neighborChanged(Level* level, int x, int y, int z, int type);
-	HitResult clip(Level* level, int xt, int yt, int zt, const Vec3& a, const Vec3& b);
+	void neighborChanged(Level* level, int x, int y, int z, int type) override;
+	HitResult clip(Level* level, int xt, int yt, int zt, const Vec3& a, const Vec3& b) override;
 	int getDir(int dir);
-	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue);
-	bool mayPlace(Level* level, int x, int y, int z, unsigned char face);
+	int getPlacedOnFaceDataValue(Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ, int itemValue) override;
+	bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override;
 	static bool isOpen(int data);
 	static bool attachesTo(int id);
 };

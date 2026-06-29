@@ -43,11 +43,11 @@ public:
 			delete[] checkBuffer;
 	}
 
-	int getRenderLayer() {
+	int getRenderLayer() override {
         return isSolidRender()? Tile::RENDERLAYER_OPAQUE : Tile::RENDERLAYER_ALPHATEST;
     }
 
-    int getColor(LevelSource* level, int x, int y, int z) {
+    int getColor(LevelSource* level, int x, int y, int z) override {
 
         int data = (level->getData(x, y, z) & LEAF_TYPE_MASK);
         if (data == EVERGREEN_LEAF) {
@@ -69,7 +69,7 @@ public:
 		
     }
 
-    void onRemove(Level* level, int x, int y, int z) {
+    void onRemove(Level* level, int x, int y, int z) override {
         int r = 1;
         int r2 = r + 1;
 
@@ -88,7 +88,7 @@ public:
 
     int* checkBuffer; //@todo Rewrite this?
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->isClientSide) return;
 
         int currentData = level->getData(x, y, z);
@@ -153,7 +153,7 @@ public:
         }
     }
 
-	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data) {
+	void playerDestroy(Level* level, Player* player, int x, int y, int z, int data) override {
 		if (!level->isClientSide) {
 			ItemInstance* item = player->inventory->getSelected();
 			if (item && item->id == ((Item*)Item::shears)->id) {
@@ -165,15 +165,15 @@ public:
 		super::playerDestroy(level, player, x, y, z, data);
 	}
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return random->nextInt(20) == 0 ? 1 : 0;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Tile::sapling->id;
     }
 
-	void spawnResources(Level* level, int x, int y, int z, int data, float odds) {
+	void spawnResources(Level* level, int x, int y, int z, int data, float odds) override {
 		if (!level->isClientSide) {
 			int chance = 20;
 			if (level->random.nextInt(chance) == 0) {
@@ -187,11 +187,11 @@ public:
 		}
 	}
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return !allowSame;
     }
 
-    int getTexture(int face, int data) {
+    int getTexture(int face, int data) override {
         if ((data & LEAF_TYPE_MASK) == EVERGREEN_LEAF) {
 			return (this == Tile::leaves)?	tex + 5 * 16
 										:	tex -     16;
@@ -204,7 +204,7 @@ public:
         tex = oTex + (fancyGraphics ? 0 : 1);
     }
 protected:
-	int getSpawnResourcesAuxValue(int data) {
+	int getSpawnResourcesAuxValue(int data) override {
 		return data & LEAF_TYPE_MASK;
 	}
 private:

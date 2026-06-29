@@ -15,25 +15,25 @@ class Cow: public Animal
 public:
     Cow(Level* level);
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
-    bool interact(Player* player);
+    bool interact(Player* player) override;
 protected:
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
-    float getSoundVolume();
+    float getSoundVolume() override;
 
-    int getDeathLoot();
+    int getDeathLoot() override;
     /*@Override*/
-    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/);
+    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/) override;
 
     /*@Override*/
     Animal* getBreedOffspring(Animal* target);

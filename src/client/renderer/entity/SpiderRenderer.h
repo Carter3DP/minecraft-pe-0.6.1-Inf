@@ -20,7 +20,7 @@ public:
     }
 
 protected:
-    float getFlipDegrees(Mob* spider) {
+    float getFlipDegrees(Mob* spider) override {
         return 180;
     }
 
@@ -37,7 +37,7 @@ protected:
 //    }
 
     /*@Override*/
-    void scale(Mob* mob, float a) {
+    void scale(Mob* mob, float a) override {
         float scale = ((Spider*)mob)->getModelScale();
         glScalef(scale, scale, scale);
     }

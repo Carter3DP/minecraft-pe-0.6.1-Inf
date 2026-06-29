@@ -33,11 +33,11 @@ public:
         return this;
     }
 
-    int getParticleTexture() {
+    int getParticleTexture() override {
         return ParticleEngine::TERRAIN_TEXTURE;
     }
 
-    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
+    void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) override {
         float u0 = ((tex & 15) + uo / 4.0f) / 16.0f;
         float u1 = u0 + 0.999f / 16.0f / 4;
         float v0 = ((tex >> 4) + vo / 4.0f) / 16.0f;

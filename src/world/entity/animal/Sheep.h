@@ -31,22 +31,22 @@ public:
     Sheep(Level* level);
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
 	/*@Override*/
-    void aiStep();
+    void aiStep() override;
 
     //*@Override*/
-	void handleEntityEvent(char id);
+	void handleEntityEvent(char id) override;
 
     float getHeadEatPositionScale(float a);
     float getHeadEatAngleScale(float a);
 
     /*@Override*/
-    bool interact(Player* player);
+    bool interact(Player* player) override;
 
-    void addAdditonalSaveData(CompoundTag* tag);
-    void readAdditionalSaveData(CompoundTag* tag);
+    void addAdditonalSaveData(CompoundTag* tag) override;
+    void readAdditionalSaveData(CompoundTag* tag) override;
 
     int getColor() const;
     void setColor(int color);
@@ -56,25 +56,25 @@ public:
 	bool isSheared() const;
     void setSheared(bool value);
 
-	int getEntityTypeId() const;
+	int getEntityTypeId() const override;
 protected:
     /*@Override*/
-    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/);
+    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/) override;
     /*@Override*/
-    int getDeathLoot();
+    int getDeathLoot() override;
 
     /*@Override*/
-    void jumpFromGround();
+    void jumpFromGround() override;
 
     /*@Override*/
-    void updateAi();
+    void updateAi() override;
 
     /*@Override*/
-    bool shouldHoldGround();
+    bool shouldHoldGround() override;
 
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
 //     /*@Override*/
 //     Animal getBreedOffspring(Animal target) {

@@ -11,14 +11,14 @@ public:
 
 	virtual ~DeathScreen();
 
-	void init();
+	void init() override;
 
-	void setupPositions();
+	void setupPositions() override;
 
-	void tick();
-	void render(int xm, int ym, float a);
+	void tick() override;
+	void render(int xm, int ym, float a) override;
 
-	void buttonClicked(Button* button);
+	void buttonClicked(Button* button) override;
 
 private:
 	Button* bRespawn;

@@ -39,11 +39,11 @@ public:
 		_areas.clear();
 	}
 
-	int getPointerId(const MouseAction& m) {
+	int getPointerId(const MouseAction& m) override {
 		return getPointerId(m.x, m.y, m.pointerId);
 	}
 	
-	int getPointerId(int x, int y, int pid) {
+	int getPointerId(int x, int y, int pid) override {
 		//static Stopwatch w;
 		//w.printEvery(200, "IArea");
 		//w.start();
@@ -97,7 +97,7 @@ public:
 		delete[] _y;
 	}
 
-    virtual bool isInside(float x, float y)
+    virtual bool isInside(float x, float y) override
     {
 	  bool c = false;
       for (int i = 0, j = _numPoints-1; i < _numPoints; j = i++) {
@@ -126,7 +126,7 @@ public:
 		_y1(y1)
 	{}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return x >= _x0 && x <= _x1
 			&& y >= _y0 && y <= _y1;
 	}
@@ -154,7 +154,7 @@ public:
 	:	_x(x), _y(y), _rr(r*r)
 	{}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		const float dx = x - _x;
 		const float dy = y - _y;
 		return (dx*dx + dy*dy) <= _rr;
@@ -193,7 +193,7 @@ public:
 	void include(IArea* area) { _includes.push_back(area); }
 	void exclude(IArea* area) { _excludes.push_back(area); }
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		for (unsigned int i = 0; i < _includes.size(); ++i)
 			if (_includes[i]->isInside(x, y)) {
 				bool good = true;
@@ -232,7 +232,7 @@ public:
 		}
 	}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return _a->isInside(x, y) || _b->isInside(x, y);
 	}
 
@@ -257,7 +257,7 @@ public:
 		}
 	}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return _a->isInside(x, y) && _b->isInside(x, y);
 	}
 
@@ -282,7 +282,7 @@ public:
 		}
 	}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return _a->isInside(x, y) ^ _b->isInside(x, y);
 	}
 
@@ -303,7 +303,7 @@ public:
 		if (deleteMe && _a->deleteMe) delete _a;
 	}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return !_a->isInside(x, y);
 	}
 
@@ -328,7 +328,7 @@ public:
 		}
 	}
 
-	virtual bool isInside(float x, float y) {
+	virtual bool isInside(float x, float y) override {
 		return _a->isInside(x, y) && !_b->isInside(x, y);
 	}
 private:

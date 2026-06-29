@@ -17,7 +17,7 @@ public:
 	{
     }
 
-	ItemInstance* use(ItemInstance* itemInstance, Level* level, Player* player) {
+	ItemInstance* use(ItemInstance* itemInstance, Level* level, Player* player) override {
 		level->addEntity( new TripodCamera(level, player, player->x, player->y, player->z) );
 		return itemInstance;
 	}

@@ -41,20 +41,20 @@ public:
 	RandomLevelSource(Level* level, long seed, int version, bool spawnMobs);
 	~RandomLevelSource();
 
-	bool hasChunk(int x, int y);
-    LevelChunk* create(int x, int z);
-	LevelChunk* getChunk(int xOffs, int zOffs);
+	bool hasChunk(int x, int y) override;
+    LevelChunk* create(int x, int z) override;
+	LevelChunk* getChunk(int xOffs, int zOffs) override;
 
 	void prepareHeights(int xOffs, int zOffs, unsigned char* blocks, /*Biome*/void* biomes, double* temperatures);
     void buildSurfaces(int xOffs, int zOffs, unsigned char* blocks, Biome** biomes);
-	void postProcess(ChunkSource* parent, int xt, int zt);
+	void postProcess(ChunkSource* parent, int xt, int zt) override;
 
-    bool tick();
+    bool tick() override;
 
-    Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z);
+    Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z) override;
 
-	bool shouldSave();
-    std::string gatherStats();
+	bool shouldSave() override;
+    std::string gatherStats() override;
 
 	//bool save(bool force, ProgressListener progressListener) {
 private:
@@ -108,20 +108,20 @@ public:
 
 	}
 
-	virtual bool hasChunk(int x, int y) { return true; };
-	virtual LevelChunk* getChunk(int x, int z) { return create(x, z); };
+	virtual bool hasChunk(int x, int y) override { return true; };
+	virtual LevelChunk* getChunk(int x, int z) override { return create(x, z); };
 
-    virtual LevelChunk* create(int x, int z);
-	virtual void postProcess(ChunkSource* parent, int x, int z) {};
+    virtual LevelChunk* create(int x, int z) override;
+	virtual void postProcess(ChunkSource* parent, int x, int z) override {};
 
-	virtual bool tick() { return false; };
+	virtual bool tick() override { return false; };
 
-	virtual bool shouldSave() { return false; };
+	virtual bool shouldSave() override { return false; };
 
     /**
      * Returns some stats that are rendered when the user holds F3.
      */
-	virtual std::string gatherStats() { return "PerformanceTestChunkSource"; };
+	virtual std::string gatherStats() override { return "PerformanceTestChunkSource"; };
 };
 
 

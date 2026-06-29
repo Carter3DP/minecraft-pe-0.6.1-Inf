@@ -21,7 +21,7 @@ public:
         this->setTicking(true);
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (level->isEmptyTile(x, y + 1, z)) {
             int height = 1;
             while (level->getTile(x, y - height, z) == id) {
@@ -39,7 +39,7 @@ public:
         }
     }
 
-    bool mayPlace(Level* level, int x, int y, int z) {
+    bool mayPlace(Level* level, int x, int y, int z) override {
         int below = level->getTile(x, y - 1, z);
         if (below == id) return true;
         if (below != ((Tile*)Tile::grass)->id && below != Tile::dirt->id && below != Tile::sand->id) return false;
@@ -50,19 +50,19 @@ public:
         return false;
     }
 
-    void neighborChanged(Level* level, int x, int y, int z, int type) {
+    void neighborChanged(Level* level, int x, int y, int z, int type) override {
         checkAlive(level, x, y, z);
     }
 
-    bool canSurvive(Level* level, int x, int y, int z) {
+    bool canSurvive(Level* level, int x, int y, int z) override {
         return mayPlace(level, x, y, z);
     }
 
-    AABB* getAABB(Level* level, int x, int y, int z) {
+    AABB* getAABB(Level* level, int x, int y, int z) override {
         return NULL;
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         return Item::reeds->id;
     }
 
@@ -70,19 +70,19 @@ public:
         return false;
     }
 
-    bool isSolidRender() {
+    bool isSolidRender() override {
         return false;
     }
 
-    bool isCubeShaped() {
+    bool isCubeShaped() override {
         return false;
     }
 
-    int getRenderShape() {
+    int getRenderShape() override {
         return Tile::SHAPE_CROSS_TEXTURE;
     }
 
-	int getRenderLayer() {
+	int getRenderLayer() override {
         return Tile::RENDERLAYER_ALPHATEST;
     }
 

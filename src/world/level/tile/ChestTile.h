@@ -18,29 +18,29 @@ public:
 
     ChestTile(int id);
 
-    bool isSolidRender();
+    bool isSolidRender() override;
 
     /*@Override*/
-    bool isCubeShaped();
+    bool isCubeShaped() override;
 
-    int getRenderShape();
+    int getRenderShape() override;
 
-	bool mayPlace(Level* level, int x, int y, int z, unsigned char face);
-	void setPlacedBy(Level* level, int x, int y, int z, Mob* by);
+	bool mayPlace(Level* level, int x, int y, int z, unsigned char face) override;
+	void setPlacedBy(Level* level, int x, int y, int z, Mob* by) override;
 
-	void onPlace(Level* level, int x, int y, int z);
-	void onRemove(Level* level, int x, int y, int z);
+	void onPlace(Level* level, int x, int y, int z) override;
+	void onRemove(Level* level, int x, int y, int z) override;
 
     void recalcLockDir(Level* level, int x, int y, int z);
 
-    int getTexture(LevelSource* level, int x, int y, int z, int face);
-    int getTexture(int face);
+    int getTexture(LevelSource* level, int x, int y, int z, int face) override;
+    int getTexture(int face) override;
 
-	void neighborChanged(Level* level, int x, int y, int z, int type);
+	void neighborChanged(Level* level, int x, int y, int z, int type) override;
 
-    bool use(Level* level, int x, int y, int z, Player* player);
+    bool use(Level* level, int x, int y, int z, Player* player) override;
 
-    TileEntity* newTileEntity();
+    TileEntity* newTileEntity() override;
 
 private:
 	bool isFullChest(Level* level, int x, int y, int z);

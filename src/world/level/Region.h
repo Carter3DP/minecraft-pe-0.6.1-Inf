@@ -16,18 +16,18 @@ public:
     Region(Level* level, int x1, int y1, int z1, int x2, int y2, int z2);
 	~Region();
 
-	bool isSolidRenderTile(int x, int y, int z);
-    bool isSolidBlockingTile(int x, int y, int z);
-	int  getTile(int x, int y, int z);
-	bool isEmptyTile(int x, int y, int z);
+	bool isSolidRenderTile(int x, int y, int z) override;
+    bool isSolidBlockingTile(int x, int y, int z) override;
+	int  getTile(int x, int y, int z) override;
+	bool isEmptyTile(int x, int y, int z) override;
 
-	float getBrightness(int x, int y, int z);
+	float getBrightness(int x, int y, int z) override;
     int   getRawBrightness(int x, int y, int z);
 	int   getRawBrightness(int x, int y, int z, bool propagate);
 
-	int getData(int x, int y, int z);
-	const Material* getMaterial(int x, int y, int z);
-	Biome* getBiome(int x, int z);
+	int getData(int x, int y, int z) override;
+	const Material* getMaterial(int x, int y, int z) override;
+	Biome* getBiome(int x, int z) override;
 	BiomeSource* getBiomeSource() override;
 private:
 	LevelChunk* getChunkFor(int x, int z);

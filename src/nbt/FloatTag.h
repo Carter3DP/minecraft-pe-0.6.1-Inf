@@ -24,31 +24,31 @@ public:
 	{
     }
 
-    void write(IDataOutput* dos) /*throws IOException*/ {
+    void write(IDataOutput* dos) /*throws IOException*/ override {
         dos->writeFloat(data);
     }
 
-    void load(IDataInput* dis) /*throws IOException*/ {
+    void load(IDataInput* dis) /*throws IOException*/ override {
         data = dis->readFloat();
     }
 
-    char getId() const {
+    char getId() const override {
         return TAG_Float;
     }
 
-    std::string toString() const {
+    std::string toString() const override {
         std::stringstream ss;
         ss << data;
         return ss.str();
     }
 
     //@Override
-    Tag* copy() const {
+    Tag* copy() const override {
         return new FloatTag(getName(), data);
     }
 
     //@Override
-    bool equals(const Tag& rhs) const {
+    bool equals(const Tag& rhs) const override {
         if (super::equals(rhs)) {
             return data == ((FloatTag&)rhs).data;
         }

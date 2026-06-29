@@ -19,30 +19,30 @@ public:
 
 	~ServerPlayer();
 
-	void aiStep();
-	void tick();
-	void take(Entity* e, int orgCount);
+	void aiStep() override;
+	void tick() override;
+	void take(Entity* e, int orgCount) override;
 
-	void hurtArmor(int dmg);
+	void hurtArmor(int dmg) override;
 
-	void displayClientMessage(const std::string& messageId);
+	void displayClientMessage(const std::string& messageId) override;
 
-	void openContainer(ChestTileEntity* furnace);
-	void openFurnace(FurnaceTileEntity* furnace);
-	void closeContainer();
+	void openContainer(ChestTileEntity* furnace) override;
+	void openFurnace(FurnaceTileEntity* furnace) override;
+	void closeContainer() override;
 	void doCloseContainer();
 
-	bool hasResource( int id );
+	bool hasResource( int id ) override;
 	//
 	// IContainerListener
 	//
-	void setContainerData(BaseContainerMenu* menu, int id, int value);
-	void slotChanged(BaseContainerMenu* menu, int slot, const ItemInstance& item, bool isResultSlot);
-	void refreshContainer(BaseContainerMenu* menu, const std::vector<ItemInstance>& items);
+	void setContainerData(BaseContainerMenu* menu, int id, int value) override;
+	void slotChanged(BaseContainerMenu* menu, int slot, const ItemInstance& item, bool isResultSlot) override;
+	void refreshContainer(BaseContainerMenu* menu, const std::vector<ItemInstance>& items) override;
 
-	virtual void stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint);
+	virtual void stopSleepInBed(bool forcefulWakeUp, bool updateLevelList, bool saveRespawnPoint) override;
 
-	void completeUsingItem();
+	void completeUsingItem() override;
 private:
 	void nextContainerCounter();
 	void setContainerMenu( BaseContainerMenu* menu );

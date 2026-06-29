@@ -19,17 +19,17 @@ public:
     }
 
     /*@Override*/
-    int getIcon(int itemAuxValue) {
+    int getIcon(int itemAuxValue) override {
         return Tile::cloth->getTexture(2, ClothTile::getTileDataForItemAuxValue(itemAuxValue));
     }
 
     /*@Override*/
-    int getLevelDataForAuxValue(int auxValue) {
+    int getLevelDataForAuxValue(int auxValue) override {
         return auxValue;
     }
 
     /*@Override*/
-    std::string getDescriptionId(const ItemInstance* instance) const {
+    std::string getDescriptionId(const ItemInstance* instance) const override {
         return super::getDescriptionId() + "." + DyePowderItem::COLOR_DESCS[ClothTile::getTileDataForItemAuxValue(instance->getAuxValue())];
     }
 };

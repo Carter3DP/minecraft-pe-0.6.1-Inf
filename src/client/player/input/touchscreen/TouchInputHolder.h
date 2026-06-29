@@ -88,7 +88,7 @@ public:
 		_sensitivity = sensitivity;
 	}
 
-	virtual void onConfigChanged(const Config& c) {
+	virtual void onConfigChanged(const Config& c) override {
 		if (false && _options->getBooleanValue(OPTIONS_IS_JOY_TOUCH_AREA)) {
 			int touchWidth = c.width - (int)inventoryArea._x1;
 			if (touchWidth > (int)c.minecraft->pixelCalc.millimetersToPixels(60))
@@ -150,7 +150,7 @@ public:
 	//
 	// Implementation for the ITurnInput part
 	//
-	TurnDelta getTurnDelta() {
+	TurnDelta getTurnDelta() override {
 		float dx = 0, dy = 0;
 		const float now = getTimeS();
 
@@ -304,7 +304,7 @@ public:
 	//
 	// Implementation for the IBuildInput part
 	//
-	virtual bool tickBuild(Player* player, BuildActionIntention* bai) {
+	virtual bool tickBuild(Player* player, BuildActionIntention* bai) override {
 		_lastPlayer = player;
 
 		if (state == State_Destroy) {
@@ -423,7 +423,7 @@ public:
 	~TouchInputHolder() {
 	}
 
-	virtual void onConfigChanged(const Config& c) {
+	virtual void onConfigChanged(const Config& c) override {
 		_move.onConfigChanged(c);
 		_turnBuild.moveArea = _move.getRectangleArea();
 		_turnBuild.pauseArea = _move.getPauseRectangleArea();
@@ -432,7 +432,7 @@ public:
 		((ITurnInput*)&_turnBuild)->onConfigChanged(c);
 	}
 
-	virtual bool allowPicking() {
+	virtual bool allowPicking() override {
 		const int* pointerIds;
 		int pointerCount = Multitouch::getActivePointerIds(&pointerIds);
 		for (int i = 0; i < pointerCount; ++i) {
@@ -451,13 +451,13 @@ public:
 		// return _turnBuild.allowPicking;
 	}
 
-	virtual void render(float alpha) {
+	virtual void render(float alpha) override {
 		_turnBuild.render(alpha);
 	}
 
-	virtual IMoveInput*		getMoveInput()  { return &_move; }
-	virtual ITurnInput*		getTurnInput()  { return &_turnBuild; }
-	virtual IBuildInput*	getBuildInput() { return &_turnBuild; }
+	virtual IMoveInput*		getMoveInput() override { return &_move; }
+	virtual ITurnInput*		getTurnInput() override { return &_turnBuild; }
+	virtual IBuildInput*	getBuildInput() override { return &_turnBuild; }
 
 private:
 	TouchscreenInput_TestFps _move;

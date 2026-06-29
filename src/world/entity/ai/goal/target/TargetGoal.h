@@ -21,7 +21,7 @@ public:
         mustSee(mustSee)
     {}
 
-    bool canContinueToUse() {
+    bool canContinueToUse() override {
         Mob* target = mob->getTarget();
         if (target == NULL) return false;
         if (!target->isAlive()) return false;
@@ -30,7 +30,7 @@ public:
         return true;
     }
 
-    void stop() {
+    void stop() override {
         mob->setTarget(NULL);
     }
 

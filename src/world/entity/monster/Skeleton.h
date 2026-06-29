@@ -17,23 +17,23 @@ public:
     Skeleton(Level* level);
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
-    void aiStep();
+    void aiStep() override;
 
-    int getDeathLoot();
+    int getDeathLoot() override;
 
-    ItemInstance* getCarriedItem();
+    ItemInstance* getCarriedItem() override;
 
-	virtual int getEntityTypeId() const;
+	virtual int getEntityTypeId() const override;
 protected:
-    const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+    const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 
-    void checkHurtTarget(Entity* target, float d);
+    void checkHurtTarget(Entity* target, float d) override;
     /*@Override*/
-    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/);
+    void dropDeathLoot(/*bool wasKilledByPlayer, int playerBonusLevel*/) override;
 	virtual int getUseDuration();
 private:
 	ItemInstance bow;

@@ -38,16 +38,16 @@ public:
     DyePowderItem(int id);
 
     ///*@Override*/
-    int getIcon(int itemAuxValue);
+    int getIcon(int itemAuxValue) override;
 
     ///*@Override*/
-    std::string getDescriptionId(const ItemInstance* itemInstance) const;
+    std::string getDescriptionId(const ItemInstance* itemInstance) const override;
 
     ///*@Override*/
-    bool useOn(ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ);
+    bool useOn(ItemInstance* itemInstance, Player* player, Level* level, int x, int y, int z, int face, float clickX, float clickY, float clickZ) override;
 
     ///*@Override*/
-    void interactEnemy(ItemInstance* itemInstance, Mob* mob);
+    void interactEnemy(ItemInstance* itemInstance, Mob* mob) override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_ITEM__DyePowderItem_H__*/

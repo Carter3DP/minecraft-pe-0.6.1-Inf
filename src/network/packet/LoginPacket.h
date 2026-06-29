@@ -23,7 +23,7 @@ public:
 	{
 	}
 
-	void write(RakNet::BitStream* bitStream)
+	void write(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Write((RakNet::MessageID)(ID_USER_PACKET_ENUM + PACKET_LOGIN));
 		bitStream->Write(clientName);
@@ -31,7 +31,7 @@ public:
 		bitStream->Write(clientNetworkLowestSupportedVersion);
 	}
 
-	void read(RakNet::BitStream* bitStream)
+	void read(RakNet::BitStream* bitStream) override
 	{
 		bitStream->Read(clientName);
 		// First versions didn't send the client version
@@ -42,7 +42,7 @@ public:
 		}
 	}
 
-	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback)
+	void handle(const RakNet::RakNetGUID& source, NetEventCallback* callback) override
 	{
 		callback->handle(source, (LoginPacket*)this);
 	}

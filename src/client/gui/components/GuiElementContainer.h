@@ -9,17 +9,17 @@ class GuiElementContainer : public GuiElement {
 public:
 	GuiElementContainer(bool active=false, bool visible=true, int x = 0, int y = 0, int width=24, int height=24);
     virtual ~GuiElementContainer();
-    virtual void render(Minecraft* minecraft, int xm, int ym);
-	virtual void setupPositions();
+    virtual void render(Minecraft* minecraft, int xm, int ym) override;
+	virtual void setupPositions() override;
 	virtual void addChild(GuiElement* element);
 	virtual void removeChild(GuiElement* element);
 
-	virtual void tick( Minecraft* minecraft );
+	virtual void tick( Minecraft* minecraft ) override;
 
-	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum );
-	virtual void keyPressed(Minecraft* minecraft, int key);
-	virtual void charPressed(Minecraft* minecraft, char key);
+	virtual void mouseClicked( Minecraft* minecraft, int x, int y, int buttonNum ) override;
+	virtual void mouseReleased( Minecraft* minecraft, int x, int y, int buttonNum ) override;
+	virtual void keyPressed(Minecraft* minecraft, int key) override;
+	virtual void charPressed(Minecraft* minecraft, char key) override;
 
 protected:
 	std::vector<GuiElement*> children;

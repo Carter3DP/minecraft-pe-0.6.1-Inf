@@ -16,14 +16,14 @@ public:
         tex = 13 + 16 * 2;
     }
 
-    int getTexture(int face) {
+    int getTexture(int face) override {
 		if (face == Facing::UP) return 9 + 10 * 16;
 		if (face == Facing::DOWN) return 14 + 3 * 16;
 		if (face == Facing::NORTH || face == Facing::SOUTH) return 8 + 10 * 16;
 		return tex;
     }
 
-	bool use(Level* level, int x, int y, int z, Player* player) {
+	bool use(Level* level, int x, int y, int z, Player* player) override {
 		player->startStonecutting(x, y, z);
         return true;
     }

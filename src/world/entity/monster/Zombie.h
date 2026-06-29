@@ -17,25 +17,25 @@ public:
 	~Zombie();
 
     /*@Override*/
-    int getMaxHealth();
+    int getMaxHealth() override;
 
-    void aiStep();
-	virtual int getEntityTypeId() const;
+    void aiStep() override;
+	virtual int getEntityTypeId() const override;
 	void setUseNewAi(bool use);
-	virtual void die(Entity* source);
-	virtual int getAttackDamage(Entity* target);
+	virtual void die(Entity* source) override;
+	virtual int getAttackDamage(Entity* target) override;
 protected:
 	/*@Override*/
-	int getArmorValue();
+	int getArmorValue() override;
 
-	const char* getAmbientSound();
-    std::string getHurtSound();
-    std::string getDeathSound();
+	const char* getAmbientSound() override;
+    std::string getHurtSound() override;
+    std::string getDeathSound() override;
 	
 	//@todo
-    int getDeathLoot();
+    int getDeathLoot() override;
 
-	virtual bool useNewAi();
+	virtual bool useNewAi() override;
 
 	int fireCheckTick;
 	bool _useNewAi;

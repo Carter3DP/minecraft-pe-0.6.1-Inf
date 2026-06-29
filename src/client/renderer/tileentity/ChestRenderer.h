@@ -11,7 +11,7 @@ class ChestTileEntity;
 class ChestRenderer: public TileEntityRenderer
 {
     /*@Override*/
-    void render(TileEntity* chest, double x, double y, double z, float a);
+    void render(TileEntity* chest, double x, double y, double z, float a) override;
 
 private:
     ChestModel chestModel;

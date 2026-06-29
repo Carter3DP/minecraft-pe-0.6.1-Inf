@@ -14,15 +14,15 @@ class TextEditScreen: public Screen
 public:
 	TextEditScreen(SignTileEntity* signEntity);
 	~TextEditScreen();
-    void init();
-	void tick();
-	bool handleBackEvent(bool isDown);
-	void render(int xm, int ym, float a);
-	virtual void lostFocus();
-	virtual void keyPressed(int eventKey);
-	virtual void charPressed(char inputChar);
-	void setupPositions();
-	void buttonClicked(Button* button);
+    void init() override;
+	void tick() override;
+	bool handleBackEvent(bool isDown) override;
+	void render(int xm, int ym, float a) override;
+	virtual void lostFocus() override;
+	virtual void keyPressed(int eventKey) override;
+	virtual void charPressed(char inputChar) override;
+	void setupPositions() override;
+	void buttonClicked(Button* button) override;
 protected:
 	bool isShowingKeyboard;
 	SignTileEntity* sign;

@@ -29,30 +29,30 @@ public:
         dontSave = true;
     }
 
-    bool isAt(int x, int z) {
+    bool isAt(int x, int z) override {
         return x == this->x && z == this->z;
     }
 
-    int getHeightmap(int x, int z) {
+    int getHeightmap(int x, int z) override {
         return 0;
     }
 
-    void recalcBlockLights() {
+    void recalcBlockLights() override {
     }
 
-    void recalcHeightmapOnly() {
+    void recalcHeightmapOnly() override {
         return;
     }
 
-    void recalcHeightmap() {
+    void recalcHeightmap() override {
         return;
     }
 
-    void lightLava() {
+    void lightLava() override {
         return;
     }
 
-    int getTile(int x, int y, int z) {
+    int getTile(int x, int y, int z) override {
 		//if (y <= 1)
 		//{
 		//	return Tile::unbreakable->id;
@@ -65,51 +65,51 @@ public:
         return 0;
     }
 
-    bool setTileAndData(int x, int y, int z, int _tile, int _data) {
+    bool setTileAndData(int x, int y, int z, int _tile, int _data) override {
         return true;
     }
 
-    bool setTile(int x, int y, int z, int _tile) {
+    bool setTile(int x, int y, int z, int _tile) override {
         return true;
     }
 
-    int getData(int x, int y, int z) {
+    int getData(int x, int y, int z) override {
         return 0;
     }
 
-    void setData(int x, int y, int z, int val) {
+    void setData(int x, int y, int z, int val) override {
         return;
     }
 
-    int getBrightness(const LightLayer& layer, int x, int y, int z) {
+    int getBrightness(const LightLayer& layer, int x, int y, int z) override {
         return 7;
     }
 
-    void setBrightness(const LightLayer& layer, int x, int y, int z, int brightness) {
+    void setBrightness(const LightLayer& layer, int x, int y, int z, int brightness) override {
         return;
     }
 
-    int getRawBrightness(int x, int y, int z, int skyDampen) {
+    int getRawBrightness(int x, int y, int z, int skyDampen) override {
         return 7;
     }
 
-    void addEntity(Entity* e) {
+    void addEntity(Entity* e) override {
         return;
     }
 
-    void removeEntity(Entity* e) {
+    void removeEntity(Entity* e) override {
         return;
     }
 
-    void removeEntity(Entity* e, int yc) {
+    void removeEntity(Entity* e, int yc) override {
         return;
     }
 
-    bool isSkyLit(int x, int y, int z) {
+    bool isSkyLit(int x, int y, int z) override {
         return false;
     }
 
-    void skyBrightnessChanged() {
+    void skyBrightnessChanged() override {
         return;
     }
 /*
@@ -130,19 +130,19 @@ public:
     }
 	*/
 
-    void load() {
+    void load() override {
         return;
     }
 
-    void unload() {
+    void unload() override {
         return;
     }
 
-    void markUnsaved() {
+    void markUnsaved() override {
         return;
     }
 
-	void getEntities(Entity* except, const AABB& bb, std::vector<Entity*>& es) {
+	void getEntities(Entity* except, const AABB& bb, std::vector<Entity*>& es) override {
         return;
     }
 	/*
@@ -159,11 +159,11 @@ public:
     }
 */
 
-    void setBlocks(unsigned char* newBlocks, int sub) {
+    void setBlocks(unsigned char* newBlocks, int sub) override {
         return;
     }
 
-    int getBlocksAndData(unsigned char* data, int x0, int y0, int z0, int x1, int y1, int z1, int p) {
+    int getBlocksAndData(unsigned char* data, int x0, int y0, int z0, int x1, int y1, int z1, int p) override {
         int xs = x1 - x0;
         int ys = y1 - y0;
         int zs = z1 - z0;
@@ -175,7 +175,7 @@ public:
         return len;
     }
 
-    int setBlocksAndData(unsigned char* data, int x0, int y0, int z0, int x1, int y1, int z1, int p) {
+    int setBlocksAndData(unsigned char* data, int x0, int y0, int z0, int x1, int y1, int z1, int p) override {
         int xs = x1 - x0;
         int ys = y1 - y0;
         int zs = z1 - z0;
@@ -184,11 +184,11 @@ public:
         return s + s / 2 * 3;
     }
 
-    Random getRandom(long l) {
+    Random getRandom(long l) override {
         return /*new*/ Random((level->getSeed() + x * x * 4987142 + x * 5947611 + z * z * 4392871l + z * 389711) ^ l);
     }
 
-    bool isEmpty() {
+    bool isEmpty() override {
         return true;
     }
 };

@@ -23,21 +23,21 @@ public:
         this->lit = lit;
     }
 
-    int getTickDelay() {
+    int getTickDelay() override {
         return 30;
     }
 
-    void attack(Level* level, int x, int y, int z, Player* player) {
+    void attack(Level* level, int x, int y, int z, Player* player) override {
         interact(level, x, y, z);
         Tile::attack(level, x, y, z, player);
     }
 
-    void stepOn(Level* level, int x, int y, int z, Entity* entity) {
+    void stepOn(Level* level, int x, int y, int z, Entity* entity) override {
         interact(level, x, y, z);
         Tile::stepOn(level, x, y, z, entity);
     }
 
-    bool use(Level* level, int x, int y, int z, Player* player) {
+    bool use(Level* level, int x, int y, int z, Player* player) override {
         interact(level, x, y, z);
         return Tile::use(level, x, y, z, player);
     }
@@ -49,22 +49,22 @@ public:
         }
     }
 
-    void tick(Level* level, int x, int y, int z, Random* random) {
+    void tick(Level* level, int x, int y, int z, Random* random) override {
         if (id == Tile::redStoneOre_lit->id) {
             level->setTile(x, y, z, Tile::redStoneOre->id);
         }
     }
 
-    int getResource(int data, Random* random) {
+    int getResource(int data, Random* random) override {
         //return Item.redStone.id;
 		return 0;
     }
 
-    int getResourceCount(Random* random) {
+    int getResourceCount(Random* random) override {
         return 4 + random->nextInt(2);
     }
 
-    void animateTick(Level* level, int x, int y, int z, Random* random) {
+    void animateTick(Level* level, int x, int y, int z, Random* random) override {
         if (lit) {
             poofParticles(level, x, y, z);
         }

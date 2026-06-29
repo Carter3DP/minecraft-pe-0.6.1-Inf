@@ -20,12 +20,12 @@ public:
         this->allowSame = allowSame;
     }
     
-    bool isSolidRender()
+    bool isSolidRender() override
     {
         return false;
     }
     
-    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face)
+    bool shouldRenderFace(LevelSource* level, int x, int y, int z, int face) override
     {
         int id = level->getTile(x, y, z);
         if (!allowSame && id == this->id) return false;

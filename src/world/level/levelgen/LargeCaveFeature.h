@@ -150,7 +150,7 @@ protected:
         }
     }
 
-    void addFeature(Level* level, int x, int z, int xOffs, int zOffs, unsigned char* blocks, int blocksSize) {
+    void addFeature(Level* level, int x, int z, int xOffs, int zOffs, unsigned char* blocks, int blocksSize) override {
         int caves = random.nextInt(random.nextInt(random.nextInt(40) + 1) + 1);
         if (random.nextInt(15) != 0) caves = 0;
 

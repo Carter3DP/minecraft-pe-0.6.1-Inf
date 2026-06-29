@@ -26,7 +26,7 @@ public:
 
 	void setNumItems(int i) { numItems = i; }
 	IntRectangle getItemPos(int i);
-	void renderBg(Minecraft* minecraft, int xm, int ym);
+	void renderBg(Minecraft* minecraft, int xm, int ym) override;
 private:
 	NinePatchLayer* bg;
 	NinePatchLayer* bgSelected;
@@ -42,19 +42,19 @@ public:
     PaneCraftingScreen(int craftingSize);
 	~PaneCraftingScreen();
 
-    void init();
-	void setupPositions();
+    void init() override;
+	void setupPositions() override;
 
-	void tick();
-	void render(int xm, int ym, float a);
-	bool renderGameBehind();
-    bool closeOnPlayerHurt();
-	void buttonClicked(Button* button);
-	void keyPressed( int eventKey );
+	void tick() override;
+	void render(int xm, int ym, float a) override;
+	bool renderGameBehind() override;
+    bool closeOnPlayerHurt() override;
+	void buttonClicked(Button* button) override;
+	void keyPressed( int eventKey ) override;
 
 	// IItemPaneCallback
-	void onItemSelected(const ItemPane* forPane, int itemIndexInCurrentCategory);
-	const std::vector<CItem*>& getItems(const ItemPane* forPane);
+	void onItemSelected(const ItemPane* forPane, int itemIndexInCurrentCategory) override;
+	const std::vector<CItem*>& getItems(const ItemPane* forPane) override;
 protected:
 	void setSingleCategoryAndIcon(int categoryBitmask, int categoryIcon);
 private:

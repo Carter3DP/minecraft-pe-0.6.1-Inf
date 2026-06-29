@@ -19,12 +19,12 @@ public:
 
 	GrassTile(int id);
 
-	int getTexture(LevelSource* level, int x, int y, int z, int face);
-	int getTexture(int face, int data);
-    int getColor(LevelSource* level, int x, int y, int z);
+	int getTexture(LevelSource* level, int x, int y, int z, int face) override;
+	int getTexture(int face, int data) override;
+    int getColor(LevelSource* level, int x, int y, int z) override;
 
-    void tick(Level* level, int x, int y, int z, Random* random);
-    int getResource(int data, Random* random);
+    void tick(Level* level, int x, int y, int z, Random* random) override;
+    int getResource(int data, Random* random) override;
 };
 
 #endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__GrassTile_H__*/
