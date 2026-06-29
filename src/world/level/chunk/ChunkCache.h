@@ -21,6 +21,7 @@ public:
 	:	xLast(-999999999),
 		zLast(-999999999),
 		last(NULL),
+		postProcessDepth(0),
 		level(level_),
 		storage(storage_),
 		source(source_)
@@ -96,10 +97,12 @@ public:
             MCPE_CRASH_TRACE("[IW] ChunkCache::getChunk installed (%d,%d), terrainPopulated=%d, fromSave=%d\n",
                 x, z, chunks[pos] ? chunks[pos]->terrainPopulated : -1, chunks[pos] ? chunks[pos]->createdFromSave : -1);
 
-            if (!chunks[pos]->terrainPopulated && hasChunk(x + 1, z + 1) && hasChunk(x, z + 1) && hasChunk(x + 1, z)) postProcess(this, x, z);
-            if (hasChunk(x - 1, z) && !getChunk(x - 1, z)->terrainPopulated && hasChunk(x - 1, z + 1) && hasChunk(x, z + 1) && hasChunk(x - 1, z)) postProcess(this, x - 1, z);
-            if (hasChunk(x, z - 1) && !getChunk(x, z - 1)->terrainPopulated && hasChunk(x + 1, z - 1) && hasChunk(x, z - 1) && hasChunk(x + 1, z)) postProcess(this, x, z - 1);
-            if (hasChunk(x - 1, z - 1) && !getChunk(x - 1, z - 1)->terrainPopulated && hasChunk(x - 1, z - 1) && hasChunk(x, z - 1) && hasChunk(x - 1, z)) postProcess(this, x - 1, z - 1);
+            if (postProcessDepth == 0) {
+                if (!chunks[pos]->terrainPopulated) postProcess(this, x, z);
+                if (hasChunk(x - 1, z) && !getChunk(x - 1, z)->terrainPopulated) postProcess(this, x - 1, z);
+                if (hasChunk(x, z - 1) && !getChunk(x, z - 1)->terrainPopulated) postProcess(this, x, z - 1);
+                if (hasChunk(x - 1, z - 1) && !getChunk(x - 1, z - 1)->terrainPopulated) postProcess(this, x - 1, z - 1);
+            }
         }
         xLast = x;
         zLast = z;
@@ -119,6 +122,12 @@ public:
         LevelChunk* chunk = getChunk(x, z);
         if (!chunk->terrainPopulated) {
             MCPE_CRASH_TRACE("[IW] ChunkCache::postProcess begin (%d,%d)\n", x, z);
+			postProcessDepth++;
+			getChunk(x + 1, z);
+			getChunk(x, z + 1);
+			getChunk(x + 1, z + 1);
+			postProcessDepth--;
+
             chunk->terrainPopulated = true;
             if (source != NULL) {
                 source->postProcess(parent, x, z);
@@ -249,6 +258,7 @@ private:
     Level* level;
 
     LevelChunk* last;
+	int postProcessDepth;
 
 };
 
