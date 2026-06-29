@@ -943,11 +943,11 @@ void Player::updateRidden() {
         return;
     }
 
-    double var1 = x;
-    double var3 = y;
-    double var5 = z;
+    double oldX = x;
+    double oldY = y;
+    double oldZ = z;
     super::updateRidden();
     oTilt = tilt;
     tilt = 0.0;
-    //this.addMountedMovementStat(this.posX - var1, this.posY - var3, this.posZ - var5); stats not implemented yet.
+    //this.addMountedMovementStat(this.posX - oldX, this.posY - oldY, this.posZ - oldZ); stats not implemented yet.
 }

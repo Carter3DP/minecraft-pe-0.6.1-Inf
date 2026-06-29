@@ -136,7 +136,7 @@ public:
 	virtual int getAuxData();
 
 	virtual double getMountedYOffset();
-	virtual void mountEntity(Entity* var1);
+	virtual void mountEntity(Entity* ent);
 	virtual void updateRiderPosition();
 	virtual bool isRiding();
 	virtual void updateRidden();

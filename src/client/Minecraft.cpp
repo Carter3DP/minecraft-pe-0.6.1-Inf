@@ -73,6 +73,7 @@
 
 #include "player/input/MouseTurnInput.h"
 #include "../world/entity/MobFactory.h"
+#include "../world/entity/EntityTypes.h"
 #include "../world/level/MobSpawner.h"
 #include "../util/Mth.h"
 #include "../network/packet/InteractPacket.h"
@@ -970,7 +971,11 @@ void Minecraft::handleBuildAction(BuildActionIntention* action) {
 			missTime = 10;
 		}
 	} else if (hitResult.type == ENTITY) {
-		if (action->isAttack() || action->isRemove()) {
+		bool touchBoatInteract = useTouchscreen() && action->isInteract() && !action->isRemove()
+			&& hitResult.entity->isEntityType(EntityTypes::boatEntity);
+		bool touchEntityAttack = useTouchscreen() && action->isInteract() && !touchBoatInteract;
+
+		if (action->isAttack() || action->isRemove() || touchEntityAttack) {
 			player->swing();
 			//LOGI("attacking!\n");
 			InteractPacket packet(InteractPacket::Attack, player->entityId, hitResult.entity->entityId);

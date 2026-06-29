@@ -1036,29 +1036,29 @@ double Entity::getMountedYOffset() {
                     entityRiderPitchDelta += 360.0;
                 }
 
-                double var1 = entityRiderYawDelta * 0.5;
-                double var3 = entityRiderPitchDelta * 0.5;
-                float var5 = 10.0;
-                if (var1 > (double)var5) {
-                    var1 = (double)var5;
+                double yawStep = entityRiderYawDelta * 0.5;
+                double pitchStep = entityRiderPitchDelta * 0.5;
+                float maxRotationStep = 10.0;
+                if (yawStep > (double)maxRotationStep) {
+                    yawStep = (double)maxRotationStep;
                 }
 
-                if (var1 < (double)(-var5)) {
-                    var1 = (double)(-var5);
+                if (yawStep < (double)(-maxRotationStep)) {
+                    yawStep = (double)(-maxRotationStep);
                 }
 
-                if (var3 > (double)var5) {
-                    var3 = (double)var5;
+                if (pitchStep > (double)maxRotationStep) {
+                    pitchStep = (double)maxRotationStep;
                 }
 
-                if (var3 < (double)(-var5)) {
-                    var3 = (double)(-var5);
+                if (pitchStep < (double)(-maxRotationStep)) {
+                    pitchStep = (double)(-maxRotationStep);
                 }
 
-                entityRiderYawDelta -= var1;
-                entityRiderPitchDelta -= var3;
-                yRot = (float)((double)yRot + var1);
-                xRot = (float)((double)xRot + var3);
+                entityRiderYawDelta -= yawStep;
+                entityRiderPitchDelta -= pitchStep;
+                yRot = (float)((double)yRot + yawStep);
+                xRot = (float)((double)xRot + pitchStep);
             }
         }
     }

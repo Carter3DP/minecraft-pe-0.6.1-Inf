@@ -29,7 +29,7 @@ class EntityBoat: public Entity{
         AABB getBoundingBox();
         virtual bool isPushable() override;
         virtual double getMountedYOffset() override;
-        virtual bool hurt(Entity* e, int var2) override;
+        virtual bool hurt(Entity* e, int damage) override;
         virtual void animateHurt() override;
         virtual bool canBeCollidedWith();
         virtual bool isPickable() override;
