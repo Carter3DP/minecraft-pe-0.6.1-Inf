@@ -34,6 +34,8 @@
 		F99D353A2F73800000DC153E /* water.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350A2F73800000DC153E /* water.png */; };
 		F99D353B2F73800000DC153E /* moon.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350B2F73800000DC153E /* moon.png */; };
 		F99D353C2F73800000DC153E /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = F99D350C2F73800000DC153E /* sun.png */; };
+		F99F101D2F84A00000F2B29A /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = F99F101C2F84A00000F2B29A /* boat.png */; };
+		F99F101E2F84A00000F2B29A /* boat.png in Resources */ = {isa = PBXBuildFile; fileRef = F99F101C2F84A00000F2B29A /* boat.png */; };
 		0400453716A41236003EB6FA /* HeavyTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0400453516A41236003EB6FA /* HeavyTile.cpp */; };
 		0400453A16A4125C003EB6FA /* FallingTileRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0400453816A4125B003EB6FA /* FallingTileRenderer.cpp */; };
 		0413970716A82E1E008A9F1A /* ArmorItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0413970516A82E1E008A9F1A /* ArmorItem.cpp */; };
@@ -1633,6 +1635,7 @@
 		F99D350A2F73800000DC153E /* water.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = water.png; sourceTree = "<group>"; };
 		F99D350B2F73800000DC153E /* moon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon.png; sourceTree = "<group>"; };
 		F99D350C2F73800000DC153E /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
+		F99F101C2F84A00000F2B29A /* boat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boat.png; sourceTree = "<group>"; };
 		D572D3DF144CB23200E67862 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D584926C14FD234400741128 /* SharedConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedConstants.cpp; sourceTree = "<group>"; };
 		D584926F14FD236700741128 /* Control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Control.h; path = ai/control/Control.h; sourceTree = "<group>"; };
@@ -3025,6 +3028,7 @@
 			children = (
 				D598BD90163ED0DB00A36438 /* sign.png */,
 				D5ACF28D15C03E8800E21C22 /* arrows.png */,
+				F99F101C2F84A00000F2B29A /* boat.png */,
 				D572D3C4144C6A1400E67862 /* camera.png */,
 			);
 			path = item;
@@ -4842,6 +4846,7 @@
 				D5B50A5C14CFF492005F7284 /* skeleton.png in Resources */,
 				D5B50A5E14CFF492005F7284 /* spider.png in Resources */,
 				D5B50A6014CFF492005F7284 /* zombie.png in Resources */,
+				F99F101E2F84A00000F2B29A /* boat.png in Resources */,
 				D54954F914E38FFC00685A35 /* cancel_0_1.png in Resources */,
 				D54954FB14E38FFC00685A35 /* cancel_0_3.png in Resources */,
 				D54954FD14E38FFC00685A35 /* cancel_1_1.png in Resources */,
@@ -5072,6 +5077,7 @@
 				D5B50A5B14CFF492005F7284 /* skeleton.png in Resources */,
 				D5B50A5D14CFF492005F7284 /* spider.png in Resources */,
 				D5B50A5F14CFF492005F7284 /* zombie.png in Resources */,
+				F99F101D2F84A00000F2B29A /* boat.png in Resources */,
 				D54954F814E38FFC00685A35 /* cancel_0_1.png in Resources */,
 				D54954FA14E38FFC00685A35 /* cancel_0_3.png in Resources */,
 				D54954FC14E38FFC00685A35 /* cancel_1_1.png in Resources */,
