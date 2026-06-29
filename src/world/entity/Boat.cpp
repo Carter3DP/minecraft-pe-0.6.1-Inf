@@ -60,7 +60,7 @@ double EntityBoat::getMountedYOffset() {
 }
 
 bool EntityBoat::hurt(Entity* e, int damage) {
-    if (e->level->isClientSide && e->isAlive()) {
+    if (!level->isClientSide && isAlive()) {
         boatRockDirection = -boatRockDirection;
         boatTimeSinceHit = 10;
         boatCurrentDamage += damage * 10;
@@ -73,14 +73,14 @@ bool EntityBoat::hurt(Entity* e, int damage) {
 
             //wood drops
             for(drops = 0; drops < 3; ++drops) {
-                e->spawnAtLocation(Tile::wood->id, 1);
+                spawnAtLocation(Tile::wood->id, 1);
             }
 
             //stick drops. Eventually will remove, I hated this
             for(drops = 0; drops < 2; ++drops) {
-                e->spawnAtLocation(Item::stick->id, 1);
+                spawnAtLocation(Item::stick->id, 1);
             }
-            e->remove();
+            remove();
         }
         return true;
     } else {
@@ -229,16 +229,14 @@ void EntityBoat::tick() {
                 }
             }
         }
-        else if (horizontalCollision && yv > 0.15) {
-            if (level->isClientSide){
-                remove();
-                int var22;
-                for(var22 = 0; var22 < 3; ++var22) {
-                    spawnAtLocation(Tile::wood->id, 1);
-                }
-                for(var22 = 0; var22 < 2; ++var22) {
-                    spawnAtLocation(Item::stick->id, 1);
-                }
+        if (horizontalCollision && yv > 0.15) {
+            remove();
+            int var22;
+            for(var22 = 0; var22 < 3; ++var22) {
+                spawnAtLocation(Tile::wood->id, 1);
+            }
+            for(var22 = 0; var22 < 2; ++var22) {
+                spawnAtLocation(Item::stick->id, 1);
             }
         } 
         else {
