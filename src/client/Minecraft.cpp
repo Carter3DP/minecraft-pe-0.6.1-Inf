@@ -970,7 +970,7 @@ void Minecraft::handleBuildAction(BuildActionIntention* action) {
 			missTime = 10;
 		}
 	} else if (hitResult.type == ENTITY) {
-		if (action->isAttack()) {
+		if (action->isAttack() || action->isRemove()) {
 			player->swing();
 			//LOGI("attacking!\n");
 			InteractPacket packet(InteractPacket::Attack, player->entityId, hitResult.entity->entityId);
