@@ -9,7 +9,7 @@
 
 #include "../platform/log.h"
 
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__)
 #include <algorithm>
 #include <cstring>
 #include <ifaddrs.h>
@@ -23,7 +23,7 @@
 #define APP_IDENTIFIER "MCCPP;" APP_VERSION_STRING ";"
 #define APP_IDENTIFIER_MINECON "MCCPP;MINECON;"
 
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__)
 static std::vector<std::string> getLocalBroadcastAddresses()
 {
 	std::vector<std::string> addresses;
@@ -169,13 +169,13 @@ void RakNetInstance::pingForHosts(int basePort)
 	pingPort = basePort;
 	lastPingTime = RakNet::GetTimeMS();
 
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__)
 	std::vector<std::string> broadcastAddresses = getLocalBroadcastAddresses();
 #endif
 	for (int i = 0; i < 4; ++i)
 	{
 		rakPeer->Ping("255.255.255.255", basePort + i, true);
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__)
 		for (unsigned int j = 0; j < broadcastAddresses.size(); ++j)
 			rakPeer->Ping(broadcastAddresses[j].c_str(), basePort + i, true);
 #endif
