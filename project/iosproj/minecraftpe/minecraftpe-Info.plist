@@ -54,6 +54,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Minecraft PE uses the local network to find and join multiplayer games on your WiFi.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>minecraft.ttf</string>

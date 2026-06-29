@@ -9,11 +9,59 @@
 
 #include "../platform/log.h"
 
+#if defined(__APPLE__) || defined(ANDROID)
+#include <algorithm>
+#include <cstring>
+#include <ifaddrs.h>
+#include <net/if.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string>
+#include <vector>
+#endif
+
 #define APP_IDENTIFIER "MCCPP;" APP_VERSION_STRING ";"
 #define APP_IDENTIFIER_MINECON "MCCPP;MINECON;"
 
+#if defined(__APPLE__) || defined(ANDROID)
+static std::vector<std::string> getLocalBroadcastAddresses()
+{
+	std::vector<std::string> addresses;
+	struct ifaddrs* interfaces = NULL;
+
+	if (getifaddrs(&interfaces) != 0)
+		return addresses;
+
+	for (struct ifaddrs* current = interfaces; current != NULL; current = current->ifa_next)
+	{
+		if (current->ifa_addr == NULL || current->ifa_broadaddr == NULL)
+			continue;
+		if (current->ifa_addr->sa_family != AF_INET)
+			continue;
+		if ((current->ifa_flags & IFF_UP) == 0 || (current->ifa_flags & IFF_LOOPBACK) != 0 || (current->ifa_flags & IFF_BROADCAST) == 0)
+			continue;
+
+		const struct sockaddr_in* broadcastAddress = (const struct sockaddr_in*)current->ifa_broadaddr;
+		const char* address = inet_ntoa(broadcastAddress->sin_addr);
+		if (address == NULL || address[0] == '\0')
+			continue;
+		if (strcmp(address, "0.0.0.0") == 0 || strcmp(address, "255.255.255.255") == 0)
+			continue;
+
+		if (std::find(addresses.begin(), addresses.end(), address) == addresses.end())
+			addresses.push_back(address);
+	}
+
+	freeifaddrs(interfaces);
+	return addresses;
+}
+#endif
+
 RakNetInstance::RakNetInstance()
 :	rakPeer(NULL),
+	isPingingForServers(false),
+	pingPort(0),
+	lastPingTime(0),
 	_isServer(false),
 	_isLoggedIn(false)
 {
@@ -121,8 +169,17 @@ void RakNetInstance::pingForHosts(int basePort)
 	pingPort = basePort;
 	lastPingTime = RakNet::GetTimeMS();
 
+#if defined(__APPLE__) || defined(ANDROID)
+	std::vector<std::string> broadcastAddresses = getLocalBroadcastAddresses();
+#endif
 	for (int i = 0; i < 4; ++i)
+	{
 		rakPeer->Ping("255.255.255.255", basePort + i, true);
+#if defined(__APPLE__) || defined(ANDROID)
+		for (unsigned int j = 0; j < broadcastAddresses.size(); ++j)
+			rakPeer->Ping(broadcastAddresses[j].c_str(), basePort + i, true);
+#endif
+	}
 }
 
 void RakNetInstance::stopPingForHosts()
