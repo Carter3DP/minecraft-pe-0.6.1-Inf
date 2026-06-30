@@ -18,8 +18,8 @@
 
 
 #if defined(_WIN32)
-DWORD mProcMask;
-DWORD mSysMask;
+DWORD_PTR mProcMask;
+DWORD_PTR mSysMask;
 HANDLE mThread;
 
 

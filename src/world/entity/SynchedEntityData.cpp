@@ -94,8 +94,12 @@ SynchedEntityData::DataList SynchedEntityData::unpack( IDataInput* input )
 			item = new DataItem2<Pos>(itemType, itemId, Pos(x, y, z));
 			}
 			break;
+		default:
+			LOGE("Invalid synced entity data type: %d\n", itemType);
+			return result;
 		}
-		result.push_back(item);
+		if (item)
+			result.push_back(item);
 
 		currentHeader = input->readByte();
 	}
@@ -109,6 +113,8 @@ void SynchedEntityData::assignValues( DataList* items )
 
 		//for (DataItem item : items) {
 		DataItem* item = *it;
+		if (!item)
+			continue;
 		Map::iterator jt = itemsById.find(item->getId());
 		//DataItem dataItem = itemsById.get(item.getId());
 		if (jt != itemsById.end()) {

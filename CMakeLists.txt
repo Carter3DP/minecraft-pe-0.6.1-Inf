@@ -306,7 +306,7 @@ if (${PLATFORM} STREQUAL "Desktop")
 endif()
 
 # Server
-if(UNIX)
+if(${PLATFORM} STREQUAL "Desktop")
     add_executable("${PROJECT_NAME}-server" ${SERVER_SOURCES})
 
     target_compile_definitions("${PROJECT_NAME}-server" PUBLIC "STANDALONE_SERVER" "SERVER_PROFILER")
@@ -317,7 +317,7 @@ if(UNIX)
         "project/lib_projects/raknet/jni/RaknetSources"
     )
 
-    target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries("${PROJECT_NAME}-server" ${CMAKE_THREAD_LIBS_INIT} ${EXTRA_LIBS})
 endif()
 
 add_executable(${PROJECT_NAME} ${CLIENT_SOURCES})
