@@ -264,11 +264,12 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 						RakNet::RakString data;
 						activeBitStream.Read(time);
 						activeBitStream.Read(data);
+						RakNet::TimeMS ping = RakNet::GetTimeMS() - time;
 
-						int index = handleUnconnectedPong(data, currentEvent, APP_IDENTIFIER, false);
+						int index = handleUnconnectedPong(data, currentEvent, APP_IDENTIFIER, false, ping);
 						if (index < 0) {
 							// Check if it's an official Mojang MineCon server
-							index = handleUnconnectedPong(data, currentEvent, APP_IDENTIFIER_MINECON, true);
+							index = handleUnconnectedPong(data, currentEvent, APP_IDENTIFIER_MINECON, true, ping);
 							if (index >= 0) availableServers[index].isSpecial = true;
 						}
 					}
@@ -753,7 +754,7 @@ const char* RakNetInstance::getPacketName(int packetId)
 }
 #endif
 
-int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const RakNet::Packet* p, const char* appid, bool insertAtBeginning)
+int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const RakNet::Packet* p, const char* appid, bool insertAtBeginning, const RakNet::TimeMS ping)
 {
 	RakNet::RakString appIdentifier(appid);
 	// This weird code is a result of RakString.Find being pretty useless
@@ -765,7 +766,8 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 	bool found = false;
 	for (unsigned int i = 0; i < availableServers.size(); i++) {
 		if (availableServers[i].address == p->systemAddress) {
-			availableServers[i].pingTime = RakNet::GetTimeMS();
+			//availableServers[i].prevpingTime = availableServers[i].pingTime;
+			availableServers[i].pingTime = ping;
 
 			bool emptyName = data.GetLength() == appIdentifier.GetLength();
 			if (emptyName)
@@ -779,7 +781,7 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 	}
 	PingedCompatibleServer server;
 	server.address = p->systemAddress;
-	server.pingTime = RakNet::GetTimeMS();
+	server.pingTime = ping;
 	server.isSpecial = false;
 	server.name = data.SubStr(appIdentifier.GetLength(), data.GetLength() - appIdentifier.GetLength());
 

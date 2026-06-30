@@ -38,6 +38,9 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
 	int xx1 = (int)x0 + 24;
 	int xx2 = xx1;
 
+	std::string ping = std::to_string(s.pingTime) + "ms";
+
+	int xx3 = (int)x1 - minecraft->font->width(ping) - 24;
 	if (s.isSpecial) {
 		xx1 += 50;
 
@@ -50,6 +53,7 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
 
 	drawString(minecraft->font, s.name.C_String(), xx1, y + 4 + 2, color);
 	drawString(minecraft->font, s.address.ToString(false), xx2, y + 18, color2);
+	drawString(minecraft->font, ping, xx3, y + 18, color2);
 
 	/*
 	drawString(minecraft->font, copiedServerList[i].name.C_String(), (int)x0 + 24, y + 4, color);

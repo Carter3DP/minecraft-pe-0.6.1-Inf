@@ -6,6 +6,7 @@
 #include "../components/ScrolledSelectionList.h"
 #include "../../Minecraft.h"
 #include "../../../network/RakNetInstance.h"
+#include "../../../raknet/GetTime.h"
 
 
 class JoinGameScreen;
@@ -36,8 +37,11 @@ protected:
 	{
 		const PingedCompatibleServer& s = copiedServerList[i];
 		unsigned int color = s.isSpecial? 0xff00b0 : 0xffffa0;
+		int xx3 = x + 70;
+		std::string ping = std::to_string(s.pingTime) + "ms";
 		drawString(minecraft->font, s.name.C_String(), x, y + 2, color);
 		drawString(minecraft->font, s.address.ToString(false), x, y + 16, 0xffffa0);
+		drawString(minecraft->font, ping, xx3, y + 18, color);
 	}
 };
 
