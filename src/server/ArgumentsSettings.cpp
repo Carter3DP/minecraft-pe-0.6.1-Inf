@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 ArgumentsSettings::ArgumentsSettings(int numArguments, char** arguments)
-: externalPath("."), levelName("level"), showHelp(false), port(19132), serverKey(""), cachePath("."), levelDir("level") {
+: externalPath("."), levelName("level"), showHelp(false), port(19132), serverKey(""), cachePath("."), levelDir("level"), serverName("My PE Server") {
 	for(int a = 0; a < numArguments; ++a) {
 		if(strcmp(arguments[a], "--help") == 0) {
 			showHelp = true;
@@ -35,6 +35,11 @@ ArgumentsSettings::ArgumentsSettings(int numArguments, char** arguments)
 		} else if(strcmp(arguments[a], "--cachepath") == 0) {
 			if(a + 1 < numArguments) {
 				cachePath = std::string(arguments[a+1]);
+				a++; // Skip the next argument since it's part of this one.
+			}
+		} else if(strcmp(arguments[a], "--servername") == 0) {
+			if(a + 1 < numArguments) {
+				serverName = std::string(arguments[a+1]);
 			}
 		}
 	}
@@ -53,6 +58,9 @@ std::string ArgumentsSettings::getCachePath() {
 }
 std::string ArgumentsSettings::getLevelDir() {
 	return levelDir;
+}
+std::string ArgumentsSettings::getServerName(){
+	return serverName;
 }
 bool ArgumentsSettings::getShowHelp() {
 	return showHelp;

@@ -9,6 +9,7 @@ public:
 	std::string getServerKey();
 	std::string getCachePath();
 	std::string getLevelDir();
+	std::string getServerName();
 	bool getShowHelp();
 	int getPort();
 private:
@@ -17,6 +18,7 @@ private:
 	std::string levelName;
 	std::string levelDir;
 	std::string serverKey;
+	std::string serverName;
 	bool showHelp;
 	int port;
 };

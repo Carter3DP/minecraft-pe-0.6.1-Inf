@@ -42,6 +42,7 @@ int main(int numArguments, char* pszArgs[]) {
 		printf("--help - Shows this message.\n");
 		printf("--port - The port to run the server on. [default: %d]\n", defaultSettings.getPort());
 		printf("--serverkey - The key that the server should use for API calls. [default: \"%s\"]\n", defaultSettings.getServerKey().c_str());
+		printf("--servername - The name that the server broadcasts. [default: \"%s\"]\n", defaultSettings.getServerName().c_str());
 		printf("-------------------------------------------------------\n");
 		return 0;
 	}
@@ -58,7 +59,7 @@ int main(int numArguments, char* pszArgs[]) {
 	LevelSettings settings(getEpochTimeS(), GameType::Creative);
 	float startTime = getTimeS();
 	((MAIN_CLASS*)g_app)->selectLevel(aSettings.getLevelDir(), aSettings.getLevelName(),  settings);
-	((MAIN_CLASS*)g_app)->hostMultiplayer(aSettings.getPort());
+	((MAIN_CLASS*)g_app)->hostMultiplayer(aSettings.getPort(), aSettings.getServerName());
 
 	std::cout << "Level has been generated in " << getTimeS() - startTime << std::endl;
 	((MAIN_CLASS*)g_app)->level->saveLevelData();

@@ -1422,7 +1422,7 @@ bool Minecraft::joinMultiplayerFromString( const std::string& server )
 	return false;
 }
 
-void Minecraft::hostMultiplayer(int port) {
+void Minecraft::hostMultiplayer(int port, const std::string& servername) {
 	// Tear down last instance
 	raknetInstance->disconnect();
 	delete netCallback;
@@ -1431,6 +1431,12 @@ void Minecraft::hostMultiplayer(int port) {
 #if !defined(NO_NETWORK)
 	netCallback = new ServerSideNetworkHandler(this, raknetInstance);
 #ifdef STANDALONE_SERVER
+	if(servername != ""){
+		options.set(OPTIONS_USERNAME, servername);
+	}
+	else{
+		options.set(OPTIONS_USERNAME, "My PE Server"); //Fallback incase passed as empty. Actual default is in ArgumentSettings.cpp
+	}
 	raknetInstance->host("Server", port, 16);
 #else
 	raknetInstance->host(options.getStringValue(OPTIONS_USERNAME), port);
