@@ -36,7 +36,7 @@ public:
 		delete emptyChunk;
 
 		for (ChunkMap::iterator it = chunks.begin(); it != chunks.end(); ++it) {
-			if (it->second) {
+			if (it->second && it->second != emptyChunk) {
 				it->second->deleteBlockData();
 				delete it->second;
 			}
@@ -115,7 +115,7 @@ public:
     }
 
 	Biome::MobList getMobsAt(const MobCategory& mobCategory, int x, int y, int z) override {
-		return source->getMobsAt(mobCategory, x, y, z);
+		return source ? source->getMobsAt(mobCategory, x, y, z) : Biome::MobList();
 	}
 
     void postProcess(ChunkSource* parent, int x, int z) override {
@@ -183,7 +183,7 @@ public:
 				if (++saves == MAX_SAVES) break;
 			}
 		}
-        return source->tick();
+        return source ? source->tick() : false;
     }
 
     bool shouldSave() override {

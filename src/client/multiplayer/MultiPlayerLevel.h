@@ -5,8 +5,10 @@
 #include "../../world/level/Level.h"
 //#include "../../network/packet/DisconnectPacket.h"
 #include "../../world/entity/Entity.h"
+#include "../../world/level/chunk/ChunkCache.h"
 #include "../../world/level/chunk/ChunkSource.h"
 #include "../../world/level/dimension/Dimension.h"
+#include "../../world/level/storage/LevelStorage.h"
 //#include "../../world/level/storage/MockedLevelStorage.h"
 
 #include <set>
@@ -40,6 +42,8 @@ public:
 	MultiPlayerLevel(LevelStorage* levelStorage, const std::string& levelName, const LevelSettings& settings, int levelVersion)
 	:	super(levelStorage, levelName, settings, levelVersion)
 	{
+		delete _chunkSource;
+		_chunkSource = new ChunkCache(this, levelStorage ? levelStorage->createChunkStorage(dimension) : NULL, NULL);
 		//super(new MockedLevelStorage(), "MpServer", Dimension.getNew(dimension), levelSettings);
 		//this->difficulty = difficulty;
 		//setSpawnPos(new Pos(8, 64, 8));
