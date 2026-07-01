@@ -29,6 +29,8 @@ public:
 protected:
 
 	virtual int getNumberOfItems() override { return (int)copiedServerList.size(); }
+	virtual int getRowLeft() const override;
+	virtual int getRowRight() const override;
 
 	virtual void selectItem(int item, bool doubleClick) override { selectedItem = item; }
 	virtual bool isSelectedItem(int item) override { return item == selectedItem; }

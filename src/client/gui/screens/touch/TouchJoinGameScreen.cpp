@@ -4,8 +4,13 @@
 #include "../../Font.h"
 #include "../../../Minecraft.h"
 #include "../../../renderer/Textures.h"
+#include "../../../renderer/Tesselator.h"
+#include "../../../renderer/gles.h"
 
 namespace Touch {
+
+static const int SERVER_ICON_SIZE = 24;
+static const int SERVER_ICON_TEXT_GAP = 6;
 
 //
 // Games list
@@ -35,8 +40,25 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
 	unsigned int color  = s.isSpecial? 0x6090a0 : 0xffffb0;
 	unsigned int color2 = 0xffffa0;//colors[i&1];
 
-	int xx1 = (int)x0 + 24;
-	int xx2 = xx1;
+	int xx2 = (int)(minecraft->SafeZone.left * minecraft->gui.InvGuiScale) + 24;
+
+	std::string icon = (!s.isClientHosted && s.hasIcon && !s.icon.empty()) ? s.icon : "gui/default_world.png";
+	TextureId texId = (icon == "gui/default_world.png") ? minecraft->textures->loadTexture(icon) : minecraft->textures->loadTexture("%clamp%" + icon, false);
+	if (!Textures::isTextureIdValid(texId) && icon != "gui/default_world.png")
+		texId = minecraft->textures->loadTexture("gui/default_world.png");
+	if (Textures::isTextureIdValid(texId)) {
+		minecraft->textures->bind(texId);
+		glColor4f2(1, 1, 1, 1);
+		glEnable2(GL_BLEND);
+		t.begin();
+			t.vertexUV((float)xx2, (float)(y + 5 + SERVER_ICON_SIZE), blitOffset, 0, 1);
+			t.vertexUV((float)(xx2 + SERVER_ICON_SIZE), (float)(y + 5 + SERVER_ICON_SIZE), blitOffset, 1, 1);
+			t.vertexUV((float)(xx2 + SERVER_ICON_SIZE), (float)(y + 5), blitOffset, 1, 0);
+			t.vertexUV((float)xx2, (float)(y + 5), blitOffset, 0, 0);
+		t.draw();
+	}
+	int xx1 = xx2 + SERVER_ICON_SIZE + SERVER_ICON_TEXT_GAP;
+	int textX = xx1;
 
 	std::string ping = std::to_string(s.pingTime) + "ms";
 
@@ -48,11 +70,11 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
         glColor4f2(1,1,1,1);
         glEnable2(GL_BLEND);
 		minecraft->textures->loadAndBindTexture("gui/badge/minecon140.png");
-		blit(xx2, y + 6, 0, 0, 37, 8, 140, 240);
+		blit(textX, y + 6, 0, 0, 37, 8, 140, 240);
 	}
 
 	drawString(minecraft->font, s.name.C_String(), xx1, y + 4 + 2, color);
-	drawString(minecraft->font, s.address.ToString(false), xx2, y + 18, color2);
+	drawString(minecraft->font, s.address.ToString(false), textX, y + 18, color2);
 	drawString(minecraft->font, ping, xx3, y + 18, color2);
 
 	/*
@@ -90,6 +112,7 @@ void JoinGameScreen::init()
 
 	minecraft->raknetInstance->clearServerList();
 	gamesList = new AvailableGamesList(minecraft, width, height);
+	gamesList->copiedServerList = minecraft->raknetInstance->loadSavedServers();
 
 #ifdef ANDROID
 	//tabButtons.push_back(&bJoin);
@@ -176,40 +199,31 @@ void JoinGameScreen::tick()
 		if (orgServerList[i].name.GetLength() > 0)
 			serverList.push_back(orgServerList[i]);
 
-	if (serverList.size() != gamesList->copiedServerList.size())
-	{
-		// copy the currently selected item
-		PingedCompatibleServer selectedServer;
-		bool hasSelection = false;
-		if (isIndexValid(gamesList->selectedItem))
-		{
-			selectedServer = gamesList->copiedServerList[gamesList->selectedItem];
-			hasSelection = true;
-		}
-
-		gamesList->copiedServerList = serverList;
-		gamesList->selectItem(-1, false);
-
-		// re-select previous item if it still exists
-		if (hasSelection)
-		{
-			for (unsigned int i = 0; i < gamesList->copiedServerList.size(); i++)
-			{
-				if (gamesList->copiedServerList[i].address == selectedServer.address)
-				{
-					gamesList->selectItem(i, false);
-					break;
-				}
+	bool shouldSaveServerList = false;
+	for (unsigned int i = 0; i < serverList.size(); ++i) {
+		bool found = false;
+		for (unsigned int j = 0; j < gamesList->copiedServerList.size(); ++j) {
+			if (gamesList->copiedServerList[j].address == serverList[i].address) {
+				if (gamesList->copiedServerList[j].name.StrCmp(serverList[i].name) != 0 ||
+					gamesList->copiedServerList[j].icon != serverList[i].icon ||
+					gamesList->copiedServerList[j].hasIcon != serverList[i].hasIcon ||
+					gamesList->copiedServerList[j].isClientHosted != serverList[i].isClientHosted)
+					shouldSaveServerList = true;
+				serverList[i].isSaved = gamesList->copiedServerList[j].isSaved || serverList[i].isSaved;
+				gamesList->copiedServerList[j] = serverList[i];
+				found = true;
+				break;
 			}
 		}
-	} else {
-		for (int i = (int)gamesList->copiedServerList.size()-1; i >= 0 ; --i) {
-			for (int j = 0; j < (int) serverList.size(); ++j)
-				if (serverList[j].address == gamesList->copiedServerList[i].address)
-					gamesList->copiedServerList[i].name = serverList[j].name;
+		if (!found)
+		{
+			gamesList->copiedServerList.push_back(serverList[i]);
+			shouldSaveServerList = true;
 		}
 	}
 
+	if (shouldSaveServerList)
+		minecraft->raknetInstance->saveServerList(gamesList->copiedServerList);
 	bJoin.active = isIndexValid(gamesList->selectedItem);
 }
 

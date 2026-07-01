@@ -1166,6 +1166,9 @@ bool Minecraft::supportNonTouchScreen() {
 }
 void Minecraft::init()
 {
+	if (raknetInstance)
+		raknetInstance->setServerStoragePath(externalStoragePath);
+
 #ifndef STANDALONE_SERVER
 	checkGlError("Init enter");
 

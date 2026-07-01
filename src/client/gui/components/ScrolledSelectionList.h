@@ -25,6 +25,8 @@ protected:
 	virtual bool isSelectedItem(int item) = 0;
 
 	virtual int getMaxPosition();
+	virtual int getRowLeft() const;
+	virtual int getRowRight() const;
 
 	virtual void renderItem(int i, int x, int y, int h, Tesselator& t) = 0;
 	virtual void renderHeader(int x, int y, Tesselator& t) {}

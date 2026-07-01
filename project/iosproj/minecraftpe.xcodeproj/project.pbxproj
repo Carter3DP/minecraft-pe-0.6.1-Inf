@@ -1181,6 +1181,8 @@
 		F912B8CF2F6C3D5200BC60DF /* TextBox.h in Sources */ = {isa = PBXBuildFile; fileRef = 042A91AC16B17517007ABBC6 /* TextBox.h */; };
 		F99D341F2F736AA100DC153E /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D341E2F736AA100DC153E /* HttpClient.cpp */; };
 		F99D34202F736AA100DC153E /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D341E2F736AA100DC153E /* HttpClient.cpp */; };
+		F99D34392F73700100DC153E /* PngLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D34372F73700100DC153E /* PngLoader.cpp */; };
+		F99D343A2F73700100DC153E /* PngLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D34372F73700100DC153E /* PngLoader.cpp */; };
 		F99D34232F736AD400DC153E /* TextOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D34222F736AD400DC153E /* TextOption.cpp */; };
 		F99D34242F736AD400DC153E /* TextOption.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D34222F736AD400DC153E /* TextOption.cpp */; };
 		F99D34272F736AFB00DC153E /* OptionsFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99D34262F736AFB00DC153E /* OptionsFile.cpp */; };
@@ -2515,6 +2517,8 @@
 		D5F3B7E41454930400D25470 /* InAppSettings.bundle */ = {isa = PBXFileReference; explicitFileType = "wrapper.installer-pkg"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		F99D341D2F736AA100DC153E /* HttpClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HttpClient.h; path = ../../src/platform/HttpClient.h; sourceTree = "<group>"; };
 		F99D341E2F736AA100DC153E /* HttpClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HttpClient.cpp; path = ../../src/platform/HttpClient.cpp; sourceTree = "<group>"; };
+		F99D34372F73700100DC153E /* PngLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PngLoader.cpp; path = ../../src/platform/PngLoader.cpp; sourceTree = "<group>"; };
+		F99D343B2F73700100DC153E /* PngLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PngLoader.h; path = ../../src/platform/PngLoader.h; sourceTree = "<group>"; };
 		F99D34212F736AD400DC153E /* TextOption.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextOption.h; path = ../../src/client/gui/components/TextOption.h; sourceTree = "<group>"; };
 		F99D34222F736AD400DC153E /* TextOption.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TextOption.cpp; path = ../../src/client/gui/components/TextOption.cpp; sourceTree = "<unknown>"; };
 		F99D34252F736AFB00DC153E /* OptionsFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OptionsFile.h; path = ../../src/client/OptionsFile.h; sourceTree = "<group>"; };
@@ -4469,6 +4473,8 @@
 				D5B50C1614CFF66F005F7284 /* src */,
 				F99D341D2F736AA100DC153E /* HttpClient.h */,
 				F99D341E2F736AA100DC153E /* HttpClient.cpp */,
+				F99D343B2F73700100DC153E /* PngLoader.h */,
+				F99D34372F73700100DC153E /* PngLoader.cpp */,
 				F99D34212F736AD400DC153E /* TextOption.h */,
 				F99D34222F736AD400DC153E /* TextOption.cpp */,
 				F99D34252F736AFB00DC153E /* OptionsFile.h */,
@@ -5492,6 +5498,7 @@
 				D5251DEE1538192700FC82C8 /* IncrementalReadInterface.cpp in Sources */,
 				D5251DF01538192700FC82C8 /* Itoa.cpp in Sources */,
 				F99D34202F736AA100DC153E /* HttpClient.cpp in Sources */,
+				F99D343A2F73700100DC153E /* PngLoader.cpp in Sources */,
 				F99D34382F736C1000DC153E /* JoinByIPScreen.cpp in Sources */,
 				D5251DF21538192700FC82C8 /* LinuxStrings.cpp in Sources */,
 				D5251DF41538192700FC82C8 /* LocklessTypes.cpp in Sources */,
@@ -5968,6 +5975,7 @@
 				D544942215D13F5E005FA9B0 /* RemotePlayer.cpp in Sources */,
 				D5B17ED515E226F50056E751 /* Throwable.cpp in Sources */,
 				F99D341F2F736AA100DC153E /* HttpClient.cpp in Sources */,
+				F99D34392F73700100DC153E /* PngLoader.cpp in Sources */,
 				D5B17ED915E2273F0056E751 /* SurvivalMode.cpp in Sources */,
 				D5B17EDD15E227670056E751 /* TrapDoorTile.cpp in Sources */,
 				D5B17EE115E260910056E751 /* MoveFolder.mm in Sources */,

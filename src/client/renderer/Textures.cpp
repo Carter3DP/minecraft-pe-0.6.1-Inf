@@ -4,6 +4,7 @@
 #include "ptexture/DynamicTexture.h"
 #include "../Options.h"
 #include "../../platform/time.h"
+#include "../../platform/log.h"
 #include "../../AppPlatform.h"
 #include "../../util/StringUtils.h"
 
@@ -65,10 +66,34 @@ TextureId Textures::loadTexture( const std::string& resourceName, bool inTexture
 	if (it != idMap.end())
 		return it->second;
 
-	bool isUrl = Util::startsWith(resourceName, "http://") || Util::startsWith(resourceName, "https://");
-	TextureData texdata = platform->loadTexture(resourceName, isUrl ? false : inTextureFolder);
+	std::string loadName = resourceName;
+	bool oldClamp = clamp;
+	bool oldBlur = blur;
+	if (Util::startsWith(loadName, "%clamp%")) {
+		clamp = true;
+		loadName = loadName.substr(7);
+	}
+	if (Util::startsWith(loadName, "%blur%")) {
+		blur = true;
+		loadName = loadName.substr(6);
+	}
+
+	bool isUrl = Util::startsWith(loadName, "http://") || Util::startsWith(loadName, "https://");
+	TextureData texdata = platform->loadTexture(loadName, isUrl ? false : inTextureFolder);
+	if (Util::startsWith(loadName, "servers/") || loadName.find("/servers/") != std::string::npos)
+	{
+		if (texdata.data)
+			LOGI("[ServerIcon] Loaded client texture %s: %dx%d\n", loadName.c_str(), texdata.w, texdata.h);
+		else
+			LOGW("[ServerIcon] Failed to load client texture %s\n", loadName.c_str());
+	}
 	if (texdata.data)
-		return assignTexture(resourceName, texdata);
+	{
+		TextureId id = assignTexture(resourceName, texdata);
+		clamp = oldClamp;
+		blur = oldBlur;
+		return id;
+	}
     else if (texdata.identifier != InvalidId) {
         //LOGI("Adding id: %d for %s\n", texdata.identifier, resourceName.c_str());
 		idMap.insert(std::make_pair(resourceName, texdata.identifier));
@@ -77,6 +102,8 @@ TextureId Textures::loadTexture( const std::string& resourceName, bool inTexture
 		idMap.insert(std::make_pair(resourceName, Textures::InvalidId));
 		//loadedImages.insert(std::make_pair(InvalidId, texdata));
 	}
+	clamp = oldClamp;
+	blur = oldBlur;
 	return Textures::InvalidId;
 }
 

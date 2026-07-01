@@ -116,7 +116,8 @@ struct RakPeerAndIndex
 	unsigned int extraSocketOptions;
 };
 
-static const unsigned int MAX_OFFLINE_DATA_LENGTH=400; // I set this because I limit ID_CONNECTION_REQUEST to 512 bytes, and the password is appended to that packet.
+static const unsigned int MAX_OFFLINE_DATA_LENGTH=32768; // Raised for LAN discovery metadata such as server icons.
+static const unsigned int MAX_OUT_OF_BAND_INTERNAL_DATA_LENGTH=1024;
 
 // Used to distinguish between offline messages with data, and messages from the reliability layer
 // Should be different than any message that could result from messages from the reliability layer
@@ -1987,7 +1988,7 @@ void RakPeer::SetOccasionalPing( bool doPing )
 }
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Description:
-// Length should be under 400 bytes, as a security measure against flood attacks
+// Length should be under MAX_OFFLINE_DATA_LENGTH bytes, as a security measure against flood attacks
 // Sets the data to send with an  (LAN server discovery) /(offline ping) response
 // See the Ping sample project for how this is used.
 // data: a block of data to store, or 0 for none
@@ -1995,7 +1996,7 @@ void RakPeer::SetOccasionalPing( bool doPing )
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void RakPeer::SetOfflinePingResponse( const char *data, const unsigned int length )
 {
-	RakAssert(length < 400);
+	RakAssert(length < MAX_OFFLINE_DATA_LENGTH);
 
 	rakPeerMutexes[ offlinePingResponse_Mutex ].Lock();
 	offlinePingResponse.Reset();
@@ -4295,7 +4296,7 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 			rakPeer->AddPacketToProducer(packet);
 		}
 		else if ((unsigned char) data[ 0 ] == ID_OUT_OF_BAND_INTERNAL &&
-			(size_t) length < MAX_OFFLINE_DATA_LENGTH+sizeof(OFFLINE_MESSAGE_DATA_ID)+sizeof(MessageID)+RakNetGUID::size())
+			(size_t) length < MAX_OUT_OF_BAND_INTERNAL_DATA_LENGTH+sizeof(OFFLINE_MESSAGE_DATA_ID)+sizeof(MessageID)+RakNetGUID::size())
 		{
 			unsigned int dataLength = (unsigned int) (length-sizeof(OFFLINE_MESSAGE_DATA_ID)-RakNetGUID::size()-sizeof(MessageID));
 			RakAssert(dataLength<1024);

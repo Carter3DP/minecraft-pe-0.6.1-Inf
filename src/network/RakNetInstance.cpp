@@ -9,6 +9,17 @@
 
 #include "../platform/log.h"
 
+#include <cstdio>
+#include <cerrno>
+#include <cstring>
+
+#if defined(_WIN32)
+#include <direct.h>
+#else
+#include <sys/stat.h>
+#include <sys/types.h>
+#endif
+
 #if defined(__APPLE__)
 #include <algorithm>
 #include <cstring>
@@ -22,6 +33,133 @@
 
 #define APP_IDENTIFIER "MCCPP;" APP_VERSION_STRING ";"
 #define APP_IDENTIFIER_MINECON "MCCPP;MINECON;"
+#define SERVER_META_MARKER "\nMCCPPMETA;"
+#define SERVER_ICON_REQUEST "MCCPPICONREQ"
+#define SERVER_ICON_CHUNK "MCCPPICONCHUNK"
+
+static const unsigned int SERVER_ICON_CHUNK_SIZE = 850;
+static const unsigned int SERVER_ICON_MAX_BYTES = 256 * 1024;
+
+static bool createDirectoryIfMissing(const std::string& path)
+{
+	if (path.empty())
+		return true;
+#if defined(_WIN32)
+	return _mkdir(path.c_str()) == 0 || errno == EEXIST;
+#else
+	return mkdir(path.c_str(), 0755) == 0 || errno == EEXIST;
+#endif
+}
+
+static bool createDirectoriesForFile(const std::string& path)
+{
+	size_t fpos = path.find_last_of("/\\");
+	if (fpos == std::string::npos)
+		return true;
+
+	std::string dir = path.substr(0, fpos);
+	std::string current;
+	for (size_t i = 0; i <= dir.size(); ++i)
+	{
+		if (i == dir.size() || dir[i] == '/' || dir[i] == '\\')
+		{
+			if (!current.empty() && !createDirectoryIfMissing(current))
+				return false;
+		}
+		if (i < dir.size())
+			current.push_back(dir[i]);
+	}
+	return true;
+}
+
+static bool fileExists(const std::string& path)
+{
+	FILE* fp = fopen(path.c_str(), "rb");
+	if (!fp)
+		return false;
+	fclose(fp);
+	return true;
+}
+
+static std::string base64Encode(const std::vector<unsigned char>& data)
+{
+	static const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	std::string out;
+	int val = 0;
+	int valb = -6;
+	for (unsigned char c : data)
+	{
+		val = (val << 8) + c;
+		valb += 8;
+		while (valb >= 0)
+		{
+			out.push_back(alphabet[(val >> valb) & 0x3f]);
+			valb -= 6;
+		}
+	}
+	if (valb > -6)
+		out.push_back(alphabet[((val << 8) >> (valb + 8)) & 0x3f]);
+	while (out.size() % 4)
+		out.push_back('=');
+	return out;
+}
+
+static std::vector<unsigned char> base64Decode(const std::string& text)
+{
+	static const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	int table[256];
+	for (int i = 0; i < 256; ++i) table[i] = -1;
+	for (int i = 0; i < 64; ++i) table[(unsigned char)alphabet[i]] = i;
+
+	std::vector<unsigned char> out;
+	int val = 0;
+	int valb = -8;
+	for (unsigned char c : text)
+	{
+		if (table[c] == -1)
+			break;
+		val = (val << 6) + table[c];
+		valb += 6;
+		if (valb >= 0)
+		{
+			out.push_back((unsigned char)((val >> valb) & 0xff));
+			valb -= 8;
+		}
+	}
+	return out;
+}
+
+static std::string escapeServerField(const std::string& value)
+{
+	std::string out;
+	for (char c : value)
+	{
+		if (c == '\\' || c == '|' || c == '\n' || c == '\r')
+			out.push_back('\\');
+		if (c == '\n') out.push_back('n');
+		else if (c == '\r') out.push_back('r');
+		else out.push_back(c);
+	}
+	return out;
+}
+
+static std::string unescapeServerField(const std::string& value)
+{
+	std::string out;
+	for (size_t i = 0; i < value.size(); ++i)
+	{
+		if (value[i] == '\\' && i + 1 < value.size())
+		{
+			char n = value[++i];
+			if (n == 'n') out.push_back('\n');
+			else if (n == 'r') out.push_back('\r');
+			else out.push_back(n);
+		}
+		else
+			out.push_back(value[i]);
+	}
+	return out;
+}
 
 #if defined(__APPLE__)
 static std::vector<std::string> getLocalBroadcastAddresses()
@@ -63,7 +201,8 @@ RakNetInstance::RakNetInstance()
 	pingPort(0),
 	lastPingTime(0),
 	_isServer(false),
-	_isLoggedIn(false)
+	_isLoggedIn(false),
+	_hasServerIcon(false)
 {
 	rakPeer = RakNet::RakPeerInterface::GetInstance();
 	rakPeer->SetTimeoutTime(20000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
@@ -95,6 +234,7 @@ bool RakNetInstance::host(const std::string& localName, int port, int maxConnect
 
 	_isServer = true;
 	isPingingForServers = false;
+	loadServerIcon();
 
 	return (result == RakNet::RAKNET_STARTED);
 }
@@ -111,6 +251,20 @@ void RakNetInstance::announceServer(const std::string& localName)
 		connectionData += APP_IDENTIFIER;
 #endif
 		connectionData += localName.c_str();
+		connectionData += SERVER_META_MARKER;
+#if defined(STANDALONE_SERVER)
+		connectionData += "type=standalone;";
+#else
+		connectionData += "type=client;";
+#endif
+		connectionData += _hasServerIcon ? "icon=1;" : "icon=0;";
+		LOGI("[ServerIcon] Announcing server '%s' with icon=%s, rawBytes=%u, encodedBytes=%u, offlineResponseBytes=%u\n",
+			localName.c_str(), _hasServerIcon ? "yes" : "no", (unsigned int)_serverIconData.size(), (unsigned int)_serverIconBase64.size(), (unsigned int)connectionData.GetLength());
+		if (connectionData.GetLength() > 1200)
+		{
+			LOGW("[ServerIcon] Warning: offline response is %u bytes. Discovery metadata is unexpectedly large.\n",
+				(unsigned int)connectionData.GetLength());
+		}
 
 		RakNet::BitStream bitStream;
 		bitStream.Write(connectionData);
@@ -210,6 +364,358 @@ void RakNetInstance::clearServerList()
 	*/
 }
 
+void RakNetInstance::setServerStoragePath(const std::string& path)
+{
+	_serverStoragePath = path;
+}
+
+std::string RakNetInstance::getServerStorageBasePath() const
+{
+	std::string base = _serverStoragePath.empty() ? "." : _serverStoragePath;
+	return base + "/games/com.mojang";
+}
+
+std::string RakNetInstance::getServerIconPath(const RakNet::SystemAddress& address) const
+{
+	std::string ip = address.ToString(false);
+	for (size_t i = 0; i < ip.size(); ++i)
+		if (ip[i] == ':' || ip[i] == '\\' || ip[i] == '/')
+			ip[i] = '_';
+
+	return getServerStorageBasePath() + "/servers/" + ip + "/icon.png";
+}
+
+bool RakNetInstance::writeServerIcon(const RakNet::SystemAddress& address, const std::vector<unsigned char>& iconData, std::string& outPath) const
+{
+	if (iconData.empty())
+		return false;
+
+	outPath = getServerIconPath(address);
+	if (!createDirectoriesForFile(outPath))
+		return false;
+
+	FILE* fp = fopen(outPath.c_str(), "wb");
+	if (!fp)
+		return false;
+	fwrite(iconData.data(), 1, iconData.size(), fp);
+	fclose(fp);
+	return true;
+}
+
+void RakNetInstance::loadServerIcon()
+{
+	_hasServerIcon = false;
+	_serverIconBase64.clear();
+	_serverIconData.clear();
+
+	LOGI("[ServerIcon] Looking for server icon at icon.png relative to the current working directory\n");
+	FILE* fp = fopen("icon.png", "rb");
+	if (!fp)
+	{
+		LOGW("[ServerIcon] No icon.png loaded: fopen failed with errno=%d (%s)\n", errno, strerror(errno));
+		return;
+	}
+
+	if (fseek(fp, 0, SEEK_END) != 0)
+	{
+		LOGW("[ServerIcon] No icon.png loaded: failed to seek to end, errno=%d (%s)\n", errno, strerror(errno));
+		fclose(fp);
+		return;
+	}
+	long size = ftell(fp);
+	if (size < 0)
+	{
+		LOGW("[ServerIcon] No icon.png loaded: ftell failed, errno=%d (%s)\n", errno, strerror(errno));
+		fclose(fp);
+		return;
+	}
+	if (fseek(fp, 0, SEEK_SET) != 0)
+	{
+		LOGW("[ServerIcon] No icon.png loaded: failed to seek to start, errno=%d (%s)\n", errno, strerror(errno));
+		fclose(fp);
+		return;
+	}
+	if (size <= 0)
+	{
+		LOGW("[ServerIcon] No icon.png loaded: file is empty (%ld bytes)\n", size);
+		fclose(fp);
+		return;
+	}
+
+	std::vector<unsigned char> data((size_t)size);
+	size_t read = fread(data.data(), 1, data.size(), fp);
+	if (read != data.size())
+	{
+		LOGW("[ServerIcon] No icon.png loaded: read %u of %u bytes, ferror=%d, errno=%d (%s)\n",
+			(unsigned int)read, (unsigned int)data.size(), ferror(fp), errno, strerror(errno));
+		fclose(fp);
+		return;
+	}
+	fclose(fp);
+
+	_serverIconData = data;
+	_serverIconBase64 = base64Encode(data);
+	_hasServerIcon = !_serverIconData.empty();
+	if (_hasServerIcon)
+		LOGI("[ServerIcon] Loaded icon.png successfully: rawBytes=%u, encodedBytes=%u\n",
+			(unsigned int)data.size(), (unsigned int)_serverIconBase64.size());
+	else
+		LOGW("[ServerIcon] No icon.png loaded: file data was empty after reading\n");
+}
+
+void RakNetInstance::requestServerIcon(const RakNet::SystemAddress& address)
+{
+	std::string key = address.ToString(true);
+	if (_pendingServerIcons.find(key) != _pendingServerIcons.end())
+		return;
+
+	PendingServerIcon pending;
+	pending.totalBytes = 0;
+	pending.totalChunks = 0;
+	pending.receivedChunks = 0;
+	_pendingServerIcons[key] = pending;
+
+	RakNet::BitStream bitStream;
+	bitStream.Write(RakNet::RakString(SERVER_ICON_REQUEST));
+	bool sent = rakPeer->AdvertiseSystem(address.ToString(false), address.GetPort(), (const char*)bitStream.GetData(), bitStream.GetNumberOfBytesUsed());
+	LOGI("[ServerIcon] Client requested icon from %s: sent=%s\n",
+		address.ToString(true), sent ? "yes" : "no");
+}
+
+void RakNetInstance::sendServerIconChunks(const RakNet::SystemAddress& address)
+{
+	if (!_hasServerIcon || _serverIconData.empty())
+	{
+		LOGW("[ServerIcon] Server received icon request from %s but no icon is loaded\n",
+			address.ToString(true));
+		return;
+	}
+
+	unsigned int totalBytes = (unsigned int)_serverIconData.size();
+	unsigned int totalChunks = (totalBytes + SERVER_ICON_CHUNK_SIZE - 1) / SERVER_ICON_CHUNK_SIZE;
+	unsigned int sentChunks = 0;
+
+	for (unsigned int chunkIndex = 0; chunkIndex < totalChunks; ++chunkIndex)
+	{
+		unsigned int offset = chunkIndex * SERVER_ICON_CHUNK_SIZE;
+		unsigned int chunkSize = totalBytes - offset;
+		if (chunkSize > SERVER_ICON_CHUNK_SIZE)
+			chunkSize = SERVER_ICON_CHUNK_SIZE;
+
+		RakNet::BitStream bitStream;
+		bitStream.Write(RakNet::RakString(SERVER_ICON_CHUNK));
+		bitStream.Write(totalBytes);
+		bitStream.Write(totalChunks);
+		bitStream.Write(chunkIndex);
+		bitStream.Write(chunkSize);
+		bitStream.WriteAlignedBytes(&_serverIconData[offset], chunkSize);
+
+		if (rakPeer->AdvertiseSystem(address.ToString(false), address.GetPort(), (const char*)bitStream.GetData(), bitStream.GetNumberOfBytesUsed()))
+			++sentChunks;
+	}
+
+	LOGI("[ServerIcon] Server sent icon chunks to %s: rawBytes=%u, chunks=%u/%u, chunkSize=%u\n",
+		address.ToString(true), totalBytes, sentChunks, totalChunks, SERVER_ICON_CHUNK_SIZE);
+}
+
+void RakNetInstance::handleAdvertiseSystem(const RakNet::Packet* packet, RakNet::BitStream& bitStream)
+{
+	RakNet::RakString message;
+	if (!bitStream.Read(message))
+	{
+		LOGW("[ServerIcon] Received malformed advertise packet from %s: missing message id\n",
+			packet->systemAddress.ToString(true));
+		return;
+	}
+
+	if (message.StrCmp(SERVER_ICON_REQUEST) == 0)
+	{
+		if (_isServer)
+		{
+			LOGI("[ServerIcon] Server received icon request from %s\n",
+				packet->systemAddress.ToString(true));
+			sendServerIconChunks(packet->systemAddress);
+		}
+		return;
+	}
+
+	if (message.StrCmp(SERVER_ICON_CHUNK) == 0)
+	{
+		if (!_isServer)
+			handleServerIconChunk(packet->systemAddress, bitStream);
+		return;
+	}
+}
+
+void RakNetInstance::handleServerIconChunk(const RakNet::SystemAddress& address, RakNet::BitStream& bitStream)
+{
+	unsigned int totalBytes = 0;
+	unsigned int totalChunks = 0;
+	unsigned int chunkIndex = 0;
+	unsigned int chunkSize = 0;
+
+	if (!bitStream.Read(totalBytes) || !bitStream.Read(totalChunks) || !bitStream.Read(chunkIndex) || !bitStream.Read(chunkSize))
+	{
+		LOGW("[ServerIcon] Client received malformed icon chunk header from %s\n",
+			address.ToString(true));
+		return;
+	}
+
+	if (totalBytes == 0 || totalBytes > SERVER_ICON_MAX_BYTES || totalChunks == 0 || chunkIndex >= totalChunks ||
+		chunkSize == 0 || chunkSize > SERVER_ICON_CHUNK_SIZE || chunkIndex * SERVER_ICON_CHUNK_SIZE + chunkSize > totalBytes)
+	{
+		LOGW("[ServerIcon] Client rejected icon chunk from %s: rawBytes=%u, chunks=%u, index=%u, chunkBytes=%u\n",
+			address.ToString(true), totalBytes, totalChunks, chunkIndex, chunkSize);
+		return;
+	}
+
+	std::vector<unsigned char> chunk(chunkSize);
+	if (!bitStream.ReadAlignedBytes(chunk.data(), chunkSize))
+	{
+		LOGW("[ServerIcon] Client failed to read icon chunk payload from %s: index=%u, chunkBytes=%u\n",
+			address.ToString(true), chunkIndex, chunkSize);
+		return;
+	}
+
+	std::string key = address.ToString(true);
+	PendingServerIcon& pending = _pendingServerIcons[key];
+	if (pending.totalBytes == 0)
+	{
+		pending.totalBytes = totalBytes;
+		pending.totalChunks = totalChunks;
+		pending.receivedChunks = 0;
+		pending.data.resize(totalBytes);
+		pending.received.assign(totalChunks, false);
+		LOGI("[ServerIcon] Client started receiving icon from %s: rawBytes=%u, chunks=%u\n",
+			address.ToString(true), totalBytes, totalChunks);
+	}
+
+	if (pending.totalBytes != totalBytes || pending.totalChunks != totalChunks)
+	{
+		LOGW("[ServerIcon] Client rejected mismatched icon chunk from %s: expected rawBytes=%u chunks=%u, got rawBytes=%u chunks=%u\n",
+			address.ToString(true), pending.totalBytes, pending.totalChunks, totalBytes, totalChunks);
+		return;
+	}
+
+	if (!pending.received[chunkIndex])
+	{
+		unsigned int offset = chunkIndex * SERVER_ICON_CHUNK_SIZE;
+		memcpy(&pending.data[offset], chunk.data(), chunkSize);
+		pending.received[chunkIndex] = true;
+		++pending.receivedChunks;
+	}
+
+	if (pending.receivedChunks != pending.totalChunks)
+		return;
+
+	std::string iconPath;
+	if (!writeServerIcon(address, pending.data, iconPath))
+	{
+		LOGW("[ServerIcon] Client received complete icon from %s but failed to save it (rawBytes=%u)\n",
+			address.ToString(true), pending.totalBytes);
+		_pendingServerIcons.erase(key);
+		return;
+	}
+
+	for (unsigned int i = 0; i < availableServers.size(); ++i)
+	{
+		if (availableServers[i].address == address)
+		{
+			availableServers[i].icon = iconPath;
+			availableServers[i].hasIcon = true;
+			availableServers[i].isClientHosted = false;
+			availableServers[i].isSaved = true;
+			break;
+		}
+	}
+
+	LOGI("[ServerIcon] Client saved chunked icon from %s to %s (rawBytes=%u, chunks=%u)\n",
+		address.ToString(true), iconPath.c_str(), pending.totalBytes, pending.totalChunks);
+	_pendingServerIcons.erase(key);
+}
+
+ServerList RakNetInstance::loadSavedServers()
+{
+	ServerList servers;
+	std::string path = getServerStorageBasePath() + "/servers/servers.txt";
+	FILE* fp = fopen(path.c_str(), "r");
+	if (!fp)
+		return servers;
+
+	char line[2048];
+	while (fgets(line, sizeof(line), fp))
+	{
+		std::string value(line);
+		while (!value.empty() && (value[value.size() - 1] == '\n' || value[value.size() - 1] == '\r'))
+			value.resize(value.size() - 1);
+		if (value.empty())
+			continue;
+
+		std::vector<std::string> fields;
+		size_t start = 0;
+		bool escaped = false;
+		for (size_t i = 0; i <= value.size(); ++i)
+		{
+			if (i < value.size() && value[i] == '\\' && !escaped)
+			{
+				escaped = true;
+				continue;
+			}
+			if (i == value.size() || (value[i] == '|' && !escaped))
+			{
+				fields.push_back(unescapeServerField(value.substr(start, i - start)));
+				start = i + 1;
+			}
+			escaped = false;
+		}
+
+		if (fields.size() < 2)
+			continue;
+
+		PingedCompatibleServer server;
+		server.address.FromString(fields[0].c_str());
+		server.name = fields[1].c_str();
+		server.icon = fields.size() > 2 ? fields[2] : "";
+		server.hasIcon = fields.size() > 3 ? fields[3] == "1" : !server.icon.empty();
+		server.isClientHosted = fields.size() > 4 ? fields[4] == "client" : false;
+		server.isSaved = true;
+		server.isSpecial = false;
+		server.pingTime = 0;
+		server.prevpingTime = 0;
+		server.lastSeenTime = RakNet::GetTimeMS();
+		servers.push_back(server);
+	}
+
+	fclose(fp);
+	return servers;
+}
+
+void RakNetInstance::saveServerList(const ServerList& servers)
+{
+	std::string path = getServerStorageBasePath() + "/servers/servers.txt";
+	if (!createDirectoriesForFile(path))
+		return;
+
+	FILE* fp = fopen(path.c_str(), "w");
+	if (!fp)
+		return;
+
+	for (unsigned int i = 0; i < servers.size(); ++i)
+	{
+		const PingedCompatibleServer& server = servers[i];
+		if (!server.isSaved && server.name.GetLength() == 0)
+			continue;
+		fprintf(fp, "%s|%s|%s|%s|%s\n",
+			escapeServerField(server.address.ToString(true)).c_str(),
+			escapeServerField(server.name.C_String()).c_str(),
+			escapeServerField(server.icon).c_str(),
+			server.hasIcon ? "1" : "0",
+			server.isClientHosted ? "client" : "standalone");
+	}
+
+	fclose(fp);
+}
+
 RakNet::RakPeerInterface* RakNetInstance::getPeer()
 {
 	return rakPeer;
@@ -273,6 +779,9 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 							if (index >= 0) availableServers[index].isSpecial = true;
 						}
 					}
+					break;
+				case ID_ADVERTISE_SYSTEM:
+					handleAdvertiseSystem(currentEvent, activeBitStream);
 					break;
 				}
 			}
@@ -763,6 +1272,99 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 	if ( !emptyNameOrLonger || appIdentifier.StrCmp(data.SubStr(0, appIdentifier.GetLength())) != 0)
 		return -1;
 
+	RakNet::RakString serverName = data.SubStr(appIdentifier.GetLength(), data.GetLength() - appIdentifier.GetLength());
+	bool hasMetadata = false;
+	bool isClientHosted = false;
+	bool hasIcon = false;
+	std::string iconData;
+
+	int metaIndex = serverName.Find(SERVER_META_MARKER);
+	if (metaIndex >= 0)
+	{
+		RakNet::RakString meta = serverName.SubStr(metaIndex + strlen(SERVER_META_MARKER), serverName.GetLength() - metaIndex - strlen(SERVER_META_MARKER));
+		serverName = serverName.SubStr(0, metaIndex);
+		hasMetadata = true;
+
+		std::string metaText = meta.C_String();
+		size_t start = 0;
+		while (start < metaText.size())
+		{
+			size_t end = metaText.find(';', start);
+			std::string token = metaText.substr(start, end == std::string::npos ? std::string::npos : end - start);
+			size_t equals = token.find('=');
+			if (equals != std::string::npos)
+			{
+				std::string key = token.substr(0, equals);
+				std::string value = token.substr(equals + 1);
+				if (key == "type")
+					isClientHosted = value == "client";
+				else if (key == "icon")
+					hasIcon = value == "1";
+				else if (key == "icondata")
+					iconData = value;
+			}
+			if (end == std::string::npos)
+				break;
+			start = end + 1;
+		}
+	}
+
+	std::string iconPath;
+	if (hasMetadata)
+	{
+		LOGI("[ServerIcon] Client parsed announce from %s: type=%s, hasIcon=%s, encodedBytes=%u\n",
+			p->systemAddress.ToString(true),
+			isClientHosted ? "client" : "standalone",
+			hasIcon ? "yes" : "no",
+			(unsigned int)iconData.size());
+	}
+	else
+	{
+		LOGI("[ServerIcon] Client parsed announce from %s with no icon metadata\n",
+			p->systemAddress.ToString(true));
+	}
+
+	if (hasMetadata && hasIcon && !isClientHosted && !iconData.empty())
+	{
+		std::vector<unsigned char> decodedIcon = base64Decode(iconData);
+		if (decodedIcon.empty())
+		{
+			LOGW("[ServerIcon] Client received icon metadata from %s but decoded payload was empty (encodedBytes=%u)\n",
+				p->systemAddress.ToString(true), (unsigned int)iconData.size());
+		}
+		else if (writeServerIcon(p->systemAddress, decodedIcon, iconPath))
+		{
+			LOGI("[ServerIcon] Client saved icon from %s to %s (rawBytes=%u, encodedBytes=%u)\n",
+				p->systemAddress.ToString(true), iconPath.c_str(), (unsigned int)decodedIcon.size(), (unsigned int)iconData.size());
+		}
+		else
+		{
+			LOGW("[ServerIcon] Client received icon from %s but failed to save it (rawBytes=%u, encodedBytes=%u)\n",
+				p->systemAddress.ToString(true), (unsigned int)decodedIcon.size(), (unsigned int)iconData.size());
+		}
+	}
+	else if (hasMetadata && hasIcon && !isClientHosted)
+	{
+		std::string existingIconPath = getServerIconPath(p->systemAddress);
+		if (fileExists(existingIconPath))
+		{
+			iconPath = existingIconPath;
+			LOGI("[ServerIcon] Client found saved icon for %s at %s; skipping chunk request\n",
+				p->systemAddress.ToString(true), iconPath.c_str());
+		}
+		else
+		{
+			LOGI("[ServerIcon] Client received icon metadata from %s without inline data; requesting chunked icon\n",
+				p->systemAddress.ToString(true));
+			requestServerIcon(p->systemAddress);
+		}
+	}
+	else if (hasMetadata && hasIcon && isClientHosted)
+	{
+		LOGI("[ServerIcon] Client received icon metadata from %s but server is client-hosted; using default icon\n",
+			p->systemAddress.ToString(true));
+	}
+
 	bool found = false;
 	for (unsigned int i = 0; i < availableServers.size(); i++) {
 		if (availableServers[i].address == p->systemAddress) {
@@ -770,12 +1372,17 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 			availableServers[i].pingTime = ping;
 			availableServers[i].lastSeenTime = RakNet::GetTimeMS();
 
-			bool emptyName = data.GetLength() == appIdentifier.GetLength();
+			bool emptyName = serverName.GetLength() == 0;
 			if (emptyName)
 				availableServers[i].name = "";
 			else {
-				availableServers[i].name = data.SubStr(appIdentifier.GetLength(), data.GetLength() - appIdentifier.GetLength());
+				availableServers[i].name = serverName;
 			}
+			availableServers[i].hasIcon = hasIcon;
+			availableServers[i].isClientHosted = isClientHosted;
+			availableServers[i].isSaved = true;
+			if (!iconPath.empty())
+				availableServers[i].icon = iconPath;
 			//LOGI("Swapping name: %s\n", availableServers[i].name.C_String());
 			return i;
 		}
@@ -786,7 +1393,11 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 	server.prevpingTime = ping;
 	server.lastSeenTime = RakNet::GetTimeMS();
 	server.isSpecial = false;
-	server.name = data.SubStr(appIdentifier.GetLength(), data.GetLength() - appIdentifier.GetLength());
+	server.name = serverName;
+	server.icon = iconPath;
+	server.hasIcon = hasIcon;
+	server.isClientHosted = isClientHosted;
+	server.isSaved = true;
 
 	if (insertAtBeginning) {
 		availableServers.insert(availableServers.begin(), server);

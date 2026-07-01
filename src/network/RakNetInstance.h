@@ -3,12 +3,14 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include "../raknet/RakNetTypes.h"
 #include "../raknet/RakString.h"
 
 namespace RakNet
 {
 	class RakPeerInterface;
+	class BitStream;
 }
 
 class Packet;
@@ -16,12 +18,26 @@ class NetEventCallback;
 
 typedef struct PingedCompatibleServer
 {
+	PingedCompatibleServer()
+	:	pingTime(0),
+		prevpingTime(0),
+		lastSeenTime(0),
+		hasIcon(false),
+		isClientHosted(false),
+		isSaved(false),
+		isSpecial(false)
+	{
+	}
+
 	RakNet::RakString name;
 	RakNet::SystemAddress address;
 	RakNet::TimeMS pingTime;
 	RakNet::TimeMS prevpingTime;
 	RakNet::TimeMS lastSeenTime;
 	std::string icon;
+	bool hasIcon;
+	bool isClientHosted;
+	bool isSaved;
 	bool isSpecial;
 } PingedCompatibleServer;
 typedef std::vector<PingedCompatibleServer> ServerList;
@@ -39,6 +55,9 @@ public:
 	virtual void stopPingForHosts() {}
 	virtual const ServerList& getServerList() { static ServerList l; return l; }
 	virtual void clearServerList() {}
+	virtual ServerList loadSavedServers() { return ServerList(); }
+	virtual void saveServerList(const ServerList& servers) {}
+	virtual void setServerStoragePath(const std::string& path) {}
     
 	virtual void disconnect() {}
     
@@ -76,6 +95,9 @@ public:
 	void stopPingForHosts() override;
 	const ServerList& getServerList() override;
 	void clearServerList() override;
+	ServerList loadSavedServers() override;
+	void saveServerList(const ServerList& servers) override;
+	void setServerStoragePath(const std::string& path) override;
 
 	void disconnect() override;
 
@@ -105,6 +127,23 @@ public:
 
 private:
 	int handleUnconnectedPong(const RakNet::RakString& data, const RakNet::Packet*, const char* appid, bool insertAtBeginning, const RakNet::TimeMS ping);
+	void loadServerIcon();
+	std::string getServerStorageBasePath() const;
+	std::string getServerIconPath(const RakNet::SystemAddress& address) const;
+	bool writeServerIcon(const RakNet::SystemAddress& address, const std::vector<unsigned char>& iconData, std::string& outPath) const;
+	void requestServerIcon(const RakNet::SystemAddress& address);
+	void sendServerIconChunks(const RakNet::SystemAddress& address);
+	void handleAdvertiseSystem(const RakNet::Packet* packet, RakNet::BitStream& bitStream);
+	void handleServerIconChunk(const RakNet::SystemAddress& address, RakNet::BitStream& bitStream);
+
+	struct PendingServerIcon
+	{
+		unsigned int totalBytes;
+		unsigned int totalChunks;
+		unsigned int receivedChunks;
+		std::vector<unsigned char> data;
+		std::vector<bool> received;
+	};
 
 	RakNet::RakPeerInterface*	rakPeer;
 	RakNet::RakNetGUID			serverGuid;
@@ -116,6 +155,11 @@ private:
 
 	bool _isServer;
 	bool _isLoggedIn;
+	bool _hasServerIcon;
+	std::string _serverIconBase64;
+	std::vector<unsigned char> _serverIconData;
+	std::string _serverStoragePath;
+	std::map<std::string, PendingServerIcon> _pendingServerIcons;
 };
 
 #endif /*_MINECRAFT_NETWORK_RAKNETINSTANCE_H_*/

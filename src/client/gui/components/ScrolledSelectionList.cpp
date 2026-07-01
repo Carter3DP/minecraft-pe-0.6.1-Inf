@@ -50,10 +50,20 @@ int ScrolledSelectionList::getMaxPosition()
 	return getNumberOfItems() * itemHeight + headerHeight;
 }
 
+int ScrolledSelectionList::getRowLeft() const
+{
+	return width / 2 - (92 + 16 + 2);
+}
+
+int ScrolledSelectionList::getRowRight() const
+{
+	return width / 2 + (92 + 16 + 2);
+}
+
 int ScrolledSelectionList::getItemAtPosition( int x, int y )
 {
-	int x0 = width / 2 - (92 + 16 + 2);
-	int x1 = width / 2 + (92 + 16 + 2);
+	int x0 = getRowLeft();
+	int x1 = getRowRight();
 
 	int clickSlotPos = (int)(y - y0 - headerHeight + (int) yo - 4);
 	int slot = clickSlotPos / itemHeight;
@@ -142,7 +152,7 @@ void ScrolledSelectionList::render( int xm, int ym, float a )
 
 	renderDirtBackground();
 
-	int rowX = (int)(width / 2 - 92 - 16);
+	int rowX = getRowLeft() + 2;
 	int rowBaseY = (int)(y0 + 4 - (int) yo);
 
 	if (doRenderHeader) {
@@ -159,8 +169,8 @@ void ScrolledSelectionList::render( int xm, int ym, float a )
 		}
 
 		if (renderSelection && isSelectedItem(i)) {
-			float x0 = width / 2.0f - (92 + 16 + 2);
-			float x1 = width / 2.0f + (92 + 16 + 2);
+			float x0 = (float)getRowLeft();
+			float x1 = (float)getRowRight();
 			glColor4f2(1, 1, 1, 1);
 			glDisable2(GL_TEXTURE_2D);
 			t.begin();
