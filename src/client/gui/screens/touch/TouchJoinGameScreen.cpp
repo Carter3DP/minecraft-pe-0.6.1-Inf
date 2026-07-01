@@ -60,7 +60,9 @@ void AvailableGamesList::renderItem( int i, int x, int y, int h, Tesselator& t )
 	int xx1 = xx2 + SERVER_ICON_SIZE + SERVER_ICON_TEXT_GAP;
 	int textX = xx1;
 
-	std::string ping = std::to_string(s.pingTime) + "ms";
+	char pingBuf[32];
+	snprintf(pingBuf, sizeof(pingBuf), "%dms", s.pingTime);
+	std::string ping = pingBuf;
 
 	int xx3 = (int)x1 - minecraft->font->width(ping) - 24;
 	if (s.isSpecial) {

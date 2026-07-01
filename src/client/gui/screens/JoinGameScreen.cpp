@@ -6,6 +6,7 @@
 #include "../../renderer/Tesselator.h"
 #include "../../renderer/gles.h"
 #include "../../../network/RakNetInstance.h"
+#include <cstdio>
 
 static const int JOIN_LIST_EXTRA_WIDTH = 30;
 static const int SERVER_ICON_SIZE = 24;
@@ -195,7 +196,10 @@ int AvailableGamesList::getRowRight() const
 void AvailableGamesList::renderItem(int i, int x, int y, int h, Tesselator& t) {
 		const PingedCompatibleServer& s = copiedServerList[i];
 		unsigned int color = s.isSpecial? 0xff00b0 : 0xffffa0;
-		std::string ping = std::to_string(s.pingTime) + "ms";
+		char pingBuf[32];
+		snprintf(pingBuf, sizeof(pingBuf), "%dms", s.pingTime);
+		std::string ping = pingBuf;
+		//std::string ping = std::to_string(s.pingTime) + "ms"; //Android no likey
 		int xx3 = getRowRight() - minecraft->font->width(ping) - 3;
 		const int textX = x + SERVER_ICON_SIZE + SERVER_ICON_TEXT_GAP;
 		std::string icon = (!s.isClientHosted && s.hasIcon && !s.icon.empty()) ? s.icon : "gui/default_world.png";
