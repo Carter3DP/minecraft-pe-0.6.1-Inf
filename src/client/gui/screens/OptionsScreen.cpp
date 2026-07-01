@@ -113,7 +113,7 @@ void OptionsScreen::setupPositions() {
 
 	bHeader->x = 0;
 	bHeader->y = 0;
-	bHeader->width = width; //- btnClose->width; looked a little bad with safe zones. hopefully this is better.
+	bHeader->width = width - btnClose->width;
 	bHeader->height = btnClose->height;
 
 	updateCategoryScrollBounds();

@@ -45,12 +45,12 @@ protected:
 
 	float y0;
 	float y1;
-	int itemHeight;
-private:
-	int width;
-	int height;
 	float x1;
 	float x0;
+	int width;
+	int height;
+	int itemHeight;
+private:
 
 	int ignoreY; // new attempt to fix android jump bug
 	int dragState;

@@ -304,7 +304,7 @@ void RakNetInstance::runEvents(NetEventCallback* callback)
 			ServerList::iterator it = availableServers.begin();
 			for (; it != availableServers.end(); )
 			{
-				if (RakNet::GetTimeMS() - it->pingTime > 3000)
+				if (RakNet::GetTimeMS() - it->lastSeenTime > 3000)
 				{
 					it = availableServers.erase(it);
 				}
@@ -768,6 +768,7 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 		if (availableServers[i].address == p->systemAddress) {
 			//availableServers[i].prevpingTime = availableServers[i].pingTime;
 			availableServers[i].pingTime = ping;
+			availableServers[i].lastSeenTime = RakNet::GetTimeMS();
 
 			bool emptyName = data.GetLength() == appIdentifier.GetLength();
 			if (emptyName)
@@ -782,6 +783,8 @@ int RakNetInstance::handleUnconnectedPong(const RakNet::RakString& data, const R
 	PingedCompatibleServer server;
 	server.address = p->systemAddress;
 	server.pingTime = ping;
+	server.prevpingTime = ping;
+	server.lastSeenTime = RakNet::GetTimeMS();
 	server.isSpecial = false;
 	server.name = data.SubStr(appIdentifier.GetLength(), data.GetLength() - appIdentifier.GetLength());
 

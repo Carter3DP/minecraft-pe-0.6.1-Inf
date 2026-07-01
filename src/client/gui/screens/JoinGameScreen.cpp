@@ -60,43 +60,39 @@ bool JoinGameScreen::isIndexValid( int index )
 
 void JoinGameScreen::tick()
 {
+	const RakNet::TimeMS staleServerTimeoutMs = 10000;
+	const RakNet::TimeMS now = RakNet::GetTimeMS();
 	const ServerList& orgServerList = minecraft->raknetInstance->getServerList();
 	ServerList serverList;
 	for (unsigned int i = 0; i < orgServerList.size(); ++i)
 		if (orgServerList[i].name.GetLength() > 0)
 			serverList.push_back(orgServerList[i]);
 
-	if (serverList.size() != gamesList->copiedServerList.size())
+	for (unsigned int i = 0; i < serverList.size(); ++i)
 	{
-		// copy the currently selected item
-		PingedCompatibleServer selectedServer;
-		bool hasSelection = false;
-		if (isIndexValid(gamesList->selectedItem))
+		bool found = false;
+		for (unsigned int j = 0; j < gamesList->copiedServerList.size(); ++j)
 		{
-			selectedServer = gamesList->copiedServerList[gamesList->selectedItem];
-			hasSelection = true;
-		}
-
-		gamesList->copiedServerList = serverList;
-		gamesList->selectItem(-1, false);
-
-		// re-select previous item if it still exists
-		if (hasSelection)
-		{
-			for (unsigned int i = 0; i < gamesList->copiedServerList.size(); i++)
+			if (gamesList->copiedServerList[j].address == serverList[i].address)
 			{
-				if (gamesList->copiedServerList[i].address == selectedServer.address)
-				{
-					gamesList->selectItem(i, false);
-					break;
-				}
+				gamesList->copiedServerList[j] = serverList[i];
+				found = true;
+				break;
 			}
 		}
-	} else {
-		for (int i = (int)gamesList->copiedServerList.size()-1; i >= 0 ; --i) {
-			for (int j = 0; j < (int) serverList.size(); ++j)
-				if (serverList[j].address == gamesList->copiedServerList[i].address)
-					gamesList->copiedServerList[i].name = serverList[j].name;
+		if (!found)
+			gamesList->copiedServerList.push_back(serverList[i]);
+	}
+
+	for (int i = (int)gamesList->copiedServerList.size() - 1; i >= 0; --i)
+	{
+		if (now - gamesList->copiedServerList[i].lastSeenTime > staleServerTimeoutMs)
+		{
+			gamesList->copiedServerList.erase(gamesList->copiedServerList.begin() + i);
+			if (gamesList->selectedItem == i)
+				gamesList->selectItem(-1, false);
+			else if (gamesList->selectedItem > i)
+				gamesList->selectItem(gamesList->selectedItem - 1, false);
 		}
 	}
 
@@ -165,3 +161,14 @@ void JoinGameScreen::render( int xm, int ym, float a )
 }
 
 bool JoinGameScreen::isInGameScreen() { return false; }
+
+
+void AvailableGamesList::renderItem(int i, int x, int y, int h, Tesselator& t) {
+		const PingedCompatibleServer& s = copiedServerList[i];
+		unsigned int color = s.isSpecial? 0xff00b0 : 0xffffa0;
+		std::string ping = std::to_string(s.pingTime) + "ms";
+		int xx3 = ((width / 2.0f) + (92 + 16 + 2) - minecraft->font->width(ping) - 1);
+		drawString(minecraft->font, s.name.C_String(), x, y + 2, color);
+		drawString(minecraft->font, s.address.ToString(false), x, y + 16, 0xffffa0);
+		drawString(minecraft->font, ping, xx3, y + 16, color);
+	}

@@ -20,6 +20,8 @@ typedef struct PingedCompatibleServer
 	RakNet::SystemAddress address;
 	RakNet::TimeMS pingTime;
 	RakNet::TimeMS prevpingTime;
+	RakNet::TimeMS lastSeenTime;
+	std::string icon;
 	bool isSpecial;
 } PingedCompatibleServer;
 typedef std::vector<PingedCompatibleServer> ServerList;

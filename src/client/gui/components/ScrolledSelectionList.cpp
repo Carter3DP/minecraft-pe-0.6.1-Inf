@@ -117,7 +117,7 @@ void ScrolledSelectionList::render( int xm, int ym, float a )
 			yInertia = 0.0f;
 		}
 
-		if (dragState >= 0 && getTimeMs() - lastSelectionTime < 300)
+		if (dragState >= 0 && getTimeMs() - lastSelectionTime > 20)
 		{
 			float clickSlotPos = (ym - y0 - headerHeight + (int) yo - 4);
 			int slot = (int)clickSlotPos / itemHeight;
